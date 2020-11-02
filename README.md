@@ -27,8 +27,10 @@ See this for instructions on how to create libplctag AAR: https://github.com/lib
 - It provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
 - "Get Tags" will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
 - You will need to specify the Custom String Length when the "custom string" data type is selected.
+- Modbus part of the libplctag library is not included in this app.
 
 There might be bugs in the app. Not everything could be tested by me, since I don't have access to all the different PLCs supported by the libplctag library.
+See the libplctag website for all PLCs supported by the library.
 
 Screenshots folder has pictures of this app running inside the Android x86 emulator phone (Pixel 3a API 30).
 The app was also tested as working on an old Samsung phone with arm processor and Android 4.4.2.
