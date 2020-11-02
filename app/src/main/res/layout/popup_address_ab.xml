@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/popupABLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    tools:context=".PopUpAddressAB">
+
+    <TextView
+        android:id="@+id/labelCustomStringLength"
+        android:layout_width="160dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:gravity="start|center_vertical"
+        android:inputType="none"
+        android:text="@string/labelCustomStringLength"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerABBit" />
+
+    <Spinner
+        android:id="@+id/spinnerCustomStringLength"
+        android:layout_width="40dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@android:color/holo_green_dark"
+        android:entries="@array/str_length"
+        android:popupBackground="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerABBit" />
+
+    <TextView
+        android:id="@+id/labelABDataType"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="17dp"
+        android:clickable="false"
+        android:gravity="start|center_vertical"
+        android:inputType="none"
+        android:text="@string/tvDataType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABtag" />
+
+    <Spinner
+        android:id="@+id/spinnerABDataType"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@android:color/holo_green_dark"
+        android:entries="@array/ab_data_type"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:popupBackground="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABtag" />
+
+    <Spinner
+        android:id="@+id/spinnerABBit"
+        android:layout_width="60dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@android:color/holo_green_dark"
+        android:entries="@array/bits_8bit"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:orientation="horizontal"
+        android:popupBackground="@android:color/holo_green_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerABDataType" />
+
+    <TextView
+        android:id="@+id/labelABBit"
+        android:layout_width="80dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:gravity="start|center_vertical"
+        android:inputType="none"
+        android:text="@string/labelBit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelABDataType" />
+
+    <EditText
+        android:id="@+id/etABtag"
+        android:layout_width="380dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@android:color/white"
+        android:ems="10"
+        android:focusable="auto"
+        android:focusableInTouchMode="true"
+        android:gravity="center_horizontal"
+        android:hint="@string/tvPLCAddress"
+        android:importantForAutofill="no"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelPLCTagAddress" />
+
+    <TextView
+        android:id="@+id/labelPLCTagAddress"
+        android:layout_width="130dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:clickable="false"
+        android:gravity="center_horizontal"
+        android:inputType="none"
+        android:text="@string/tvPLCAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnABOK"
+        android:layout_width="108dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="151dp"
+        android:layout_marginLeft="151dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="151dp"
+        android:layout_marginRight="151dp"
+        android:layout_marginBottom="5dp"
+        android:onClick="sendMessageReturnTag"
+        android:text="@string/btnOK"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCustomStringLength" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

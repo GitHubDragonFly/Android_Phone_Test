@@ -1,0 +1,410 @@
+<resources>
+    <string name="app_name">AB Master</string>
+
+    <string name="btnSettings">Settings</string>
+    <string name="btnAutoOFF">Auto OFF</string>
+    <string name="btnAutoON">Auto ON</string>
+    <string name="btnOK">OK</string>
+    <string name="btnGetTags">Get Tags</string>
+    <string name="btnWrite">Write</string>
+    <string name="btnClearABTags">Clear</string>
+    <string name="tvAddress">Address</string>
+    <string name="tvDataType">Data Type</string>
+    <string name="tvPLCAddress">PLC Tag / Address</string>
+    <string name="labelBit">Bit / Char</string>
+    <string name="labelCustomStringLength">Custom String Length</string>
+    <string name="labelWriteEnable">Enable Write</string>
+    <string name="labelABPLCCPU">PLC / CPU</string>
+    <string name="labelABIPAddress">IP Address</string>
+    <string name="labelABPath">Path</string>
+    <string name="labelTimeout">Timeout</string>
+    <string name="labelBoolDisplay">Bool Display</string>
+    <string name="labelLGXProgram">Program Name</string>
+    <string name="LGXProgramHint">Program Name</string>
+    <string name="LGXIPAddressHint">IP Address</string>
+    <string name="LGXPathHint">CSV</string>
+    <string name="tagHint">Tag</string>
+    <string name="valueHint">Read / Write</string>
+    <string name="timeoutHint">Positive Number</string>
+
+    <string-array name="ab_tags">
+        <item>Controller + Program Tags</item>
+    </string-array>
+
+    <string-array name="ab_cpu">
+        <item>controllogix</item>
+        <item>logixpccc</item>
+        <item>micro800</item>
+        <item>micrologix</item>
+        <item>slc500</item>
+        <item>plc5</item>
+        <item>njnx</item>
+    </string-array>
+
+    <string-array name="ab_data_type">
+        <item>int8</item>
+        <item>uint8</item>
+        <item>int16</item>
+        <item>uint16</item>
+        <item>int32</item>
+        <item>uint32</item>
+        <item>int64</item>
+        <item>uint64</item>
+        <item>float32</item>
+        <item>float64</item>
+        <item>bool</item>
+        <item>bool array</item>
+        <item>string</item>
+        <item>custom string</item>
+        <item>timer</item>
+        <item>counter</item>
+        <item>control</item>
+    </string-array>
+
+    <string-array name="ab_mlgx_data_type">
+        <item>int8</item>
+        <item>uint8</item>
+        <item>int16</item>
+        <item>uint16</item>
+        <item>int32</item>
+        <item>uint32</item>
+        <item>int64</item>
+        <item>uint64</item>
+        <item>int128</item>
+        <item>uint128</item>
+        <item>float32</item>
+        <item>float64</item>
+        <item>string</item>
+        <item>timer</item>
+        <item>counter</item>
+        <item>control</item>
+    </string-array>
+
+    <string-array name="bits_8bit">
+        <item>None</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string-array name="bits_16bit">
+        <item>None</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+    </string-array>
+
+    <string-array name="bits_32bit">
+        <item>None</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+    </string-array>
+
+    <string-array name="bits_64bit">
+        <item>None</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+    </string-array>
+
+    <string-array name="bits_128bit">
+        <item>None</item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+        <item>51</item>
+        <item>52</item>
+        <item>53</item>
+        <item>54</item>
+        <item>55</item>
+        <item>56</item>
+        <item>57</item>
+        <item>58</item>
+        <item>59</item>
+        <item>60</item>
+        <item>61</item>
+        <item>62</item>
+        <item>63</item>
+        <item>64</item>
+        <item>65</item>
+        <item>66</item>
+        <item>67</item>
+        <item>68</item>
+        <item>69</item>
+        <item>70</item>
+        <item>71</item>
+        <item>72</item>
+        <item>73</item>
+        <item>74</item>
+        <item>75</item>
+        <item>76</item>
+        <item>77</item>
+        <item>78</item>
+        <item>79</item>
+        <item>80</item>
+        <item>81</item>
+        <item>82</item>
+        <item>83</item>
+        <item>84</item>
+        <item>85</item>
+        <item>86</item>
+        <item>87</item>
+        <item>88</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
+        <item>94</item>
+        <item>95</item>
+        <item>96</item>
+        <item>97</item>
+        <item>98</item>
+        <item>99</item>
+        <item>100</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+        <item>107</item>
+        <item>108</item>
+        <item>109</item>
+        <item>110</item>
+        <item>111</item>
+        <item>112</item>
+        <item>113</item>
+        <item>114</item>
+        <item>115</item>
+        <item>116</item>
+        <item>117</item>
+        <item>118</item>
+        <item>119</item>
+        <item>120</item>
+        <item>121</item>
+        <item>122</item>
+        <item>123</item>
+        <item>124</item>
+        <item>125</item>
+        <item>126</item>
+        <item>127</item>
+    </string-array>
+
+    <string-array name="str_length">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+        <item>24</item>
+        <item>25</item>
+        <item>26</item>
+        <item>27</item>
+        <item>28</item>
+        <item>29</item>
+        <item>30</item>
+        <item>31</item>
+        <item>32</item>
+        <item>33</item>
+        <item>34</item>
+        <item>35</item>
+        <item>36</item>
+        <item>37</item>
+        <item>38</item>
+        <item>39</item>
+        <item>40</item>
+        <item>41</item>
+        <item>42</item>
+        <item>43</item>
+        <item>44</item>
+        <item>45</item>
+        <item>46</item>
+        <item>47</item>
+        <item>48</item>
+        <item>49</item>
+        <item>50</item>
+    </string-array>
+
+    <string-array name="bool_display">
+        <item>True : False</item>
+        <item>One : Zero</item>
+        <item>On : Off</item>
+    </string-array>
+
+</resources>

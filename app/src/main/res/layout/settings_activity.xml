@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settingsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    tools:context=".SettingsActivity">
+
+    <EditText
+        android:id="@+id/etABProgram"
+        android:layout_width="205dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints=""
+        android:background="@android:color/white"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/LGXIPAddressHint"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerABCPU" />
+
+    <TextView
+        android:id="@+id/labelCPU6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelLGXProgram"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/etABIPAddress"
+        app:layout_constraintTop_toBottomOf="@+id/labelCPU" />
+
+    <Spinner
+        android:id="@+id/spinnerABCPU"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|top|center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:entries="@array/ab_cpu"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etABIPAddress"
+        android:layout_width="205dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints=""
+        android:background="@android:color/white"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/LGXIPAddressHint"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABProgram" />
+
+    <TextView
+        android:id="@+id/labelCPU4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelTimeout"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/etABTimeout"
+        app:layout_constraintTop_toBottomOf="@+id/labelCPU3" />
+
+    <EditText
+        android:id="@+id/etABPath"
+        android:layout_width="205dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints=""
+        android:background="@android:color/white"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/LGXPathHint"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABIPAddress" />
+
+    <TextView
+        android:id="@+id/labelCPU2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelABIPAddress"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/etABIPAddress"
+        app:layout_constraintTop_toBottomOf="@+id/labelCPU6" />
+
+    <TextView
+        android:id="@+id/labelCPU5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelBoolDisplay"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerBooleanDisplay"
+        app:layout_constraintTop_toBottomOf="@+id/labelCPU4" />
+
+    <EditText
+        android:id="@+id/etABTimeout"
+        android:layout_width="205dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:autofillHints=""
+        android:background="@android:color/white"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/timeoutHint"
+        android:inputType="number"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABPath" />
+
+    <Spinner
+        android:id="@+id/spinnerBooleanDisplay"
+        android:layout_width="205dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal|top|center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_weight="1"
+        android:background="@color/colorPrimaryDark"
+        android:entries="@array/bool_display"
+        android:gravity="center_horizontal|center_vertical"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABTimeout" />
+
+    <TextView
+        android:id="@+id/labelCPU3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelABPath"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/etABPath"
+        app:layout_constraintTop_toBottomOf="@+id/labelCPU2" />
+
+    <Button
+        android:id="@+id/buttonSettingsOK"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginLeft="162dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="162dp"
+        android:layout_marginRight="162dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:drawable/button_onoff_indicator_on"
+        android:onClick="sendMessageReturnPLCParameters"
+        android:text="@string/btnOK"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBooleanDisplay" />
+
+    <TextView
+        android:id="@+id/labelCPU"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/labelABPLCCPU"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerABCPU"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

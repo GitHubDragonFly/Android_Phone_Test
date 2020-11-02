@@ -1,0 +1,4 @@
+include ':libplctag'
+include ':jna'
+include ':app'
+rootProject.name = "Phone Test"
