@@ -13,8 +13,8 @@
         android:layout_width="205dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:autofillHints=""
         android:background="@android:color/white"
         android:gravity="center_horizontal|center_vertical"
@@ -26,14 +26,15 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerABCPU" />
 
     <TextView
-        android:id="@+id/labelCPU6"
+        android:id="@+id/labelProgram"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelLGXProgram"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/etABIPAddress"
         app:layout_constraintTop_toBottomOf="@+id/labelCPU" />
 
@@ -43,8 +44,8 @@
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal|top|center_vertical"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_weight="1"
         android:background="@color/colorPrimaryDark"
         android:entries="@array/ab_cpu"
@@ -58,8 +59,8 @@
         android:layout_width="205dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:autofillHints=""
         android:background="@android:color/white"
         android:gravity="center_horizontal|center_vertical"
@@ -71,24 +72,25 @@
         app:layout_constraintTop_toBottomOf="@+id/etABProgram" />
 
     <TextView
-        android:id="@+id/labelCPU4"
+        android:id="@+id/labelTimeout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelTimeout"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/etABTimeout"
-        app:layout_constraintTop_toBottomOf="@+id/labelCPU3" />
+        app:layout_constraintTop_toBottomOf="@+id/labelPath" />
 
     <EditText
         android:id="@+id/etABPath"
         android:layout_width="205dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:autofillHints=""
         android:background="@android:color/white"
         android:gravity="center_horizontal|center_vertical"
@@ -100,36 +102,38 @@
         app:layout_constraintTop_toBottomOf="@+id/etABIPAddress" />
 
     <TextView
-        android:id="@+id/labelCPU2"
+        android:id="@+id/labelIPAddress"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelABIPAddress"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/etABIPAddress"
-        app:layout_constraintTop_toBottomOf="@+id/labelCPU6" />
+        app:layout_constraintTop_toBottomOf="@+id/labelProgram" />
 
     <TextView
-        android:id="@+id/labelCPU5"
+        android:id="@+id/labelBoolDisplay"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelBoolDisplay"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spinnerBooleanDisplay"
-        app:layout_constraintTop_toBottomOf="@+id/labelCPU4" />
+        app:layout_constraintTop_toBottomOf="@+id/labelTimeout" />
 
     <EditText
         android:id="@+id/etABTimeout"
         android:layout_width="205dp"
         android:layout_height="35dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:autofillHints=""
         android:background="@android:color/white"
         android:gravity="center_horizontal|center_vertical"
@@ -146,8 +150,8 @@
         android:layout_height="45dp"
         android:layout_gravity="center_horizontal|top|center_vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_weight="1"
         android:background="@color/colorPrimaryDark"
         android:entries="@array/bool_display"
@@ -157,26 +161,27 @@
         app:layout_constraintTop_toBottomOf="@+id/etABTimeout" />
 
     <TextView
-        android:id="@+id/labelCPU3"
+        android:id="@+id/labelPath"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelABPath"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/etABPath"
-        app:layout_constraintTop_toBottomOf="@+id/labelCPU2" />
+        app:layout_constraintTop_toBottomOf="@+id/labelIPAddress" />
 
     <Button
         android:id="@+id/buttonSettingsOK"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="162dp"
-        android:layout_marginLeft="162dp"
+        android:layout_width="88dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginRight="162dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
         android:background="@android:drawable/button_onoff_indicator_on"
         android:onClick="sendMessageReturnPLCParameters"
@@ -186,19 +191,19 @@
         android:textStyle="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerBooleanDisplay" />
 
     <TextView
         android:id="@+id/labelCPU"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/labelABPLCCPU"
-        android:textSize="18sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/spinnerABCPU"
         app:layout_constraintTop_toTopOf="parent" />
 

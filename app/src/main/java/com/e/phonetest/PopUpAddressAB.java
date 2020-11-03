@@ -182,10 +182,11 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
         super.onPause();
 
         View v = getCurrentFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
 
-        assert v != null;
-        imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (v != null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 
     public void sendMessageReturnTag(View v)
