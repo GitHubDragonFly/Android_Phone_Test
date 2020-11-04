@@ -27,7 +27,8 @@ See this for instructions on how to create libplctag AAR: https://github.com/lib
 - It provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
 - "Get Tags" will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
 - You will need to specify the Custom String Length when the "custom string" data type is selected.
-- Modbus part of the libplctag library is not included in this app.
+- The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
+- Modbus functionality of the libplctag library is not included in this app.
 
 There might be bugs in the app. Not everything could be tested by me, since I don't have access to all the different PLCs supported by the libplctag library.
 See the libplctag website for all PLCs supported by the library.
