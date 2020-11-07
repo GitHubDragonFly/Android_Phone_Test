@@ -40,7 +40,7 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
         etABTag = findViewById(R.id.etABtag);
         etABTag.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence chars, int start, int before, int count) {
-                if(chars.toString().contains("/"))
+                if(chars.toString().contains("/") || chars.toString().contains("."))
                     spinABBit.setEnabled(false);
                 else
                     spinABBit.setEnabled(true);
