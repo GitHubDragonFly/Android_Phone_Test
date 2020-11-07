@@ -3,7 +3,8 @@ Android phone app for communication with Allen Bradley programmable logic contro
 
 Intended to be used solely as a testing tool (not fit for any production environment).
 
-Minimum requirement is Android 4.1 (API level 16) while targeting Android 11 (API level 30).
+Minimum requirement is Android 4.1 (API level 16) while targeting Android 11 (API level 30). This should cover lots of old Android phones as well as new.
+
 Designed for portrait orientation and also designed to hide the status bar and keep the screen turned on.
 In order to work as designed, it uses permission to access Internet and Network State (see app/src/main/AndroidManifest.xml file).
 
