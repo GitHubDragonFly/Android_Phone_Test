@@ -97,7 +97,7 @@
 
     <EditText
         android:id="@+id/etABtag"
-        android:layout_width="380dp"
+        android:layout_width="0dp"
         android:layout_height="24dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
@@ -141,7 +141,7 @@
         android:layout_height="51dp"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="5dp"
