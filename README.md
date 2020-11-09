@@ -37,6 +37,16 @@ See the libplctag website for all PLCs supported by the library.
 Screenshots folder has pictures of this app running inside the Android x86 emulator phone (Pixel 3a API 30).
 The app was also tested as working on an old Samsung phone with arm processor and Android 4.4.2.
 
+# Build
+
+All it takes is to:
+
+- Download and install Android Studio.
+- Download and extract the zip file of this project.
+- Open this as an existing project in Android Studio and, on the menu, do a Build/Rebuild Project.
+- Locate created APK file in this folder: app/build/outputs/apk/free/debug.
+- Copy the APK over to your phone and install it (you might need to enable the "Install from Unknown Sources" option).
+
 # Licensing
 This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Library General Public License 2.1 to cover for the use of libplctag and jna libraries.
 
