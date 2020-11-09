@@ -24,7 +24,7 @@
     <string name="LGXIPAddressHint">IP Address</string>
     <string name="LGXPathHint">CSV</string>
     <string name="tagHint">Tag</string>
-    <string name="valueHint">Read / Write</string>
+    <string name="valueHint">Read / Write Value</string>
     <string name="timeoutHint">Positive Number</string>
 
     <string-array name="ab_tags">

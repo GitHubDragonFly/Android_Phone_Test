@@ -178,7 +178,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if (adapterView.getId() == R.id.spinnerCLGXTags) {
-            if (!(spinCLGXTags.getSelectedItem().toString().startsWith("*") || spinCLGXTags.getSelectedItem().toString().startsWith("Failed"))) {
+            if (!(spinCLGXTags.getSelectedItem().toString().startsWith("*") || spinCLGXTags.getSelectedItem().toString().startsWith("Failed") ||
+                    spinCLGXTags.getSelectedItem().toString().equals("Controller + Program Tags"))) {
+
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Selected CLGX Tag", spinCLGXTags.getSelectedItem().toString());
                 clipboard.setPrimaryClip(clip);
