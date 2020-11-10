@@ -37,13 +37,38 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
         callerName = MainActivity.callerName;
         cpu = MainActivity.abCPU;
 
+        spinABDataType = findViewById(R.id.spinnerABDataType);
+        spinABDataType.setOnItemSelectedListener(this);
+        spinABDataType.setEnabled(false);
+
+        spinABBit = findViewById(R.id.spinnerABBit);
+        spinABBit.setEnabled(false);
+
+        spinCustomStringLength = findViewById(R.id.spinnerCustomStringLength);
+        spinCustomStringLength.setOnItemSelectedListener(this);
+        spinCustomStringLength.setEnabled(false);
+
         etABTag = findViewById(R.id.etABtag);
         etABTag.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence chars, int start, int before, int count) {
-                if(chars.toString().contains("/") || chars.toString().contains("."))
+                if(chars.toString().equals("")){
+                    spinABDataType.setEnabled(false);
                     spinABBit.setEnabled(false);
-                else
-                    spinABBit.setEnabled(true);
+                } else{
+                    spinABDataType.setEnabled(true);
+
+                    if (spinABDataType.getSelectedItem().toString().equals("bool") || spinABDataType.getSelectedItem().toString().equals("bool array") ||
+                            spinABDataType.getSelectedItem().toString().equals("timer") || spinABDataType.getSelectedItem().toString().equals("counter") ||
+                            spinABDataType.getSelectedItem().toString().equals("control")){
+
+                        spinABBit.setEnabled(false);
+                    } else {
+                        if(chars.toString().contains("/") || chars.toString().contains("."))
+                            spinABBit.setEnabled(false);
+                        else
+                            spinABBit.setEnabled(true);
+                    }
+                }
             }
 
             public void beforeTextChanged(CharSequence chars, int start, int count, int after) {
@@ -52,14 +77,6 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
             public void afterTextChanged(Editable s) {
             }
         });
-
-        spinABDataType = findViewById(R.id.spinnerABDataType);
-        spinABDataType.setOnItemSelectedListener(this);
-
-        spinABBit = findViewById(R.id.spinnerABBit);
-
-        spinCustomStringLength = findViewById(R.id.spinnerCustomStringLength);
-        spinCustomStringLength.setOnItemSelectedListener(this);
 
         String[] stringArray;
         ArrayAdapter<String> dataAdapter;
@@ -95,8 +112,6 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
 
         switch(parent.getId()){
             case R.id.spinnerABDataType:
-                // Enable the bit spinner in case if it was previously disabled
-                spinABBit.setEnabled(true);
                 // Disable the custom string length spinner
                 spinCustomStringLength.setEnabled(false);
 
@@ -104,28 +119,35 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
                     case "int8":
                     case "uint8":
                         stringArray = getResources().getStringArray(R.array.bits_8bit);
+                        if (spinABDataType.isEnabled())
+                            spinABBit.setEnabled(true);
                         break;
                     case "int16":
                     case "uint16":
                         stringArray = getResources().getStringArray(R.array.bits_16bit);
+                        spinABBit.setEnabled(true);
                         break;
                     case "int32":
                     case "uint32":
                     case "float32":
                         stringArray = getResources().getStringArray(R.array.bits_32bit);
+                        spinABBit.setEnabled(true);
                         break;
                     case "int64":
                     case "uint64":
                     case "float64":
                         stringArray = getResources().getStringArray(R.array.bits_64bit);
+                        spinABBit.setEnabled(true);
                         break;
                     case "int128":
                     case "uint128":
                         stringArray = getResources().getStringArray(R.array.bits_128bit);
+                        spinABBit.setEnabled(true);
                         break;
                     case "custom string":
                         spinCustomStringLength.setEnabled(true);
                         stringArray = new String[] {"None", "1"};
+                        spinABBit.setEnabled(true);
                         break;
                     case "string":
                         int strLength;
@@ -145,6 +167,7 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
                             stringArray[i] = String.valueOf(i);
                         }
 
+                        spinABBit.setEnabled(true);
                         break;
                     default:
                         spinABBit.setEnabled(false);

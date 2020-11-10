@@ -5,10 +5,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     SetPLCParameters setParameters = MainActivity.setPLCParameters;
 
     Spinner spinABCPU, spinBooleanDisplay;
@@ -24,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
         spinABCPU = findViewById(R.id.spinnerABCPU);
+        spinABCPU.setOnItemSelectedListener(this);
+
         spinBooleanDisplay = findViewById(R.id.spinnerBooleanDisplay);
 
         etABIP = findViewById(R.id.etABIPAddress);
@@ -51,6 +55,33 @@ public class SettingsActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
+        if (parent.getId() == R.id.spinnerABCPU) {
+            if (spinABCPU.getSelectedItem().toString().equals("controllogix") ||
+                    spinABCPU.getSelectedItem().toString().equals("logixpccc") ||
+                    spinABCPU.getSelectedItem().toString().equals("njnx")) {
+
+                String ipAddress = "192.168.1.21";
+                etABIP.setText(ipAddress);
+                etABPath.setText("1,3");
+                if (spinABCPU.getSelectedItem().toString().equals("controllogix"))
+                    etABProgram.setEnabled(true);
+                else
+                    etABProgram.setEnabled(false);
+            } else {
+                etABProgram.setEnabled(false);
+                String ipAddress = "192.168.1.10";
+                etABIP.setText(ipAddress);
+                etABPath.setText("");
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
     @Override

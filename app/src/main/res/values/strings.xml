@@ -19,7 +19,7 @@
     <string name="labelABPath">Path</string>
     <string name="labelTimeout">Timeout</string>
     <string name="labelBoolDisplay">Bool Display</string>
-    <string name="labelLGXProgram">Program Name</string>
+    <string name="labelLGXProgram">Program</string>
     <string name="LGXProgramHint">Program Name</string>
     <string name="LGXIPAddressHint">IP Address</string>
     <string name="LGXPathHint">CSV</string>
