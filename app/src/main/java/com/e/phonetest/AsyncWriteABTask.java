@@ -1,6 +1,7 @@
 package com.e.phonetest;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import org.libplctag.Tag;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -143,171 +144,195 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
                         e.printStackTrace();
                     }
                 } else {
-                    if (Integer.parseInt(params[3]) > 0){
-                        ABWriteMaster.setBit(tag_id, bitIndex, 1);
+                    if (!(params[3].equals("0") || params[3].equals("false") || params[3].equals("False") || params[3].equals("1") || params[3].equals("true") || params[3].equals("True"))){
+                        value = "AB Write Failed";
+                        publishProgress();
+                        ABWriteMaster.close(tag_id);
+                        return "FINISHED";
                     } else {
-                        ABWriteMaster.setBit(tag_id, bitIndex, 0);
+                        if (params[3].equals("0") || params[3].equals("false") || params[3].equals("False"))
+                            ABWriteMaster.setBit(tag_id, bitIndex, 0);
+                        else
+                            ABWriteMaster.setBit(tag_id, bitIndex, 1);
                     }
                 }
             } else {
-                switch (dataType){
-                    case "int8":
-                        ABWriteMaster.setInt8(tag_id, 0, Integer.parseInt(params[3]));
-                        break;
-                    case "uint8":
-                        ABWriteMaster.setUInt8(tag_id, 0, Short.parseShort(params[3]));
-                        break;
-                    case "int16":
-                        ABWriteMaster.setInt16(tag_id, 0, Integer.parseInt(params[3]));
-                        break;
-                    case "uint16":
-                        ABWriteMaster.setUInt16(tag_id, 0, Integer.parseInt(params[3]));
-                        break;
-                    case "int32":
-                        ABWriteMaster.setInt32(tag_id, 0, Integer.parseInt(params[3]));
-                        break;
-                    case "uint32":
-                        ABWriteMaster.setUInt32(tag_id, 0, Long.parseLong(params[3]));
-                        break;
-                    case "int64":
-                        ABWriteMaster.setInt64(tag_id, 0, Long.parseLong(params[3]));
-                        break;
-                    case "uint64":
-                        ABWriteMaster.setUInt64(tag_id, 0, new BigInteger(params[3]));
-                        break;
-                    case "int128":
-                        ABWriteMaster.setInt128(tag_id, 0, new BigInteger(params[3]));
-                        break;
-                    case "uint128":
-                        ABWriteMaster.setUInt128(tag_id, 0, new BigInteger(params[3]));
-                        break;
-                    case "float32":
-                        ABWriteMaster.setFloat32(tag_id, 0, Float.parseFloat(params[3]));
-                        break;
-                    case "float64":
-                        ABWriteMaster.setFloat64(tag_id, 0, Double.parseDouble(params[3]));
-                        break;
-                    case "bool":
-                        ABWriteMaster.setBit(tag_id, 0, Integer.parseInt(params[3]));
-                        break;
-                    case "custom string":
-                        byte[] strBytes = null;
+                if (!(dataType.equals("bool") || dataType.equals("string") || dataType.equals("custom string")) &&
+                        !TextUtils.isDigitsOnly(params[3])){
 
-                        try {
-                            strBytes = params[3].getBytes("UTF-8");
-                        } catch (UnsupportedEncodingException e) {
-                            e.printStackTrace();
-                        }
+                    value = "AB Write Failed";
+                    publishProgress();
+                    ABWriteMaster.close(tag_id);
+                    return "FINISHED";
+                } else {
+                    switch (dataType){
+                        case "int8":
+                            ABWriteMaster.setInt8(tag_id, 0, Integer.parseInt(params[3]));
+                            break;
+                        case "uint8":
+                            ABWriteMaster.setUInt8(tag_id, 0, Short.parseShort(params[3]));
+                            break;
+                        case "int16":
+                            ABWriteMaster.setInt16(tag_id, 0, Integer.parseInt(params[3]));
+                            break;
+                        case "uint16":
+                            ABWriteMaster.setUInt16(tag_id, 0, Integer.parseInt(params[3]));
+                            break;
+                        case "int32":
+                            ABWriteMaster.setInt32(tag_id, 0, Integer.parseInt(params[3]));
+                            break;
+                        case "uint32":
+                            ABWriteMaster.setUInt32(tag_id, 0, Long.parseLong(params[3]));
+                            break;
+                        case "int64":
+                            ABWriteMaster.setInt64(tag_id, 0, Long.parseLong(params[3]));
+                            break;
+                        case "uint64":
+                            ABWriteMaster.setUInt64(tag_id, 0, new BigInteger(params[3]));
+                            break;
+                        case "int128":
+                            ABWriteMaster.setInt128(tag_id, 0, new BigInteger(params[3]));
+                            break;
+                        case "uint128":
+                            ABWriteMaster.setUInt128(tag_id, 0, new BigInteger(params[3]));
+                            break;
+                        case "float32":
+                            ABWriteMaster.setFloat32(tag_id, 0, Float.parseFloat(params[3]));
+                            break;
+                        case "float64":
+                            ABWriteMaster.setFloat64(tag_id, 0, Double.parseDouble(params[3]));
+                            break;
+                        case "bool":
+                            if (params[3].equals("0") || params[3].equals("false") || params[3].equals("False"))
+                                ABWriteMaster.setUInt8(tag_id, 0, (short) 0);
+                            else if (params[3].equals("1") || params[3].equals("true") || params[3].equals("True"))
+                                ABWriteMaster.setUInt8(tag_id, 0, (short) 1);
+                            else {
+                                value = "AB Write Failed";
+                                publishProgress();
+                                ABWriteMaster.close(tag_id);
+                                return "FINISHED";
+                            }
+                            break;
+                        case "custom string":
+                            byte[] strBytes = null;
 
-                        assert strBytes != null;
+                            try {
+                                strBytes = params[3].getBytes("UTF-8");
+                            } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                            }
 
-                        if (strBytes.length > customStringLength){
-                            value = "AB Write Failed";
-                            publishProgress();
-                            ABWriteMaster.close(tag_id);
-                            return "FINISHED";
-                        } else {
-                            byte[] allBytes, strLengthBytes;
+                            assert strBytes != null;
 
-                            strLengthBytes = ByteBuffer.allocate(4).putInt(strBytes.length).array();
+                            if (strBytes.length > customStringLength){
+                                value = "AB Write Failed";
+                                publishProgress();
+                                ABWriteMaster.close(tag_id);
+                                return "FINISHED";
+                            } else {
+                                byte[] allBytes, strLengthBytes;
 
-                            allBytes = new byte[customStringLength + 4];
+                                strLengthBytes = ByteBuffer.allocate(4).putInt(strBytes.length).array();
 
-                            //Add data length bytes
-                            allBytes[0] = strLengthBytes[3];
-                            allBytes[1] = strLengthBytes[2];
-                            allBytes[2] = strLengthBytes[1];
-                            allBytes[3] = strLengthBytes[0];
+                                allBytes = new byte[customStringLength + 4];
 
-                            //Add data bytes
-                            System.arraycopy(strBytes, 0, allBytes, 4, strBytes.length);
+                                //Add data length bytes
+                                allBytes[0] = strLengthBytes[3];
+                                allBytes[1] = strLengthBytes[2];
+                                allBytes[2] = strLengthBytes[1];
+                                allBytes[3] = strLengthBytes[0];
+
+                                //Add data bytes
+                                System.arraycopy(strBytes, 0, allBytes, 4, strBytes.length);
+
+                                //Set all byte values to the tag
+                                for (int j = 0; j < allBytes.length; j++){
+                                    ABWriteMaster.setUInt8(tag_id, j, allBytes[j]);
+                                }
+                            }
+
+                            break;
+                        case "string":
+                            byte[] data = null, valBytes, lengthBytes;
+
+                            if (cpu.equals("micro800")){
+                                try {
+                                    data = params[3].getBytes("UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+
+                                assert data != null;
+                                lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
+
+                                valBytes = new byte[data.length + 1];
+
+                                //Add data length bytes
+                                valBytes[0] = lengthBytes[3];
+
+                                //Add data bytes
+                                System.arraycopy(data, 0, valBytes, 1, data.length);
+                            } else if (cpu.equals("controllogix")){
+                                try {
+                                    data = params[3].getBytes("UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+
+                                assert data != null;
+                                lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
+
+                                valBytes = new byte[data.length + 4];
+
+                                //Add data length bytes
+                                valBytes[0] = lengthBytes[3];
+                                valBytes[1] = lengthBytes[2];
+                                valBytes[2] = lengthBytes[1];
+                                valBytes[3] = lengthBytes[0];
+
+                                //Add data bytes
+                                System.arraycopy(data, 0, valBytes, 4, data.length);
+                            } else {
+                                int result = params[3].length() % 2;
+
+                                if (result != 0)
+                                    params[3] += ' ';
+
+                                try {
+                                    data = params[3].getBytes("UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+
+                                assert data != null;
+                                lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
+
+                                valBytes = new byte[data.length + 2];
+
+                                //Add data length bytes
+                                valBytes[0] = lengthBytes[3];
+                                valBytes[1] = lengthBytes[2];
+
+                                // Reverse data bytes
+                                for (int z = 0; z < data.length - 1; z += 2)
+                                {
+                                    byte temp = data[z];
+                                    data[z] = data[z + 1];
+                                    data[z + 1] = temp;
+                                }
+
+                                //Add data bytes
+                                System.arraycopy(data, 0, valBytes, 2, data.length);
+                            }
 
                             //Set all byte values to the tag
-                            for (int j = 0; j < allBytes.length; j++){
-                                ABWriteMaster.setUInt8(tag_id, j, allBytes[j]);
-                            }
-                        }
-
-                        break;
-                    case "string":
-                        byte[] data = null, valBytes, lengthBytes;
-
-                        if (cpu.equals("micro800")){
-                            try {
-                                data = params[3].getBytes("UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
+                            for (int j = 0; j < valBytes.length; j++){
+                                ABWriteMaster.setUInt8(tag_id, j, valBytes[j]);
                             }
 
-                            assert data != null;
-                            lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
-
-                            valBytes = new byte[data.length + 1];
-
-                            //Add data length bytes
-                            valBytes[0] = lengthBytes[3];
-
-                            //Add data bytes
-                            System.arraycopy(data, 0, valBytes, 1, data.length);
-                        } else if (cpu.equals("controllogix")){
-                            try {
-                                data = params[3].getBytes("UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-
-                            assert data != null;
-                            lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
-
-                            valBytes = new byte[data.length + 4];
-
-                            //Add data length bytes
-                            valBytes[0] = lengthBytes[3];
-                            valBytes[1] = lengthBytes[2];
-                            valBytes[2] = lengthBytes[1];
-                            valBytes[3] = lengthBytes[0];
-
-                            //Add data bytes
-                            System.arraycopy(data, 0, valBytes, 4, data.length);
-                        } else {
-                            int result = params[3].length() % 2;
-
-                            if (result != 0)
-                                params[3] += ' ';
-
-                            try {
-                                data = params[3].getBytes("UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
-
-                            assert data != null;
-                            lengthBytes = ByteBuffer.allocate(4).putInt(data.length).array();
-
-                            valBytes = new byte[data.length + 2];
-
-                            //Add data length bytes
-                            valBytes[0] = lengthBytes[3];
-                            valBytes[1] = lengthBytes[2];
-
-                            // Reverse data bytes
-                            for (int z = 0; z < data.length - 1; z += 2)
-                            {
-                                byte temp = data[z];
-                                data[z] = data[z + 1];
-                                data[z + 1] = temp;
-                            }
-
-                            //Add data bytes
-                            System.arraycopy(data, 0, valBytes, 2, data.length);
-                        }
-
-                        //Set all byte values to the tag
-                        for (int j = 0; j < valBytes.length; j++){
-                            ABWriteMaster.setUInt8(tag_id, j, valBytes[j]);
-                        }
-
-                        break;
+                            break;
+                    }
                 }
             }
 
