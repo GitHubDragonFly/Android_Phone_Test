@@ -63,7 +63,8 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
 
                         spinABBit.setEnabled(false);
                     } else {
-                        if(chars.toString().contains("/") || chars.toString().contains("."))
+                        if(chars.toString().contains("/") || (chars.toString().contains(".") && !chars.toString().contains(":")) ||
+                                (chars.toString().contains(".") && chars.toString().lastIndexOf(".") > chars.toString().indexOf('.')))
                             spinABBit.setEnabled(false);
                         else
                             spinABBit.setEnabled(true);

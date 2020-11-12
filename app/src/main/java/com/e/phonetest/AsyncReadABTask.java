@@ -82,17 +82,17 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int8":
                         case "uint8":
                             elem_size = 1;
-                            if (name.contains(".")){
-                                if (TextUtils.isDigitsOnly(name.substring(name.indexOf('.') + 1)))
-                                    bitIndex[i] = Integer.parseInt(name.substring(name.indexOf('.') + 1));
+                            if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
+                                if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
+                                    bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "int16":
                         case "uint16":
                             elem_size = 2;
-                            if (name.contains(".")){
-                                if (TextUtils.isDigitsOnly(name.substring(name.indexOf('.') + 1)))
-                                    bitIndex[i] = Integer.parseInt(name.substring(name.indexOf('.') + 1));
+                            if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
+                                if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
+                                    bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "bool array":
@@ -102,18 +102,18 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "uint32":
                         case "float32":
                             elem_size = 4;
-                            if (name.contains(".")){
-                                if (TextUtils.isDigitsOnly(name.substring(name.indexOf('.') + 1)))
-                                    bitIndex[i] = Integer.parseInt(name.substring(name.indexOf('.') + 1));
+                            if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
+                                if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
+                                    bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "int64":
                         case "uint64":
                         case "float64":
                             elem_size = 8;
-                            if (name.contains(".")){
-                                if (TextUtils.isDigitsOnly(name.substring(name.indexOf('.') + 1)))
-                                    bitIndex[i] = Integer.parseInt(name.substring(name.indexOf('.') + 1));
+                            if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
+                                if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
+                                    bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "int128":
