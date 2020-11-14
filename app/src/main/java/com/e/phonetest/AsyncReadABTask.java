@@ -573,23 +573,36 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     }
                 }
 
-                // If the value has changed then publish progress on UI thread
-                if (!values[i].equals(tempValue)){
-                    values[i] = tempValue.trim();
-                    value = tempValue.trim();
-                    tempValue = "";
+                // Publish progress on UI thread when value has changed.
 
-                    callerID = params[0].get(2).get(i);
+                //if (!values[i].equals(tempValue)){
+                //    values[i] = tempValue.trim();
+                //    value = tempValue.trim();
+                //    tempValue = "";
 
-                    publishProgress();
-                }
+                //    callerID = params[0].get(2).get(i);
 
-                // Optional routine to slow down the communication
-                //try {
-                //    Thread.sleep(100);
-                //} catch (InterruptedException e) {
-                //    e.printStackTrace();
+                //    publishProgress();
                 //}
+
+
+                // Publish progress on UI thread continuously, controlled with thread's sleep time.
+
+                values[i] = tempValue.trim();
+                value = tempValue.trim();
+                tempValue = "";
+
+                callerID = params[0].get(2).get(i);
+
+                publishProgress();
+
+                // Slow down the communication to give time for UI to update all the values.
+                // Adjust the sleep time if necessary.
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
 

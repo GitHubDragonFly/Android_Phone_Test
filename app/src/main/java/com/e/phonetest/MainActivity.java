@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     AsyncTaskGetCLGXTags myTaskGetCLGXTags = null;
     AsyncWriteABTask myWriteABTask = null;
 
-    public static class ABAddressInfo
+    private static class ABAddressInfo
     {
         EditText etABTag;
         EditText etABTagValue;

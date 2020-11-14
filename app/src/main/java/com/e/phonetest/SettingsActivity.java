@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -24,6 +24,8 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         setContentView(R.layout.settings_activity);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         spinABCPU = findViewById(R.id.spinnerABCPU);
         spinABCPU.setOnItemSelectedListener(this);
