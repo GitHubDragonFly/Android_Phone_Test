@@ -228,6 +228,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         myTaskGetCLGXTags.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
 
         btnGetCLGXTags.setEnabled(false);
+        btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
     }
 
     @SuppressWarnings("unchecked")
@@ -365,9 +366,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (myWriteABTask == null) {
             // Clear the label indicating write success/failure
             ((TextView)findViewById(R.id.labelWriteMessage)).setText("");
-
+            // Start a new write task
             myWriteABTask = new AsyncWriteABTask();
         } else {
+            // Write task is already running so exit the sub
             return;
         }
 
@@ -540,6 +542,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         btnGetCLGXTags.setEnabled(true);
+        btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
     }
 
     @Override
