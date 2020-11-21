@@ -5,7 +5,7 @@
     android:id="@+id/settingsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/holo_blue_dark"
+    android:background="@drawable/rounded_rectangle_lighter_blue"
     tools:context=".SettingsActivity">
 
     <EditText
