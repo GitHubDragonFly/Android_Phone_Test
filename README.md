@@ -51,7 +51,7 @@ All it takes is to:
 This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Library General Public License 2.1 to cover for the use of libplctag and jna libraries.
 
 # Trademarks
-Any and all trademarks, either directly on indirectly mentioned in this project, belong to their respetive owners.
+Any and all trademarks, either directly on indirectly mentioned in this project, belong to their respective owners.
 
 # Useful Resources
 The forum of AdvancedHMI website, which is another open source project providing communication with a large number of different PLCs:
