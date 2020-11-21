@@ -21,7 +21,7 @@ Related project: [libplctag4android](https://github.com/libplctag/libplctag4andr
 This app is as experimental as the above mentioned related project but a bit more elaborate.
 The above mentioned related project can be used to compile the latest prerelease version of the libplctag library.
 
-See this for instructions on how to create libplctag AAR: https://github.com/libplctag/libplctag4android/issues/1
+See [this link](https://github.com/libplctag/libplctag4android/issues/1) for instructions on how to create libplctag AAR.
 
 # Functionality
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
