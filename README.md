@@ -10,18 +10,18 @@ In order to work as designed, it uses permission to access Internet and Network 
 
 It is using the following open source libraries, in the form of AAR modules added to the app:
 
-- libplctag v2.1.20 ( https://github.com/libplctag/libplctag )
-- jna v5.6.0 ( https://github.com/java-native-access/jna )
+- [libplctag](https://github.com/libplctag/libplctag) v2.1.20
+- [jna](https://github.com/java-native-access/jna) v5.6.0
 
 It is also using a modified version of the Tag.java wrapper, part of the libplctag project, so a tag_id for every tag created could be mapped and used in the software.
 Other modifications would be related to added methods for unsigned integers, previously mentioned in the related libplctag4android project (see below) as well as an additional experimental 128-bit support. All the modifications can be seen just by openning this project, navigating to the "libplctag" project, openning the AAR file and navigating through classes.jar.
 
-Related project: https://github.com/libplctag/libplctag4android
+Related project: [libplctag4android](https://github.com/libplctag/libplctag4android)
 
 This app is as experimental as the above mentioned related project but a bit more elaborate.
 The above mentioned related project can be used to compile the latest prerelease version of the libplctag library.
 
-See this for instructions on how to create libplctag AAR: https://github.com/libplctag/libplctag4android/issues/1
+See [this link](https://github.com/libplctag/libplctag4android/issues/1) for instructions on how to create libplctag AAR.
 
 # Functionality
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
@@ -54,6 +54,4 @@ This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Librar
 Any and all trademarks, either directly on indirectly mentioned in this project, belong to their respective owners.
 
 # Useful Resources
-The forum of AdvancedHMI website, which is another open source project providing communication with a large number of different PLCs:
-
-https://www.advancedhmi.com/forum/
+The AdvancedHMI website [forum](https://www.advancedhmi.com/forum/), which is another open source project providing communication with a large number of different PLCs.
