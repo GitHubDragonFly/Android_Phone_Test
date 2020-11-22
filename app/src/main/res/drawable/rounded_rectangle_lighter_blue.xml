@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  rounded_rectangle_darker_blue -->
+<!--  rounded_rectangle_lighter_blue -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"
     android:padding="5dp">
