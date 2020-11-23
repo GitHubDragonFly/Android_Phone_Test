@@ -1,12 +1,14 @@
 package com.e.phonetest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -96,10 +98,14 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         }
+
+        setParameters.UpdatePLCParameters(null);
     }
 
     public void sendMessageReturnPLCParameters(View v)
     {
+        ((Button)v).setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+
         String[] values = new String[7];
 
         values[0] = spinABCPU.getSelectedItem().toString();

@@ -515,6 +515,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
+
+        ((Button)v).setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
     }
 
     @Override
@@ -557,22 +559,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void UpdatePLCParameters(String[] values) {
-        abCPU = values[0];
-        abProgram = values[1];
-        abIPAddress = values[2];
-        abPath = values[3];
-        abTimeout = values[4];
-        boolDisplay = values[5];
+        btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
 
-        if (abCPU.equals("controllogix")){
-            btnGetCLGXTags.setEnabled(true);
-            btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
-            spinCLGXTags.setEnabled(true);
-        }
-        else{
-            btnGetCLGXTags.setEnabled(false);
-            btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
-            spinCLGXTags.setEnabled(false);
+        if (values != null){
+            abCPU = values[0];
+            abProgram = values[1];
+            abIPAddress = values[2];
+            abPath = values[3];
+            abTimeout = values[4];
+            boolDisplay = values[5];
+
+            if (abCPU.equals("controllogix")){
+                btnGetCLGXTags.setEnabled(true);
+                btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
+                spinCLGXTags.setEnabled(true);
+            }
+            else{
+                btnGetCLGXTags.setEnabled(false);
+                btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+                spinCLGXTags.setEnabled(false);
+            }
         }
     }
 
