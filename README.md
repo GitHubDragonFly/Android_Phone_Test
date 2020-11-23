@@ -26,8 +26,9 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 # Functionality
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
 - It provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
-- "Get Tags" will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
-- You will need to specify the Custom String Length when the "custom string" data type is selected.
+- "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
+- "Write" buttons are only functional when enabled & tag is present & value is present.
+- The Custom String Length has to be specified when the "custom string" data type is selected.
 - The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
 - Modbus functionality of the libplctag library is not included in this app.
 
