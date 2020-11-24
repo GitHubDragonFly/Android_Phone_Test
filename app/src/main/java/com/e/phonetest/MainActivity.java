@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     boolean clearingTags;
 
     EditText etAB1, etAB2, etAB3, etAB4, etAB5, tvAB1, tvAB2, tvAB3, tvAB4, tvAB5;
-    Button btnGetCLGXTags, btnSettings, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
+    Button btnGetCLGXTags, btnSettings, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
 
@@ -385,6 +385,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         timeout = timeout.replace(" ", "");
 
         if (TextUtils.isEmpty(ipaddress) || !TextUtils.isDigitsOnly(timeout)){
+            myWriteABTask = null;
             return;
         }
 
@@ -401,9 +402,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch(v.getId()){
             case R.id.btnWriteABTag1:
                 if (TextUtils.isEmpty(etAB1.getText())){
+                    myWriteABTask = null;
                     return;
                 } else {
                     if (TextUtils.isEmpty(tvAB1.getText())){
+                        myWriteABTask = null;
                         return;
                     } else {
                         params[2] = etAB1.getText().toString();
@@ -413,9 +416,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.btnWriteABTag2:
                 if (TextUtils.isEmpty(etAB2.getText())){
+                    myWriteABTask = null;
                     return;
                 } else {
                     if (TextUtils.isEmpty(tvAB2.getText())){
+                        myWriteABTask = null;
                         return;
                     } else {
                         params[2] = etAB2.getText().toString();
@@ -425,9 +430,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.btnWriteABTag3:
                 if (TextUtils.isEmpty(etAB3.getText())){
+                    myWriteABTask = null;
                     return;
                 } else {
                     if (TextUtils.isEmpty(tvAB3.getText())){
+                        myWriteABTask = null;
                         return;
                     } else {
                         params[2] = etAB3.getText().toString();
@@ -437,9 +444,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.btnWriteABTag4:
                 if (TextUtils.isEmpty(etAB4.getText())){
+                    myWriteABTask = null;
                     return;
                 } else {
                     if (TextUtils.isEmpty(tvAB4.getText())){
+                        myWriteABTask = null;
                         return;
                     } else {
                         params[2] = etAB4.getText().toString();
@@ -449,9 +458,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case R.id.btnWriteABTag5:
                 if (TextUtils.isEmpty(etAB5.getText())){
+                    myWriteABTask = null;
                     return;
                 } else {
                     if (TextUtils.isEmpty(tvAB5.getText())){
+                        myWriteABTask = null;
                         return;
                     } else {
                         params[2] = etAB5.getText().toString();
@@ -460,6 +471,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
                 break;
         }
+
+        btnWriteCaller = (Button)v;
+        btnWriteCaller.setEnabled(false);
+        btnWriteCaller.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
 
         myWriteABTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
     }
@@ -555,6 +570,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         ((TextView)findViewById(R.id.labelWriteMessage)).setText(value.substring(3));
+
+        btnWriteCaller.setEnabled(true);
+        btnWriteCaller.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
     }
 
     @Override
