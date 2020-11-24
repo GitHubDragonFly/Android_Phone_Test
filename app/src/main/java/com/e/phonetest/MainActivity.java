@@ -246,6 +246,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     TextUtils.isEmpty(etAB5.getText())){
 
                 tbtnAutoRead.setText(tbtnAutoRead.getTextOff());
+                myReadABTask = null;
                 return;
             }
 
@@ -264,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             timeout = timeout.replace(" ", "");
 
             if (TextUtils.isEmpty(ipaddress) || !TextUtils.isDigitsOnly(timeout)){
+                myReadABTask = null;
                 return;
             }
 
@@ -349,6 +351,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 abi.etABTag.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                 abi.etABTag.setClickable(true);
                 abi.etABTagValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                abi.etABTagValue.setTextColor(textColor);
                 abi.etABTagValue.setText("");
                 abi.btnWriteAB.setEnabled(true);
                 abi.btnWriteAB.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
