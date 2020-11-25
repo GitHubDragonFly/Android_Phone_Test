@@ -8,7 +8,7 @@ Minimum requirement is Android 4.1 (API level 16) while targeting Android 11 (AP
 Designed for portrait orientation and also designed to hide the status bar and keep the screen turned on.
 In order to work as designed, it uses permission to access Internet and Network State (see app/src/main/AndroidManifest.xml file).
 
-It is using the following open source libraries, in the form of AAR modules added to the app:
+It is using the following open source libraries, added to the app in the form of AAR modules:
 
 - [libplctag](https://github.com/libplctag/libplctag) v2.1.20
 - [jna](https://github.com/java-native-access/jna) v5.6.0
