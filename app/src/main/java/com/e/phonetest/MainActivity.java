@@ -6,7 +6,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -66,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set portrait screen mode
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
         // Hide status bar
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Keep the screen turned on
@@ -150,9 +147,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         etAB4.addTextChangedListener(tcListener);
         etAB5 = findViewById(R.id.etABTag5);
         etAB5.addTextChangedListener(tcListener);
-
-        //Hide keyboard
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
@@ -534,7 +528,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
         startActivity(intent);
 
-        ((Button)v).setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+        v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
     }
 
     @Override

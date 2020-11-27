@@ -2,13 +2,11 @@ package com.e.phonetest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,9 +19,6 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set portrait screen mode
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         setContentView(R.layout.settings_activity);
 
@@ -104,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
     public void sendMessageReturnPLCParameters(View v)
     {
-        ((Button)v).setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+        v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
 
         String[] values = new String[7];
 

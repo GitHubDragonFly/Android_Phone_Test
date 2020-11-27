@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/app_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,6 +27,7 @@
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.CustomTheme"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateVisible|adjustPan|adjustResize">
         </activity>
 
@@ -31,6 +35,7 @@
             android:name=".PopUpAddressAB"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.CustomTheme"
+            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateVisible|adjustPan|adjustResize">
         </activity>
     </application>
