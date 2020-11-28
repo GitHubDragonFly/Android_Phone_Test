@@ -1,6 +1,8 @@
 # PhoneTest
 Android phone app for communication with Allen Bradley programmable logic controllers (PLC).
 
+* Note: This app can be installed on a tablet as well (remove all "android:screenOrientation" entries from AndroidManifest to achieve any orientation on the tablet).
+
 Intended to be used solely as a testing tool (not fit for any production environment).
 
 Minimum requirement is Android 4.1 (API level 16) while targeting Android 11 (API level 30). This should cover lots of old Android phones as well as new.
