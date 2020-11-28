@@ -18,7 +18,7 @@
         android:autofillHints=""
         android:background="@drawable/rounded_rectangle_white"
         android:gravity="center_horizontal|center_vertical"
-        android:hint="@string/LGXIPAddressHint"
+        android:hint="@string/LGXProgramHint"
         android:inputType="textNoSuggestions"
         android:textColor="@android:color/black"
         android:textSize="18sp"
