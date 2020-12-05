@@ -104,7 +104,7 @@
     <EditText
         android:id="@+id/etABtag"
         android:layout_width="0dp"
-        android:layout_height="28dp"
+        android:layout_height="30dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
@@ -144,8 +144,8 @@
 
     <Button
         android:id="@+id/btnABOK"
-        android:layout_width="88dp"
-        android:layout_height="44dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"

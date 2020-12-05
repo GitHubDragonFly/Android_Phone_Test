@@ -190,8 +190,8 @@
 
     <Button
         android:id="@+id/buttonSettingsOK"
-        android:layout_width="88dp"
-        android:layout_height="44dp"
+        android:layout_width="80dp"
+        android:layout_height="40dp"
         android:layout_marginStart="100dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="20dp"
