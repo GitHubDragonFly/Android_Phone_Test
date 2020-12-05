@@ -406,7 +406,7 @@
     <Button
         android:id="@+id/buttonClearTags"
         android:layout_width="82dp"
-        android:layout_height="36dp"
+        android:layout_height="34dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="5dp"
@@ -422,7 +422,7 @@
     <Button
         android:id="@+id/buttonGetCLGXTags"
         android:layout_width="82dp"
-        android:layout_height="36dp"
+        android:layout_height="34dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="5dp"
@@ -439,7 +439,7 @@
     <Button
         android:id="@+id/buttonSettings"
         android:layout_width="82dp"
-        android:layout_height="36dp"
+        android:layout_height="34dp"
         android:layout_marginEnd="2dp"
         android:layout_marginRight="2dp"
         android:layout_marginBottom="5dp"
@@ -471,7 +471,7 @@
     <ToggleButton
         android:id="@+id/toggleAutoRead"
         android:layout_width="82dp"
-        android:layout_height="36dp"
+        android:layout_height="34dp"
         android:layout_marginStart="2dp"
         android:layout_marginLeft="2dp"
         android:layout_marginBottom="5dp"

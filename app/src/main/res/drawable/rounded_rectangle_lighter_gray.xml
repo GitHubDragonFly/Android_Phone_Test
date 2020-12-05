@@ -2,7 +2,7 @@
 <!--  rounded_rectangle_lighter_gray -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle"
-    android:padding="5dp">
+    android:padding="0dp">
 
     <solid android:color="#F0F0F0" />
 
