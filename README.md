@@ -1,7 +1,7 @@
 # PhoneTest
 Android phone app for communication with Allen Bradley programmable logic controllers (PLC).
 
-* Note: This app can be installed on a tablet as well (remove all "android:screenOrientation" entries from AndroidManifest to achieve any orientation on the tablet).
+* Note: This app can be installed on a tablet as well (you could go about removing all "android:screenOrientation" entries from AndroidManifest to achieve any orientation on the tablet otherwise it will be portrait only).
 
 Intended to be used solely as a testing tool (not fit for any production environment).
 
@@ -29,7 +29,7 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
 - It provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
 - "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
-- "Write" buttons are only functional when enabled & tag is present & value is present.
+- "Write" buttons are only functional when enabled AND tag is present AND value to write is present.
 - The Custom String Length has to be specified when the "custom string" data type is selected.
 - The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
 - Modbus functionality of the libplctag library is not included in this app.
