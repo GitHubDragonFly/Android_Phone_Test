@@ -53,8 +53,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     boolean clearingTags;
 
-    EditText etAB1, etAB2, etAB3, etAB4, etAB5, tvAB1, tvAB2, tvAB3, tvAB4, tvAB5;
+    EditText etABx, etAB1, etAB2, etAB3, etAB4, etAB5, tvABx, tvAB1, tvAB2, tvAB3, tvAB4, tvAB5;
     Button btnGetCLGXTags, btnSettings, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
+    TextView lblWriteMessage;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
 
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         etAB4.addTextChangedListener(tcListener);
         etAB5 = findViewById(R.id.etABTag5);
         etAB5.addTextChangedListener(tcListener);
+
+        lblWriteMessage = findViewById(R.id.labelWriteMessage);
     }
 
     @Override
@@ -398,76 +401,67 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch(v.getId()){
             case R.id.btnWriteABTag1:
-                if (TextUtils.isEmpty(etAB1.getText())){
+                if (TextUtils.isEmpty(etAB1.getText()) || TextUtils.isEmpty(tvAB1.getText())){
                     myWriteABTask = null;
                     return;
                 } else {
-                    if (TextUtils.isEmpty(tvAB1.getText())){
-                        myWriteABTask = null;
-                        return;
-                    } else {
-                        params[2] = etAB1.getText().toString();
-                        params[3] = tvAB1.getText().toString();
-                    }
+                    params[2] = etAB1.getText().toString();
+                    etABx = etAB1;
+                    params[3] = tvAB1.getText().toString();
+                    tvABx = tvAB1;
                 }
                 break;
             case R.id.btnWriteABTag2:
-                if (TextUtils.isEmpty(etAB2.getText())){
+                if (TextUtils.isEmpty(etAB2.getText()) || TextUtils.isEmpty(tvAB2.getText())){
                     myWriteABTask = null;
                     return;
                 } else {
-                    if (TextUtils.isEmpty(tvAB2.getText())){
-                        myWriteABTask = null;
-                        return;
-                    } else {
-                        params[2] = etAB2.getText().toString();
-                        params[3] = tvAB2.getText().toString();
-                    }
+                    params[2] = etAB2.getText().toString();
+                    etABx = etAB2;
+                    params[3] = tvAB2.getText().toString();
+                    tvABx = tvAB2;
                 }
                 break;
             case R.id.btnWriteABTag3:
-                if (TextUtils.isEmpty(etAB3.getText())){
+                if (TextUtils.isEmpty(etAB3.getText()) || TextUtils.isEmpty(tvAB3.getText())){
                     myWriteABTask = null;
                     return;
                 } else {
-                    if (TextUtils.isEmpty(tvAB3.getText())){
-                        myWriteABTask = null;
-                        return;
-                    } else {
-                        params[2] = etAB3.getText().toString();
-                        params[3] = tvAB3.getText().toString();
-                    }
+                    params[2] = etAB3.getText().toString();
+                    etABx = etAB3;
+                    params[3] = tvAB3.getText().toString();
+                    tvABx = tvAB3;
                 }
                 break;
             case R.id.btnWriteABTag4:
-                if (TextUtils.isEmpty(etAB4.getText())){
+                if (TextUtils.isEmpty(etAB4.getText()) || TextUtils.isEmpty(tvAB4.getText())){
                     myWriteABTask = null;
                     return;
                 } else {
-                    if (TextUtils.isEmpty(tvAB4.getText())){
-                        myWriteABTask = null;
-                        return;
-                    } else {
-                        params[2] = etAB4.getText().toString();
-                        params[3] = tvAB4.getText().toString();
-                    }
+                    params[2] = etAB4.getText().toString();
+                    etABx = etAB4;
+                    params[3] = tvAB4.getText().toString();
+                    tvABx = tvAB4;
                 }
                 break;
             case R.id.btnWriteABTag5:
-                if (TextUtils.isEmpty(etAB5.getText())){
+                if (TextUtils.isEmpty(etAB5.getText()) || TextUtils.isEmpty(tvAB5.getText())){
                     myWriteABTask = null;
                     return;
                 } else {
-                    if (TextUtils.isEmpty(tvAB5.getText())){
-                        myWriteABTask = null;
-                        return;
-                    } else {
-                        params[2] = etAB5.getText().toString();
-                        params[3] = tvAB5.getText().toString();
-                    }
+                    params[2] = etAB5.getText().toString();
+                    etABx = etAB5;
+                    params[3] = tvAB5.getText().toString();
+                    tvABx = tvAB5;
                 }
                 break;
         }
+
+        // Disable corresponding text boxes
+        etABx.setEnabled(false);
+        tvABx.setEnabled(false);
+        // Set the label indicating write success/failure to "Please Wait..."
+        lblWriteMessage.setText(getResources().getStringArray(R.array.ab_tags_please_wait)[0]);
 
         btnWriteCaller = (Button)v;
         btnWriteCaller.setEnabled(false);
@@ -566,7 +560,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             myWriteABTask = null;
         }
 
-        ((TextView)findViewById(R.id.labelWriteMessage)).setText(value.substring(3));
+        // Enable corresponding text boxes
+        etABx.setEnabled(true);
+        tvABx.setEnabled(true);
+        // Set the label indicating write success/failure
+        lblWriteMessage.setText(value.substring(3));
 
         btnWriteCaller.setEnabled(true);
         btnWriteCaller.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
@@ -600,6 +598,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void UpdateTags(String callerId, String value) {
         ((EditText)findViewById(getResources().getIdentifier(callerId, "id", getPackageName()))).setText(value);
+
+        switch (callerId){
+            case "etABTag1":
+                tvAB1.setText("");
+                break;
+            case "etABTag2":
+                tvAB2.setText("");
+                break;
+            case "etABTag3":
+                tvAB3.setText("");
+                break;
+            case "etABTag4":
+                tvAB4.setText("");
+                break;
+            case "etABTag5":
+                tvAB5.setText("");
+                break;
+        }
+
         callerName = "";
     }
 }
