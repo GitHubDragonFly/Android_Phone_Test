@@ -180,7 +180,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     }
 
                     String tagABString = "protocol=ab_eip&";
-                    tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name + "&elem_type=" + dataType;
+                    tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name;
 
                     tag_id = ABMaster.TagCreate(tagABString, timeout);
 
@@ -210,93 +210,37 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     if (id != null){
                         if (ABMaster.getStatus(id) == 0){
                             ABMaster.read(id, timeout);
-                            tempValue = "";
+                            if (ABMaster.getStatus(id) == 0){
+                                tempValue = "";
 
-                            if (bitIndex[i] > -1){
-                                if (dType[i].equals("custom string") || (dType[i].equals("string") && cpu.equals("controllogix"))) {
-                                    try {
-                                        tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i] + 3)}, "UTF-8");
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else if (dType[i].equals("string")) {
-                                    if (cpu.equals("micro800")) {
+                                if (bitIndex[i] > -1){
+                                    if (dType[i].equals("custom string") || (dType[i].equals("string") && cpu.equals("controllogix"))) {
                                         try {
-                                            tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i])}, "UTF-8");
+                                            tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i] + 3)}, "UTF-8");
                                         } catch (UnsupportedEncodingException e) {
                                             e.printStackTrace();
                                         }
-                                    } else {
-                                        try {
-                                            int result = bitIndex[i] % 2;
-
-                                            if (result == 0)
+                                    } else if (dType[i].equals("string")) {
+                                        if (cpu.equals("micro800")) {
+                                            try {
                                                 tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i])}, "UTF-8");
-                                            else
-                                                tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i] + 2)}, "UTF-8");
-                                        } catch (UnsupportedEncodingException e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                } else {
-                                    int val = ABMaster.getBit(id, bitIndex[i]);
-
-                                    if (MainActivity.boolDisplay.equals("One : Zero")){
-                                        tempValue = String.valueOf(val);
-                                    } else if (MainActivity.boolDisplay.equals("On : Off")){
-                                        if (val == 1){
-                                            tempValue = "On";
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
                                         } else {
-                                            tempValue = "Off";
+                                            try {
+                                                int result = bitIndex[i] % 2;
+
+                                                if (result == 0)
+                                                    tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i])}, "UTF-8");
+                                                else
+                                                    tempValue = new String(new byte[]{(byte) ABMaster.getUInt8(id, bitIndex[i] + 2)}, "UTF-8");
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
                                         }
                                     } else {
-                                        if (val == 1){
-                                            tempValue = "True";
-                                        } else {
-                                            tempValue = "False";
-                                        }
-                                    }
-                                }
-                            } else {
-                                switch (dType[i]){
-                                    case "int8":
-                                        tempValue = String.valueOf(ABMaster.getInt8(id,0));
-                                        break;
-                                    case "uint8":
-                                        tempValue = String.valueOf(ABMaster.getUInt8(id,0));
-                                        break;
-                                    case "int16":
-                                        tempValue = String.valueOf(ABMaster.getInt16(id,0));
-                                        break;
-                                    case "uint16":
-                                        tempValue = String.valueOf(ABMaster.getUInt16(id,0));
-                                        break;
-                                    case "int32":
-                                        tempValue = String.valueOf(ABMaster.getInt32(id,0));
-                                        break;
-                                    case "uint32":
-                                        tempValue = String.valueOf(ABMaster.getUInt32(id,0));
-                                        break;
-                                    case "int64":
-                                        tempValue = String.valueOf(ABMaster.getInt64(id,0));
-                                        break;
-                                    case "uint64":
-                                        tempValue = String.valueOf(ABMaster.getUInt64(id,0));
-                                        break;
-                                    case "int128":
-                                        tempValue = String.valueOf(ABMaster.getInt128(id, 0));
-                                        break;
-                                    case "uint128":
-                                        tempValue = String.valueOf(ABMaster.getUInt128(id, 0));
-                                        break;
-                                    case "float32":
-                                        tempValue = String.valueOf(ABMaster.getFloat32(id,0));
-                                        break;
-                                    case "float64":
-                                        tempValue = String.valueOf(ABMaster.getFloat64(id,0));
-                                        break;
-                                    case "bool":
-                                        int val = ABMaster.getBit(id,0);
+                                        int val = ABMaster.getBit(id, bitIndex[i]);
 
                                         if (MainActivity.boolDisplay.equals("One : Zero")){
                                             tempValue = String.valueOf(val);
@@ -313,258 +257,338 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                                 tempValue = "False";
                                             }
                                         }
-                                        break;
-                                    case "custom string":
-                                        //Actual String Length from first 4 bytes
-                                        int actStrLgth = ABMaster.getInt32(id, 0);
+                                    }
+                                } else {
+                                    switch (dType[i]){
+                                        case "int8":
+                                            tempValue = String.valueOf(ABMaster.getInt8(id,0));
+                                            break;
+                                        case "uint8":
+                                            tempValue = String.valueOf(ABMaster.getUInt8(id,0));
+                                            break;
+                                        case "int16":
+                                            tempValue = String.valueOf(ABMaster.getInt16(id,0));
+                                            break;
+                                        case "uint16":
+                                            tempValue = String.valueOf(ABMaster.getUInt16(id,0));
+                                            break;
+                                        case "int32":
+                                            tempValue = String.valueOf(ABMaster.getInt32(id,0));
+                                            break;
+                                        case "uint32":
+                                            tempValue = String.valueOf(ABMaster.getUInt32(id,0));
+                                            break;
+                                        case "int64":
+                                            tempValue = String.valueOf(ABMaster.getInt64(id,0));
+                                            break;
+                                        case "uint64":
+                                            tempValue = String.valueOf(ABMaster.getUInt64(id,0));
+                                            break;
+                                        case "int128":
+                                            tempValue = String.valueOf(ABMaster.getInt128(id, 0));
+                                            break;
+                                        case "uint128":
+                                            tempValue = String.valueOf(ABMaster.getUInt128(id, 0));
+                                            break;
+                                        case "float32":
+                                            tempValue = String.valueOf(ABMaster.getFloat32(id,0));
+                                            break;
+                                        case "float64":
+                                            tempValue = String.valueOf(ABMaster.getFloat64(id,0));
+                                            break;
+                                        case "bool":
+                                            int val = ABMaster.getBit(id,0);
 
-                                        byte[] csvalBytes = new byte[actStrLgth];
-
-                                        for (int k = 0; k < actStrLgth; k++){
-                                            csvalBytes[k] = (byte)ABMaster.getUInt8(id, k + 4);
-                                        }
-
-                                        try {
-                                            tempValue = new String(csvalBytes, "UTF-8");
-                                        } catch (UnsupportedEncodingException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        break;
-                                    case "string":
-                                        byte[] valBytes;
-
-                                        if (cpu.equals("micro800")){
-                                            //String Length from first byte
-                                            short strLgth = ABMaster.getUInt8(id, 0);
-
-                                            valBytes = new byte[strLgth];
-
-                                            for (int k = 0; k < strLgth; k++){
-                                                valBytes[k] = (byte)ABMaster.getUInt8(id, k + 1);
+                                            if (MainActivity.boolDisplay.equals("One : Zero")){
+                                                tempValue = String.valueOf(val);
+                                            } else if (MainActivity.boolDisplay.equals("On : Off")){
+                                                if (val == 1){
+                                                    tempValue = "On";
+                                                } else {
+                                                    tempValue = "Off";
+                                                }
+                                            } else {
+                                                if (val == 1){
+                                                    tempValue = "True";
+                                                } else {
+                                                    tempValue = "False";
+                                                }
                                             }
-                                        } else if (cpu.equals("controllogix")){
-                                            //String Length from first 4 bytes
-                                            int strLgth = ABMaster.getInt32(id, 0);
+                                            break;
+                                        case "custom string":
+                                            //Actual String Length from first 4 bytes
+                                            int actStrLgth = ABMaster.getInt32(id, 0);
 
-                                            valBytes = new byte[strLgth];
+                                            byte[] csvalBytes = new byte[actStrLgth];
 
-                                            for (int k = 0; k < strLgth; k++){
-                                                valBytes[k] = (byte)ABMaster.getUInt8(id, k + 4);
+                                            for (int k = 0; k < actStrLgth; k++){
+                                                csvalBytes[k] = (byte)ABMaster.getUInt8(id, k + 4);
                                             }
-                                        } else {
-                                            //String Length from first 2 bytes
-                                            int strLgth = ABMaster.getInt16(id, 0);
 
-                                            int result = strLgth % 2;
+                                            try {
+                                                tempValue = new String(csvalBytes, "UTF-8");
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
 
-                                            if (result == 0)
+                                            break;
+                                        case "string":
+                                            byte[] valBytes;
+
+                                            if (cpu.equals("micro800")){
+                                                //String Length from first byte
+                                                short strLgth = ABMaster.getUInt8(id, 0);
+
                                                 valBytes = new byte[strLgth];
-                                            else
-                                                valBytes = new byte[strLgth + 1];
 
-                                            for (int k = 0; k < valBytes.length; k += 2) // Reverse bytes
-                                            {
-                                                valBytes[k + 1] = (byte)ABMaster.getUInt8(id, k + 2);
-                                                valBytes[k] = (byte)ABMaster.getUInt8(id, k + 3);
-                                            }
-                                        }
+                                                for (int k = 0; k < strLgth; k++){
+                                                    valBytes[k] = (byte)ABMaster.getUInt8(id, k + 1);
+                                                }
+                                            } else if (cpu.equals("controllogix")){
+                                                //String Length from first 4 bytes
+                                                int strLgth = ABMaster.getInt32(id, 0);
 
-                                        try {
-                                            tempValue = new String(valBytes, "UTF-8");
-                                        } catch (UnsupportedEncodingException e) {
-                                            e.printStackTrace();
-                                        }
+                                                valBytes = new byte[strLgth];
 
-                                        break;
-                                    case "timer":
-                                        if (cpu.equals("controllogix") || cpu.equals("micro800"))
-                                        {
-                                            StringBuilder tempValueBuilder = new StringBuilder();
-                                            for (int k = 0; k < 3; k++)
-                                            {
-                                                if (k == 2)
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
+                                                for (int k = 0; k < strLgth; k++){
+                                                    valBytes[k] = (byte)ABMaster.getUInt8(id, k + 4);
+                                                }
+                                            } else {
+                                                //String Length from first 2 bytes
+                                                int strLgth = ABMaster.getInt16(id, 0);
+
+                                                int result = strLgth % 2;
+
+                                                if (result == 0)
+                                                    valBytes = new byte[strLgth];
                                                 else
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
-                                            }
-                                            tempValue = tempValueBuilder.toString();
-                                        }
-                                        else
-                                        {
-                                            if (name.contains("."))
-                                            {
-                                                if (name.substring(name.indexOf('.') + 1).equals("EN"))
+                                                    valBytes = new byte[strLgth + 1];
+
+                                                for (int k = 0; k < valBytes.length; k += 2) // Reverse bytes
                                                 {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("TT"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    valBytes[k + 1] = (byte)ABMaster.getUInt8(id, k + 2);
+                                                    valBytes[k] = (byte)ABMaster.getUInt8(id, k + 3);
                                                 }
                                             }
-                                            else
+
+                                            try {
+                                                tempValue = new String(valBytes, "UTF-8");
+                                            } catch (UnsupportedEncodingException e) {
+                                                e.printStackTrace();
+                                            }
+
+                                            break;
+                                        case "timer":
+                                            if (cpu.equals("controllogix") || cpu.equals("micro800"))
                                             {
                                                 StringBuilder tempValueBuilder = new StringBuilder();
                                                 for (int k = 0; k < 3; k++)
                                                 {
                                                     if (k == 2)
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
                                                     else
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
                                                 }
                                                 tempValue = tempValueBuilder.toString();
                                             }
-                                        }
-                                        break;
-                                    case "counter":
-                                        if (cpu.equals("controllogix") || cpu.equals("micro800"))
-                                        {
-                                            StringBuilder tempValueBuilder = new StringBuilder();
-                                            for (int k = 0; k < 3; k++)
-                                            {
-                                                if (k == 2)
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
-                                                else
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
-                                            }
-                                            tempValue = tempValueBuilder.toString();
-                                        }
-                                        else
-                                        {
-                                            if (name.contains("."))
-                                            {
-                                                if (name.substring(name.indexOf('.') + 1).equals("CU"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("CD"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("OV"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 12));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("UN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 11));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("UA"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 10));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 4));
-                                                }
-                                            }
                                             else
+                                            {
+                                                if (name.contains("."))
+                                                {
+                                                    if (name.substring(name.indexOf('.') + 1).equals("EN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("TT"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    StringBuilder tempValueBuilder = new StringBuilder();
+                                                    for (int k = 0; k < 3; k++)
+                                                    {
+                                                        if (k == 2)
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        else
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                    }
+                                                    tempValue = tempValueBuilder.toString();
+                                                }
+                                            }
+                                            break;
+                                        case "counter":
+                                            if (cpu.equals("controllogix") || cpu.equals("micro800"))
                                             {
                                                 StringBuilder tempValueBuilder = new StringBuilder();
                                                 for (int k = 0; k < 3; k++)
                                                 {
                                                     if (k == 2)
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
                                                     else
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
                                                 }
                                                 tempValue = tempValueBuilder.toString();
                                             }
-                                        }
-                                        break;
-                                    case "control":
-                                        if (cpu.equals("controllogix") || cpu.equals("micro800"))
-                                        {
-                                            StringBuilder tempValueBuilder = new StringBuilder();
-                                            for (int k = 0; k < 3; k++)
-                                            {
-                                                if (k == 2)
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
-                                                else
-                                                    tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
-                                            }
-                                            tempValue = tempValueBuilder.toString();
-                                        }
-                                        else
-                                        {
-                                            if (name.contains("."))
-                                            {
-                                                if (name.substring(name.indexOf('.') + 1).equals("EN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("EU"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("EM"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 12));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("ER"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 11));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("UL"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 10));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("IN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 9));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("FD"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getBit(id, 8));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("LEN"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                }
-                                                else if (name.substring(name.indexOf('.') + 1).equals("POS"))
-                                                {
-                                                    tempValue = String.valueOf(ABMaster.getInt16(id, 4));
-                                                }
-                                            }
                                             else
+                                            {
+                                                if (name.contains("."))
+                                                {
+                                                    if (name.substring(name.indexOf('.') + 1).equals("CU"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("CD"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("OV"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 12));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("UN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 11));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("UA"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 10));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    StringBuilder tempValueBuilder = new StringBuilder();
+                                                    for (int k = 0; k < 3; k++)
+                                                    {
+                                                        if (k == 2)
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        else
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                    }
+                                                    tempValue = tempValueBuilder.toString();
+                                                }
+                                            }
+                                            break;
+                                        case "control":
+                                            if (cpu.equals("controllogix") || cpu.equals("micro800"))
                                             {
                                                 StringBuilder tempValueBuilder = new StringBuilder();
                                                 for (int k = 0; k < 3; k++)
                                                 {
                                                     if (k == 2)
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4));
                                                     else
-                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                        tempValueBuilder.append(ABMaster.getInt32(id, k * 4)).append(", ");
                                                 }
                                                 tempValue = tempValueBuilder.toString();
                                             }
-                                        }
-                                        break;
+                                            else
+                                            {
+                                                if (name.contains("."))
+                                                {
+                                                    if (name.substring(name.indexOf('.') + 1).equals("EN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("EU"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("EM"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 12));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("ER"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 11));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("UL"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 10));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("IN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 9));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("FD"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getBit(id, 8));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("LEN"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                    }
+                                                    else if (name.substring(name.indexOf('.') + 1).equals("POS"))
+                                                    {
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    StringBuilder tempValueBuilder = new StringBuilder();
+                                                    for (int k = 0; k < 3; k++)
+                                                    {
+                                                        if (k == 2)
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                        else
+                                                            tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                    }
+                                                    tempValue = tempValueBuilder.toString();
+                                                }
+                                            }
+                                            break;
+                                    }
+                                }
+                            } else {
+                                if (ABMaster.getStatus(id) == 1)
+                                    tempValue = "pending";
+                                else
+                                    tempValue = "err " + ABMaster.getStatus(id);
+
+                                ABMaster.close(id);
+                                dict.remove(tags[i]);
+
+                                tag_id = ABMaster.TagCreate(tags[i], timeout);
+
+                                while (ABMaster.getStatus(tag_id) == 1){
+                                    try {
+                                        Thread.sleep(10);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                if (ABMaster.getStatus(tag_id) == 0){
+                                    dict.put(tags[i], tag_id);
                                 }
                             }
                         } else {

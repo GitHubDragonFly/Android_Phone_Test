@@ -9,6 +9,39 @@
     tools:context=".SettingsActivity">
 
     <EditText
+        android:id="@+id/etABGaugeAddress"
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_rectangle_light_gray"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/gaugeHint"
+        android:inputType="textNoSuggestions"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etABTimeout" />
+
+    <TextView
+        android:id="@+id/labelGaugeAddress"
+        android:layout_width="110dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical|end"
+        android:text="@string/labelGaugeAddress"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/etABGaugeAddress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelTimeout" />
+
+    <EditText
         android:id="@+id/etABProgram"
         android:layout_width="200dp"
         android:layout_height="35dp"
@@ -123,22 +156,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/labelProgram" />
 
-    <TextView
-        android:id="@+id/labelBoolDisplay"
-        android:layout_width="110dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:gravity="center_horizontal|center_vertical|end"
-        android:text="@string/labelBoolDisplay"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerBooleanDisplay"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/labelTimeout" />
-
     <EditText
         android:id="@+id/etABTimeout"
         android:layout_width="200dp"
@@ -170,7 +187,24 @@
         android:gravity="center_horizontal|center_vertical"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etABTimeout" />
+        app:layout_constraintTop_toBottomOf="@+id/etABGaugeAddress" />
+
+    <TextView
+        android:id="@+id/labelBoolDisplay"
+        android:layout_width="110dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center_horizontal|center_vertical|end"
+        android:text="@string/labelBoolDisplay"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerBooleanDisplay"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/labelGaugeAddress" />
 
     <TextView
         android:id="@+id/labelPath"

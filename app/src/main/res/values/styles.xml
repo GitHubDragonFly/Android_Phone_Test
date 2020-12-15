@@ -15,4 +15,10 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <!-- Gauge window theme. -->
+    <style name="AppTheme.GaugeTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowCloseOnTouchOutside">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
 </resources>

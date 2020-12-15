@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<ABAddressInfo> ABAddressList = new ArrayList<>();
 
-    public static String callerName = "", abTimeout = "10000", boolDisplay = "True : False";
+    public static String callerName = "", abTimeout = "10000", abGaugeAddress = "", boolDisplay = "True : False";
     public static String abCPU = "controllogix", abIPAddress = "192.168.1.21", abPath = "1,3", abProgram = "MainProgram";
 
     boolean clearingTags;
 
     EditText etABx, etAB1, etAB2, etAB3, etAB4, etAB5, tvABx, tvAB1, tvAB2, tvAB3, tvAB4, tvAB5;
-    Button btnGetCLGXTags, btnSettings, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
+    Button btnGetCLGXTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
     TextView lblWriteMessage;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         btnGetCLGXTags = findViewById(R.id.buttonGetCLGXTags);
         btnSettings = findViewById(R.id.buttonSettings);
+        btnGauge = findViewById(R.id.buttonGauge);
         tbtnAutoRead = findViewById(R.id.toggleAutoRead);
 
         tvAB1 = findViewById(R.id.tvABTagValue1);
@@ -337,6 +338,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tbtnAutoRead.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
             btnSettings.setEnabled(false);
             btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            btnGauge.setEnabled(false);
+            btnGauge.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
 
         } else {
             if (myReadABTask != null){
@@ -359,6 +362,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tbtnAutoRead.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
             btnSettings.setEnabled(true);
             btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
+            btnGauge.setEnabled(true);
+            btnGauge.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
         }
     }
 
@@ -525,6 +530,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
     }
 
+    public void sendMessageGauge(View v)
+    {
+        Intent intent = new Intent(MainActivity.this, GaugeActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     public void UpdateABUI(String callerID, String value) {
         TextView tv = findViewById(getResources().getIdentifier(callerID, "id", getPackageName()));
@@ -579,8 +590,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             abProgram = values[1];
             abIPAddress = values[2];
             abPath = values[3];
-            abTimeout = values[4];
-            boolDisplay = values[5];
+            abGaugeAddress = values[4];
+            abTimeout = values[5];
+            boolDisplay = values[6];
 
             if (abCPU.equals("controllogix")){
                 btnGetCLGXTags.setEnabled(true);

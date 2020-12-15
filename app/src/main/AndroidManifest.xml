@@ -38,6 +38,13 @@
             android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="stateVisible|adjustPan|adjustResize">
         </activity>
+
+        <activity
+            android:name=".GaugeActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.GaugeTheme"
+            android:screenOrientation="sensorPortrait">
+        </activity>
     </application>
 
 </manifest>

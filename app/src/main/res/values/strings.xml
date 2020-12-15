@@ -2,9 +2,13 @@
     <string name="app_name">AB Master</string>
 
     <string name="btnSettings">Settings</string>
+    <string name="btnGaugeDemo">Gauge Demo</string>
+    <string name="btnONOFF">LED On/Off</string>
+    <string name="btnBlink">LED Blink</string>
     <string name="btnAutoOFF">Auto OFF</string>
     <string name="btnAutoON">Auto ON</string>
     <string name="btnOK">OK</string>
+    <string name="btnGauge">Gauge</string>
     <string name="btnGetTags">Get Tags</string>
     <string name="btnWrite">Write</string>
     <string name="btnClearABTags">Clear</string>
@@ -17,6 +21,7 @@
     <string name="labelABPLCCPU">PLC / CPU</string>
     <string name="labelABIPAddress">IP Address</string>
     <string name="labelABPath">Path</string>
+    <string name="labelGaugeAddress">Gauge Tag</string>
     <string name="labelTimeout">Timeout</string>
     <string name="labelBoolDisplay">Bool Display</string>
     <string name="labelLGXProgram">Program</string>
@@ -24,6 +29,7 @@
     <string name="LGXIPAddressHint">IP Address</string>
     <string name="LGXPathHint">CSV</string>
     <string name="tagHint">Tag</string>
+    <string name="gaugeHint">float32</string>
     <string name="valueHint">Read / Write Value</string>
     <string name="timeoutHint">Positive Number</string>
 

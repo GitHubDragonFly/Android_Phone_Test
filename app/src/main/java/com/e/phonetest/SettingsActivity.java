@@ -14,7 +14,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
     SetPLCParameters setParameters = MainActivity.setPLCParameters;
 
     Spinner spinABCPU, spinBooleanDisplay;
-    EditText etABIP, etABProgram, etABPath, etABTimeout;
+    EditText etABIP, etABProgram, etABPath, etABGaugeAddress, etABTimeout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +32,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         etABIP = findViewById(R.id.etABIPAddress);
         etABProgram = findViewById(R.id.etABProgram);
         etABPath = findViewById(R.id.etABPath);
+        etABGaugeAddress = findViewById(R.id.etABGaugeAddress);
         etABTimeout = findViewById(R.id.etABTimeout);
 
         //Set current values to initial screen
@@ -46,6 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         etABIP.setText(MainActivity.abIPAddress);
         etABProgram.setText(MainActivity.abProgram);
         etABPath.setText(MainActivity.abPath);
+        etABGaugeAddress.setText(MainActivity.abGaugeAddress);
         etABTimeout.setText(MainActivity.abTimeout);
 
         for (int i = 0; i < spinBooleanDisplay.getCount(); i++){
@@ -107,8 +109,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
         values[1] = etABProgram.getText().toString();
         values[2] = etABIP.getText().toString();
         values[3] = etABPath.getText().toString();
-        values[4] = etABTimeout.getText().toString();
-        values[5] = spinBooleanDisplay.getSelectedItem().toString();
+        values[4] = etABGaugeAddress.getText().toString();
+        values[5] = etABTimeout.getText().toString();
+        values[6] = spinBooleanDisplay.getSelectedItem().toString();
 
         setParameters.UpdatePLCParameters(values);
 

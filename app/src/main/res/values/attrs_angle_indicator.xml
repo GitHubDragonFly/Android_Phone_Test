@@ -1,0 +1,22 @@
+<resources>
+    <declare-styleable name="AngleIndicator">
+        <attr name="showAngleArc" format="boolean" />
+        <attr name="showAnglePie" format="boolean" />
+        <attr name="showDirection" format="boolean" />
+        <attr name="showZeroLine" format="boolean" />
+        <attr name="zeroLineWidth" format="float" />
+        <attr name="currentValue" format="float" />
+        <attr name="circleLightColorRatio" format="float" />
+        <attr name="circleDarkColorRatio" format="float" />
+        <attr name="angleArcPieColor" format="color" />
+        <attr name="arrowColor" format="color" />
+        <attr name="circleColor" format="color" />
+        <attr name="zeroLineColor" format="color" />
+        <attr name="zeroLinePosition" format="enum">
+            <enum name="East" value="0"/>
+            <enum name="North" value="90"/>
+            <enum name="West" value="180"/>
+            <enum name="South" value="270"/>
+        </attr>
+    </declare-styleable>
+</resources>

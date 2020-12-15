@@ -8,6 +8,22 @@
     tools:context=".MainActivity">
 
     <Button
+        android:id="@+id/buttonGauge"
+        android:layout_width="82dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginBottom="5dp"
+        android:background="@android:drawable/button_onoff_indicator_on"
+        android:onClick="sendMessageGauge"
+        android:text="@string/btnGauge"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/btnWriteABTag5"
         android:layout_width="82dp"
         android:layout_height="32dp"
@@ -422,9 +438,10 @@
     <Button
         android:id="@+id/buttonGetCLGXTags"
         android:layout_width="82dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@android:drawable/button_onoff_indicator_on"
         android:enabled="true"
@@ -433,8 +450,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@android:color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/etABTag1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCLGXTags" />
 
     <Button
         android:id="@+id/buttonSettings"
@@ -482,7 +500,7 @@
         android:textOff="@string/btnAutoOFF"
         android:textOn="@string/btnAutoON"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/buttonGetCLGXTags" />
+        app:layout_constraintStart_toEndOf="@+id/buttonGauge" />
 
     <EditText
         android:id="@+id/etABTag1"
@@ -490,7 +508,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="@drawable/rounded_rectangle_lighter_gray"
@@ -520,12 +538,15 @@
     <TextView
         android:id="@+id/labelWriteMessage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
         android:textColor="@android:color/holo_blue_dark"
         android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/etABTag1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerCLGXTags" />
 

@@ -1,0 +1,10 @@
+<resources>
+    <declare-styleable name="LEDLight">
+        <attr name="led_Color" format="color" />
+        <attr name="led_ON" format="boolean" />
+        <attr name="led_Blink" format="boolean" />
+        <attr name="led_Blink_Interval" format="integer" />
+        <attr name="led_LightColorRatio" format="float" />
+        <attr name="led_DarkColorRatio" format="float" />
+    </declare-styleable>
+</resources>
