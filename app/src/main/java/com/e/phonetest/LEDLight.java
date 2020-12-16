@@ -157,13 +157,13 @@ public class LEDLight extends View {
 
         final Canvas canvas = new Canvas(bmp);
 
-        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.WHITE, mLED_LightColorRatio), Shader.TileMode.MIRROR));
-        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.BLACK, mLED_DarkColorRatio), Shader.TileMode.MIRROR));
-
         canvas.drawBitmap(bmp, 0, 0, bmpPaint);
     }
 
     private void drawLightLED(Canvas canvas){
+        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.WHITE, mLED_LightColorRatio), Shader.TileMode.MIRROR));
+        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mLED_Color, mLED_Color, Shader.TileMode.MIRROR));
+
         canvas.drawOval(rect1, paintDarkCircle);
         canvas.drawOval(rect1, paintBorder);
 
@@ -172,6 +172,9 @@ public class LEDLight extends View {
     }
 
     private void drawDarkLED(Canvas canvas){
+        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.blendARGB(Color.WHITE, mLED_Color, mLED_LightColorRatio), Shader.TileMode.MIRROR));
+        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.BLACK, mLED_DarkColorRatio), Shader.TileMode.MIRROR));
+
         canvas.drawOval(rect1, paintLightCircle);
         canvas.drawOval(rect1, paintBorder);
 
