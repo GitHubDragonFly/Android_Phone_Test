@@ -150,7 +150,7 @@ public class LEDLight extends View {
             bmp.recycle();
         }
 
-        rect1 = new RectF(2f, 2f,  getWidth() - 2f, getHeight() - 2f);
+        rect1 = new RectF(0f, 0f,  getWidth(), getHeight());
         rect2 = new RectF(6f, 6f, getWidth() - 6f, getHeight() - 6f);
 
         bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);

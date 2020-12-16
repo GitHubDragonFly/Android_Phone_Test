@@ -108,11 +108,11 @@ public class AngleIndicator extends View {
 
         paintAnglePie = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintAnglePie.setStyle(Paint.Style.FILL_AND_STROKE);
-        paintAnglePie.setStrokeWidth(10f);
+        paintAnglePie.setStrokeWidth(12f);
 
         paintAngleArc = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintAngleArc.setStyle(Paint.Style.STROKE);
-        paintAngleArc.setStrokeWidth(10f);
+        paintAngleArc.setStrokeWidth(12f);
 
         lgBrush = new Paint(Paint.ANTI_ALIAS_FLAG);
         lgBrush.setStyle(Paint.Style.FILL);
@@ -152,8 +152,8 @@ public class AngleIndicator extends View {
             bmp.recycle();
         }
 
-        rect1 = new RectF(2f, 2f,  getWidth() - 2f, getHeight() - 2f);
-        rectArc = new RectF(8f, 8f,  getWidth() - 8f, getHeight() - 8f);
+        rect1 = new RectF(0f, 0f,  getWidth(), getHeight());
+        rectArc = new RectF(6f, 6f,  getWidth() - 6f, getHeight() - 6f);
         rect2 = new RectF(12f, 12f, getWidth() - 12f, getHeight() - 12f);
         RectF rect3 = new RectF(getWidth() / 2f - getWidth() * 0.3f / 7f, getHeight() * 3.1f / 7f, getWidth() / 2f + getWidth() * 0.4f / 7f, getHeight() * 3.9f / 7f);
 
@@ -269,10 +269,10 @@ public class AngleIndicator extends View {
     private void drawText(Canvas canvas){
         String mDirection = "";
 
-        if (mShowDirection){
-            float value = mCurrentValue + mZeroPosition;
-            float modValue = Math.abs(value % 360);
+        float value = mCurrentValue + mZeroPosition;
+        float modValue = Math.abs(value % 360);
 
+        if (mShowDirection){
             if ((modValue >= 337.5 && modValue <= 360) || (modValue >= 0 && modValue < 22.5))
                 mDirection = " E";
 			else if (modValue >= 22.5 && modValue < 67.5)
@@ -323,7 +323,7 @@ public class AngleIndicator extends View {
             }
         }
 
-        String tempText = String.format(Locale.ENGLISH , "%.1f", mCurrentValue % 360) + DEGREE_SIGN + mDirection;
+        String tempText = String.format(Locale.ENGLISH , "%.1f", modValue) + DEGREE_SIGN + mDirection;
         float tempTextLength = textPaint.measureText(tempText);
 
         if (mZeroPosition == 0 || mZeroPosition == 90 || mZeroPosition == 180)
