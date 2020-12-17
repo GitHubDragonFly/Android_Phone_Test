@@ -2,6 +2,7 @@
     <declare-styleable name="AngleIndicator">
         <attr name="showAngleArc" format="boolean" />
         <attr name="showAnglePie" format="boolean" />
+        <attr name="showDegreeSign" format="boolean" />
         <attr name="showDirection" format="boolean" />
         <attr name="showZeroLine" format="boolean" />
         <attr name="zeroLineWidth" format="float" />

@@ -53,7 +53,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:showAngleArc="true"
-        app:showDirection="true"
         app:showZeroLine="true"
         app:zeroLineColor="#000000"
         app:zeroLinePosition="East" />

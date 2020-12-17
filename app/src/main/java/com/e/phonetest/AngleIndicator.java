@@ -31,10 +31,11 @@ public class AngleIndicator extends View {
     public static final String DEGREE_SIGN = "°";
     public static final boolean SHOW_ANGLE_ARC = false;
     public static final boolean SHOW_ANGLE_PIE = false;
+    public static final boolean SHOW_DEGREE_SIGN = false;
     public static final boolean SHOW_DIRECTION = false;
     public static final boolean SHOW_ZERO_LINE = false;
 
-    private boolean mShowAngleArc, mShowAnglePie, mShowDirection, mShowZeroLine;
+    private boolean mShowAngleArc, mShowAnglePie, mShowDegreeSign, mShowDirection, mShowZeroLine;
     private int mAngleArcPieColor, mArrowColor, mCircleColor, mZeroLineColor, mZeroPosition;
     private float mCurrentValue, mZeroLineWidth, mCircleLightColorRatio, mCircleDarkColorRatio;
     Path polygonPath = new Path(), arcPath = new Path();
@@ -78,6 +79,7 @@ public class AngleIndicator extends View {
         mZeroLineColor = typedArray.getColor(R.styleable.AngleIndicator_zeroLineColor, ZERO_LINE_COLOR);
         mShowAngleArc = typedArray.getBoolean(R.styleable.AngleIndicator_showAngleArc, SHOW_ANGLE_ARC);
         mShowAnglePie = typedArray.getBoolean(R.styleable.AngleIndicator_showAnglePie, SHOW_ANGLE_PIE);
+        mShowDegreeSign = typedArray.getBoolean(R.styleable.AngleIndicator_showDegreeSign, SHOW_DEGREE_SIGN);
         mShowDirection = typedArray.getBoolean(R.styleable.AngleIndicator_showDirection, SHOW_DIRECTION);
         mShowZeroLine = typedArray.getBoolean(R.styleable.AngleIndicator_showZeroLine, SHOW_ZERO_LINE);
         mZeroLineWidth = typedArray.getFloat(R.styleable.AngleIndicator_zeroLineWidth, ZERO_LINE_WIDTH);
@@ -267,7 +269,10 @@ public class AngleIndicator extends View {
     }
 
     private void drawText(Canvas canvas){
-        String mDirection = "";
+        String mDegreeSign = "", mDirection = "";
+
+        if (mShowDegreeSign)
+            mDegreeSign = DEGREE_SIGN;
 
         float value = mCurrentValue + mZeroPosition;
         float modValue = Math.abs(value % 360);
@@ -323,7 +328,7 @@ public class AngleIndicator extends View {
             }
         }
 
-        String tempText = String.format(Locale.ENGLISH , "%.1f", modValue) + DEGREE_SIGN + mDirection;
+        String tempText = String.format(Locale.ENGLISH , "%.1f", modValue) + mDegreeSign + mDirection;
         float tempTextLength = textPaint.measureText(tempText);
 
         if (mZeroPosition == 0 || mZeroPosition == 90 || mZeroPosition == 180)
