@@ -32,7 +32,7 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 - The "Write" buttons are only functional when enabled AND tag is present AND value to write is present.
 - The Custom String Length has to be specified when the "custom string" data type is selected.
 - The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
-- The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for the gauge itself (which should be of the float32 type).
+- The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for the gauge itself (supports multiple data types).
 - Modbus functionality of the libplctag library is not included in this app.
 
 There might be bugs in the app. Not everything could be tested by me, since I don't have access to all the different PLCs supported by the libplctag library.

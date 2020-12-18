@@ -19,8 +19,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     AsyncGaugeTask myGaugeTask = null;
 
     TextView tvGaugeAddress;
-    String txt = MainActivity.abGaugeAddress;
-    String[] params = new String[3];
+    String txt = "";
+    String[] params = new String[4];
     AngleIndicator ai1;
     LEDLight led1;
 
@@ -50,7 +50,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         textColor = tvGaugeAddress.getTextColors();
 
         if (MainActivity.abGaugeAddress.equals("")){
-            txt = "Gauge PLC Address not set!";
+            txt = "";
             tvGaugeAddress.setText(txt);
         }
         else {
@@ -78,8 +78,9 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
                 }
 
                 params[0] = "gateway=" + ipaddress + "&path=" + path + "&cpu=" + cpu;
-                params[1] = txt;
-                params[2] = timeout;
+                params[1] = txt.substring(0, txt.indexOf(";"));
+                params[2] = txt.substring(txt.indexOf(";") + 2);
+                params[3] = timeout;
 
                 myGaugeTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
             }

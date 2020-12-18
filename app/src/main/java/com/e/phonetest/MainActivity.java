@@ -53,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     boolean clearingTags;
 
-    EditText etABx, etAB1, etAB2, etAB3, etAB4, etAB5, tvABx, tvAB1, tvAB2, tvAB3, tvAB4, tvAB5;
-    Button btnGetCLGXTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4, btnWriteAB5;
+    EditText etABx, etAB1, etAB2, etAB3, etAB4, etABGaugeTag, tvABx, tvAB1, tvAB2, tvAB3, tvAB4;
+    Button btnGetCLGXTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4;
     TextView lblWriteMessage;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tvAB2 = findViewById(R.id.tvABTagValue2);
         tvAB3 = findViewById(R.id.tvABTagValue3);
         tvAB4 = findViewById(R.id.tvABTagValue4);
-        tvAB5 = findViewById(R.id.tvABTagValue5);
 
         textColor = tvAB1.getTextColors();
 
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnWriteAB2 = findViewById(R.id.btnWriteABTag2);
         btnWriteAB3 = findViewById(R.id.btnWriteABTag3);
         btnWriteAB4 = findViewById(R.id.btnWriteABTag4);
-        btnWriteAB5 = findViewById(R.id.btnWriteABTag5);
 
         tcListener = new TextWatcher(){
             @Override
@@ -125,9 +123,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         case "etABTag4":
                             tvAB4.setEnabled(textHasValue);
                             break;
-                        case "etABTag5":
-                            tvAB5.setEnabled(textHasValue);
-                            break;
                     }
 
                     callerName = "";
@@ -147,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         etAB3.addTextChangedListener(tcListener);
         etAB4 = findViewById(R.id.etABTag4);
         etAB4.addTextChangedListener(tcListener);
-        etAB5 = findViewById(R.id.etABTag5);
-        etAB5.addTextChangedListener(tcListener);
+
+        etABGaugeTag = findViewById(R.id.etABGaugeTag);
 
         lblWriteMessage = findViewById(R.id.labelWriteMessage);
     }
@@ -240,8 +235,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
 
             if (TextUtils.isEmpty(etAB1.getText()) && TextUtils.isEmpty(etAB2.getText()) &&
-                    TextUtils.isEmpty(etAB3.getText()) && TextUtils.isEmpty(etAB4.getText()) &&
-                    TextUtils.isEmpty(etAB5.getText())){
+                    TextUtils.isEmpty(etAB3.getText()) && TextUtils.isEmpty(etAB4.getText())){
 
                 tbtnAutoRead.setText(tbtnAutoRead.getTextOff());
                 myReadABTask = null;
@@ -309,16 +303,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABinfo.etABTag = etAB4;
                 ABinfo.etABTagValue = tvAB4;
                 ABinfo.btnWriteAB = btnWriteAB4;
-                ABAddressList.add(ABinfo);
-            }
-
-            if (!TextUtils.isEmpty(etAB5.getText())){
-                plcAddresses.add(etAB5.getText().toString());
-                callerIDs.add("tvABTagValue5");
-                ABAddressInfo ABinfo = new ABAddressInfo();
-                ABinfo.etABTag = etAB5;
-                ABinfo.etABTagValue = tvAB5;
-                ABinfo.btnWriteAB = btnWriteAB5;
                 ABAddressList.add(ABinfo);
             }
 
@@ -449,17 +433,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     tvABx = tvAB4;
                 }
                 break;
-            case R.id.btnWriteABTag5:
-                if (TextUtils.isEmpty(etAB5.getText()) || TextUtils.isEmpty(tvAB5.getText())){
-                    myWriteABTask = null;
-                    return;
-                } else {
-                    params[2] = etAB5.getText().toString();
-                    etABx = etAB5;
-                    params[3] = tvAB5.getText().toString();
-                    tvABx = tvAB5;
-                }
-                break;
         }
 
         // Disable corresponding text boxes
@@ -505,10 +478,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tvAB4.setEnabled(false);
         }
 
-        if (!(etAB5.getInputType() == InputType.TYPE_NULL) && !etAB5.getText().toString().equals("")){
-            etAB5.setText("");
-            tvAB5.setText("");
-            tvAB5.setEnabled(false);
+        if (!(etABGaugeTag.getInputType() == InputType.TYPE_NULL) && !etABGaugeTag.getText().toString().equals("")){
+            etABGaugeTag.setText("");
         }
 
         clearingTags = false;
@@ -532,6 +503,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void sendMessageGauge(View v)
     {
+        abGaugeAddress = etABGaugeTag.getText().toString();
+
         Intent intent = new Intent(MainActivity.this, GaugeActivity.class);
         startActivity(intent);
     }
@@ -590,9 +563,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             abProgram = values[1];
             abIPAddress = values[2];
             abPath = values[3];
-            abGaugeAddress = values[4];
-            abTimeout = values[5];
-            boolDisplay = values[6];
+            abTimeout = values[4];
+            boolDisplay = values[5];
 
             if (abCPU.equals("controllogix")){
                 btnGetCLGXTags.setEnabled(true);
@@ -623,9 +595,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 break;
             case "etABTag4":
                 tvAB4.setText("");
-                break;
-            case "etABTag5":
-                tvAB5.setText("");
                 break;
         }
 
