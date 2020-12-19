@@ -328,7 +328,7 @@ public class AngleIndicator extends View {
             }
         }
 
-        String tempText = String.format(Locale.ENGLISH , "%.1f", modValue) + mDegreeSign + mDirection;
+        String tempText = String.format(Locale.ENGLISH , "%.1f", (value % 360)) + mDegreeSign + mDirection;
         float tempTextLength = textPaint.measureText(tempText);
 
         if (mZeroPosition == 0 || mZeroPosition == 90 || mZeroPosition == 180)

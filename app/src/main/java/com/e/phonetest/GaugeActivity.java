@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallback {
     public static GaugeTaskCallback gaugeTaskCallback;
-
     AsyncGaugeTask myGaugeTask = null;
 
     TextView tvGaugeAddress;
@@ -91,29 +90,33 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     protected void onPause() {
         super.onPause();
 
+        mTimer.cancel();
+
         if (myGaugeTask != null){
             myGaugeTask.cancel(true);
             myGaugeTask = null;
         }
     }
 
-    private final CountDownTimer mTimer = new CountDownTimer(73400, 100) {
-        int elapsedTime = 0;
-        float val1 = 0;
+    private final CountDownTimer mTimer = new CountDownTimer(72000, 100) {
+        float val1 = 1;
 
         @Override
         public void onTick(final long millisUntilFinished) {
-            elapsedTime++;
+            if (val1 == 360 || val1 == -360)
+                val1 = 0;
 
-            if (elapsedTime < 360)
-                ai1.setCurrentValue(val1++);
+            ai1.setCurrentValue(val1);
+
+            if (millisUntilFinished > 36000)
+                val1++;
             else
-                ai1.setCurrentValue(val1--);
+                val1--;
         }
 
         @Override
         public void onFinish() {
-            sendMessageGaugeDemo(btnGaugeDemo);
+            mTimer.start();
         }
     };
 

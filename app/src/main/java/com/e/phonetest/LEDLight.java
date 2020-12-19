@@ -100,7 +100,7 @@ public class LEDLight extends View {
         paintDarkCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintDarkCircle.setStyle(Paint.Style.FILL);
 
-        mTimer = new CountDownTimer(120000, mLED_Blink_Interval) {
+        mTimer = new CountDownTimer(60000, mLED_Blink_Interval) {
 
             @Override
             public void onTick(final long millisUntilFinished) {
@@ -108,7 +108,10 @@ public class LEDLight extends View {
             }
 
             @Override
-            public void onFinish() {}
+            public void onFinish() {
+                if (isLED_Blink())
+                    mTimer.start();
+            }
         };
     }
 
