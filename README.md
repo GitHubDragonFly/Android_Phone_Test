@@ -27,11 +27,11 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 
 # Functionality
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
-- It provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
-- The "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
-- The "Write" buttons are only functional when enabled AND tag is present AND value to write is present.
-- The Custom String Length has to be specified when the "custom string" data type is selected.
 - The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
+- The app provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
+- The "Write" buttons are enabled when the tag is present AND the value to write is present.
+- The "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
+- The Custom String Length has to be specified when the "custom string" data type is selected.
 - The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for the gauge itself (supports multiple data types).
 - Modbus functionality of the libplctag library is not included in this app.
 

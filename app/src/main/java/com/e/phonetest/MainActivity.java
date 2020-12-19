@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         EditText etABTag;
         EditText etABTagValue;
-        Button btnWriteAB;
 
         ABAddressInfo(){}
     }
@@ -61,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     ColorStateList textColor;
     TextWatcher tcListener;
+    View.OnFocusChangeListener ofcl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,13 +87,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnGauge = findViewById(R.id.buttonGauge);
         tbtnAutoRead = findViewById(R.id.toggleAutoRead);
 
-        tvAB1 = findViewById(R.id.tvABTagValue1);
-        tvAB2 = findViewById(R.id.tvABTagValue2);
-        tvAB3 = findViewById(R.id.tvABTagValue3);
-        tvAB4 = findViewById(R.id.tvABTagValue4);
-
-        textColor = tvAB1.getTextColors();
-
         btnWriteAB1 = findViewById(R.id.btnWriteABTag1);
         btnWriteAB2 = findViewById(R.id.btnWriteABTag2);
         btnWriteAB3 = findViewById(R.id.btnWriteABTag3);
@@ -106,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (!clearingTags){
+                if (!clearingTags && !callerName.equals("")){
                     // Enable or disable the Read/Write display boxes
                     boolean textHasValue = !charSequence.toString().equals("");
 
@@ -123,14 +116,48 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         case "etABTag4":
                             tvAB4.setEnabled(textHasValue);
                             break;
+                        case "tvABTagValue1":
+                            btnWriteAB1.setEnabled(textHasValue);
+                            if (textHasValue)
+                                btnWriteAB1.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_on));
+                            else
+                                btnWriteAB1.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_off));
+                            break;
+                        case "tvABTagValue2":
+                            btnWriteAB2.setEnabled(textHasValue);
+                            if (textHasValue)
+                                btnWriteAB2.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_on));
+                            else
+                                btnWriteAB2.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_off));
+                            break;
+                        case "tvABTagValue3":
+                            btnWriteAB3.setEnabled(textHasValue);
+                            if (textHasValue)
+                                btnWriteAB3.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_on));
+                            else
+                                btnWriteAB3.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_off));
+                            break;
+                        case "tvABTagValue4":
+                            btnWriteAB4.setEnabled(textHasValue);
+                            if (textHasValue)
+                                btnWriteAB4.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_on));
+                            else
+                                btnWriteAB4.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_off));
+                            break;
                     }
-
-                    callerName = "";
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        };
+
+        ofcl = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus)
+                    callerName = getResources().getResourceEntryName(view.getId());
             }
         };
 
@@ -142,6 +169,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         etAB3.addTextChangedListener(tcListener);
         etAB4 = findViewById(R.id.etABTag4);
         etAB4.addTextChangedListener(tcListener);
+
+        tvAB1 = findViewById(R.id.tvABTagValue1);
+        tvAB1.setOnFocusChangeListener(ofcl);
+        tvAB1.addTextChangedListener(tcListener);
+        tvAB2 = findViewById(R.id.tvABTagValue2);
+        tvAB2.setOnFocusChangeListener(ofcl);
+        tvAB2.addTextChangedListener(tcListener);
+        tvAB3 = findViewById(R.id.tvABTagValue3);
+        tvAB3.setOnFocusChangeListener(ofcl);
+        tvAB3.addTextChangedListener(tcListener);
+        tvAB4 = findViewById(R.id.tvABTagValue4);
+        tvAB4.setOnFocusChangeListener(ofcl);
+        tvAB4.addTextChangedListener(tcListener);
+
+        textColor = tvAB1.getTextColors();
 
         etABGaugeTag = findViewById(R.id.etABGaugeTag);
 
@@ -272,7 +314,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB1;
                 ABinfo.etABTagValue = tvAB1;
-                ABinfo.btnWriteAB = btnWriteAB1;
                 ABAddressList.add(ABinfo);
             }
 
@@ -282,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB2;
                 ABinfo.etABTagValue = tvAB2;
-                ABinfo.btnWriteAB = btnWriteAB2;
                 ABAddressList.add(ABinfo);
             }
 
@@ -292,7 +332,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB3;
                 ABinfo.etABTagValue = tvAB3;
-                ABinfo.btnWriteAB = btnWriteAB3;
                 ABAddressList.add(ABinfo);
             }
 
@@ -302,7 +341,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB4;
                 ABinfo.etABTagValue = tvAB4;
-                ABinfo.btnWriteAB = btnWriteAB4;
                 ABAddressList.add(ABinfo);
             }
 
@@ -310,8 +348,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 abi.etABTag.setInputType(InputType.TYPE_NULL);
                 abi.etABTag.setClickable(false);
                 abi.etABTagValue.setInputType(InputType.TYPE_NULL);
-                abi.btnWriteAB.setEnabled(false);
-                abi.btnWriteAB.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
             }
 
             params.add(plcAddresses);
@@ -322,8 +358,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tbtnAutoRead.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
             btnSettings.setEnabled(false);
             btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
-            btnGauge.setEnabled(false);
-            btnGauge.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            callerName = "";
 
         } else {
             if (myReadABTask != null){
@@ -337,8 +372,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 abi.etABTagValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                 abi.etABTagValue.setTextColor(textColor);
                 abi.etABTagValue.setText("");
-                abi.btnWriteAB.setEnabled(true);
-                abi.btnWriteAB.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
             }
 
             ABAddressList.clear();
@@ -456,26 +489,50 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         if (!(etAB1.getInputType() == InputType.TYPE_NULL) && !etAB1.getText().toString().equals("")){
             etAB1.setText("");
+
             tvAB1.setText("");
             tvAB1.setEnabled(false);
+
+            if (btnWriteAB1.isEnabled()){
+                btnWriteAB1.setEnabled(false);
+                btnWriteAB1.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            }
         }
 
         if (!(etAB2.getInputType() == InputType.TYPE_NULL) && !etAB2.getText().toString().equals("")){
             etAB2.setText("");
+
             tvAB2.setText("");
             tvAB2.setEnabled(false);
+
+            if (btnWriteAB2.isEnabled()){
+                btnWriteAB2.setEnabled(false);
+                btnWriteAB2.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            }
         }
 
         if (!(etAB3.getInputType() == InputType.TYPE_NULL) && !etAB3.getText().toString().equals("")){
             etAB3.setText("");
+
             tvAB3.setText("");
             tvAB3.setEnabled(false);
+
+            if (btnWriteAB3.isEnabled()){
+                btnWriteAB3.setEnabled(false);
+                btnWriteAB3.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            }
         }
 
         if (!(etAB4.getInputType() == InputType.TYPE_NULL) && !etAB4.getText().toString().equals("")){
             etAB4.setText("");
+
             tvAB4.setText("");
             tvAB4.setEnabled(false);
+
+            if (btnWriteAB4.isEnabled()){
+                btnWriteAB4.setEnabled(false);
+                btnWriteAB4.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            }
         }
 
         if (!(etABGaugeTag.getInputType() == InputType.TYPE_NULL) && !etABGaugeTag.getText().toString().equals("")){
@@ -585,19 +642,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         switch (callerId){
             case "etABTag1":
+                callerName = "tvABTagValue1";
                 tvAB1.setText("");
                 break;
             case "etABTag2":
+                callerName = "tvABTagValue2";
                 tvAB2.setText("");
                 break;
             case "etABTag3":
+                callerName = "tvABTagValue3";
                 tvAB3.setText("");
                 break;
             case "etABTag4":
+                callerName = "tvABTagValue4";
                 tvAB4.setText("");
                 break;
         }
-
-        callerName = "";
     }
 }
