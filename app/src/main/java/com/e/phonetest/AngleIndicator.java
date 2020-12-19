@@ -275,7 +275,8 @@ public class AngleIndicator extends View {
             mDegreeSign = DEGREE_SIGN;
 
         float value = mCurrentValue + mZeroPosition;
-        float modValue = Math.abs(value % 360);
+        float mod = value % 360;
+        float modValue = Math.abs(mod);
 
         if (mShowDirection){
             if ((modValue >= 337.5 && modValue <= 360) || (modValue >= 0 && modValue < 22.5))
@@ -328,7 +329,7 @@ public class AngleIndicator extends View {
             }
         }
 
-        String tempText = String.format(Locale.ENGLISH , "%.1f", (value % 360)) + mDegreeSign + mDirection;
+        String tempText = String.format(Locale.ENGLISH , "%.1f", mod) + mDegreeSign + mDirection;
         float tempTextLength = textPaint.measureText(tempText);
 
         if (mZeroPosition == 0 || mZeroPosition == 90 || mZeroPosition == 180)
