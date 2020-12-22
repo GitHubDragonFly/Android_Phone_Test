@@ -2,7 +2,7 @@
     <string name="app_name">AB Master</string>
 
     <string name="btnSettings">Settings</string>
-    <string name="btnGaugeDemo">Gauge Demo</string>
+    <string name="btnGaugeDemo">Demo</string>
     <string name="btnONOFF">LED On/Off</string>
     <string name="btnBlink">LED Blink</string>
     <string name="btnAutoOFF">Auto OFF</string>
@@ -22,6 +22,7 @@
     <string name="labelABIPAddress">IP Address</string>
     <string name="labelABPath">Path</string>
     <string name="labelGaugeAddress">Gauge Tag</string>
+    <string name="labelLEDAddress">LED Blink Tag</string>
     <string name="labelTimeout">Timeout</string>
     <string name="labelBoolDisplay">Bool Display</string>
     <string name="labelLGXProgram">Program</string>
@@ -91,6 +92,21 @@
     </string-array>
 
     <string-array name="gauge_data_type">
+        <item>int8</item>
+        <item>uint8</item>
+        <item>int16</item>
+        <item>uint16</item>
+        <item>int32</item>
+        <item>uint32</item>
+        <item>int64</item>
+        <item>uint64</item>
+        <item>float32</item>
+        <item>float64</item>
+    </string-array>
+
+    <string-array name="led_data_type">
+        <item>bool</item>
+        <item>bool array</item>
         <item>int8</item>
         <item>uint8</item>
         <item>int16</item>

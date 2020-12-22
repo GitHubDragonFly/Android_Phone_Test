@@ -17,13 +17,14 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     public static GaugeTaskCallback gaugeTaskCallback;
     AsyncGaugeTask myGaugeTask = null;
 
-    TextView tvGaugeAddress;
-    String txt = "";
-    String[] params = new String[4];
+    TextView tvGaugeAddress, tvLEDBlinkAddress;
+    String txtGauge = "", txtLED = "";
+    String[] params = new String[6];
     AngleIndicator ai1;
     LEDLight led1;
 
-    boolean blink, onoff, switchTimerState;
+    boolean switchTimerState;
+    int addressesProvided = 2;
 
     Button btnGaugeDemo;
 
@@ -46,13 +47,24 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         led1 = findViewById(R.id.LEDLight1);
         btnGaugeDemo = findViewById(R.id.buttonGaugeDemo);
         tvGaugeAddress = findViewById(R.id.tvGaugeAddress);
+        tvLEDBlinkAddress = findViewById(R.id.tvLEDBlinkAddress);
         textColor = tvGaugeAddress.getTextColors();
 
-        if (MainActivity.abGaugeAddress.equals("")){
-            txt = "";
-            tvGaugeAddress.setText(txt);
+        if (MainActivity.abGaugeAddress.equals("") || MainActivity.abLEDBlinkAddress.equals("")){
+            if (MainActivity.abGaugeAddress.equals("")){
+                txtGauge = "";
+                tvGaugeAddress.setText(txtGauge);
+                addressesProvided --;
+            }
+
+            if (MainActivity.abLEDBlinkAddress.equals("")){
+                txtLED = "";
+                tvLEDBlinkAddress.setText(txtLED);
+                addressesProvided --;
+            }
         }
-        else {
+
+        if (addressesProvided > 0) {
             String cpu, ipaddress, path, timeout;
 
             cpu = MainActivity.abCPU;
@@ -65,11 +77,16 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
             timeout = timeout.replace(" ", "");
 
             if (TextUtils.isEmpty(ipaddress) || !TextUtils.isDigitsOnly(timeout)){
-                txt = "PLC Parameter Error!";
-                tvGaugeAddress.setText(txt);
+                txtGauge = "PLC Parameter Error!";
+                tvGaugeAddress.setText(txtGauge);
+                txtLED = "PLC Parameter Error!";
+                tvLEDBlinkAddress.setText(txtLED);
             } else {
-                txt = MainActivity.abGaugeAddress;
-                tvGaugeAddress.setText(txt);
+                txtGauge = MainActivity.abGaugeAddress;
+                tvGaugeAddress.setText(txtGauge);
+                txtLED = MainActivity.abLEDBlinkAddress;
+                tvLEDBlinkAddress.setText(txtLED);
+
                 btnGaugeDemo.setVisibility(View.INVISIBLE);
 
                 if (myGaugeTask == null) {
@@ -77,9 +94,24 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
                 }
 
                 params[0] = "gateway=" + ipaddress + "&path=" + path + "&cpu=" + cpu;
-                params[1] = txt.substring(0, txt.indexOf(";"));
-                params[2] = txt.substring(txt.indexOf(";") + 2);
-                params[3] = timeout;
+
+                if (txtGauge.equals("")){
+                    params[1] = "";
+                    params[2] = "";
+                } else {
+                    params[1] = txtGauge.substring(0, txtGauge.indexOf(";"));
+                    params[2] = txtGauge.substring(txtGauge.indexOf(";") + 2);
+                }
+
+                if (txtLED.equals("")){
+                    params[3] = "";
+                    params[4] = "";
+                } else {
+                    params[3] = txtLED.substring(0, txtLED.indexOf(";"));
+                    params[4] = txtLED.substring(txtLED.indexOf(";") + 2);
+                }
+
+                params[5] = timeout;
 
                 myGaugeTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, params);
             }
@@ -121,6 +153,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     };
 
     public void sendMessageGaugeDemo(View v){
+        led1.setLED_Blink(!led1.isLED_Blink());
+
         if (!switchTimerState){
             mTimer.start();
             switchTimerState = true;
@@ -132,42 +166,53 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         }
     }
 
-    public void sendMessageONOFF(View v){
-        if (!led1.isLED_Blink()){
-            if (!onoff){
-                led1.setLED_ON(true);
-                onoff = true;
-                v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
-            } else {
-                led1.setLED_ON(false);
-                onoff = false;
-                v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
-            }
-        }
-    }
-
-    public void sendMessageBLINK(View v){
-        if (!blink){
-            led1.setLED_Blink(true);
-            blink = true;
-            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
-        } else {
-            led1.setLED_Blink(false);
-            blink = false;
-            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
-        }
-    }
-
     @Override
     public void UpdateGaugeValue(String value){
-        if (value.startsWith("err") || value.equals("pending")){
+        if (value.equals("")){
+            String nb = "No Gauge tag provided!";
+            tvGaugeAddress.setText(nb);
+        } else if (value.startsWith("err") || value.equals("pending")){
             tvGaugeAddress.setTextColor(Color.RED);
             tvGaugeAddress.setText(value);
             ai1.setCurrentValue(0);
         } else {
             tvGaugeAddress.setTextColor(textColor);
-            tvGaugeAddress.setText(txt);
+            tvGaugeAddress.setText(txtGauge);
             ai1.setCurrentValue(Float.parseFloat(value));
+        }
+    }
+
+    @Override
+    public void UpdateLEDValue(String value){
+        if (value.equals("")){
+            String nb = "No LED Blink tag provided!";
+            tvLEDBlinkAddress.setText(nb);
+        } else if (value.startsWith("err") || value.equals("pending")){
+            tvLEDBlinkAddress.setTextColor(Color.RED);
+            tvLEDBlinkAddress.setText(value);
+            led1.setLED_Blink(false);
+        } else {
+            tvLEDBlinkAddress.setTextColor(textColor);
+
+            if (value.equals("0") || value.equals("false") || value.equals("False")){
+                if (led1.isLED_Blink())
+                    led1.setLED_Blink(false);
+
+                tvLEDBlinkAddress.setText(txtLED);
+            }
+            else if (value.equals("1") || value.equals("true") || value.equals("True")){
+                if (!led1.isLED_Blink())
+                    led1.setLED_Blink(true);
+
+                tvLEDBlinkAddress.setText(txtLED);
+            }
+            else {
+                if (led1.isLED_Blink())
+                    led1.setLED_Blink(false);
+
+                String nb = txtLED + " - Not a boolean equivalent!";
+                tvLEDBlinkAddress.setText(nb);
+            }
         }
     }
 }

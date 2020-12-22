@@ -47,12 +47,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<ABAddressInfo> ABAddressList = new ArrayList<>();
 
-    public static String callerName = "", abTimeout = "10000", abGaugeAddress = "", boolDisplay = "True : False";
+    public static String callerName = "", abTimeout = "10000", abGaugeAddress = "", abLEDBlinkAddress = "", boolDisplay = "True : False";
     public static String abCPU = "controllogix", abIPAddress = "192.168.1.21", abPath = "1,3", abProgram = "MainProgram";
 
     boolean clearingTags;
 
-    EditText etABx, etAB1, etAB2, etAB3, etAB4, etABGaugeTag, tvABx, tvAB1, tvAB2, tvAB3, tvAB4;
+    EditText etABx, etAB1, etAB2, etAB3, etAB4, etABGaugeTag, etABLEDBlinkTag, tvABx, tvAB1, tvAB2, tvAB3, tvAB4;
     Button btnGetCLGXTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4;
     TextView lblWriteMessage;
     ToggleButton tbtnAutoRead;
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         textColor = tvAB1.getTextColors();
 
         etABGaugeTag = findViewById(R.id.etABGaugeTag);
+        etABLEDBlinkTag = findViewById(R.id.etABLEDBlinkTag);
 
         lblWriteMessage = findViewById(R.id.labelWriteMessage);
     }
@@ -539,6 +540,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             etABGaugeTag.setText("");
         }
 
+        if (!(etABLEDBlinkTag.getInputType() == InputType.TYPE_NULL) && !etABLEDBlinkTag.getText().toString().equals("")){
+            etABLEDBlinkTag.setText("");
+        }
+
         clearingTags = false;
     }
 
@@ -561,6 +566,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void sendMessageGauge(View v)
     {
         abGaugeAddress = etABGaugeTag.getText().toString();
+        abLEDBlinkAddress = etABLEDBlinkTag.getText().toString();
 
         Intent intent = new Intent(MainActivity.this, GaugeActivity.class);
         startActivity(intent);

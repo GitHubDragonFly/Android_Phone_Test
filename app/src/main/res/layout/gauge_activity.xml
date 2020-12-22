@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/dark_blue">
 
     <TextView
+        android:id="@+id/tvLEDBlinkAddress"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/LEDLight1" />
+
+    <TextView
         android:id="@+id/tvGaugeAddress"
         android:layout_width="0dp"
         android:layout_height="32dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginBottom="30dp"
         android:gravity="center_horizontal|center_vertical"
         android:textColor="@android:color/white"
@@ -20,7 +40,7 @@
 
     <Button
         android:id="@+id/buttonGaugeDemo"
-        android:layout_width="140dp"
+        android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="50dp"
@@ -72,37 +92,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:led_Color="#1B7102"
         app:led_ON="false" />
-
-    <Button
-        android:id="@+id/buttonBlink"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
-        android:background="@android:drawable/button_onoff_indicator_off"
-        android:onClick="sendMessageBLINK"
-        android:text="@string/btnBlink"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LEDLight1" />
-
-    <Button
-        android:id="@+id/buttonONOFF"
-        android:layout_width="130dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@android:drawable/button_onoff_indicator_off"
-        android:onClick="sendMessageONOFF"
-        android:text="@string/btnONOFF"
-        android:textAllCaps="false"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/LEDLight1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -83,6 +83,8 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
             case "controllogix":
                 if (callerName.equals("etABGaugeTag"))
                     stringArray = getResources().getStringArray(R.array.gauge_data_type);
+                else if (callerName.equals("etABLEDBlinkTag"))
+                    stringArray = getResources().getStringArray(R.array.led_data_type);
                 else
                     stringArray = getResources().getStringArray(R.array.ab_data_type);
 
@@ -97,7 +99,7 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
             case "plc5":
             case "micro800":
             case "njnx":
-                if (callerName.equals("etABGaugeTag"))
+                if (callerName.equals("etABGaugeTag") || callerName.equals("etABLEDBlinkTag"))
                     stringArray = getResources().getStringArray(R.array.gauge_data_type);
                 else
                     stringArray = getResources().getStringArray(R.array.ab_mlgx_data_type);
