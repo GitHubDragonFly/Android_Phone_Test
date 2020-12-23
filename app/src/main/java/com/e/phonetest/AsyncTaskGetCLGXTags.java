@@ -48,8 +48,9 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
 
             while (offset < tagSize)
             {
-                // tagId, tagLength and IsStructure variables can be calculated.
+                // tagId, tagLength and IsStructure variables can be calculated if needed.
                 // They can also be diplayed by following the comments further below.
+
                 //int tagId = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset);
                 int tagType = GetCLGXTagsMaster.getUInt16(tag_id, offset + 4);
                 //int tagLength = GetCLGXTagsMaster.getUInt16(tag_id, offset + 6);
@@ -58,7 +59,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
 
                 if (!systemBit)
                 {
-                    //Boolean IsStructure = extractInt32Bit(tagType, 15);
+                    //Boolean IsStructure = extractInt32Bit(tagType, 15); // bit 15
 
                     int x = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset + 8);
                     int y = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset + 12);
@@ -99,7 +100,8 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
                     if (!tagName.contains(":")){
                         // Display tag name and its dimensions only.
                         valsC.add(tagName + dimensions);
-                        // Display tag name, its dimensions, tagId, tagLength and IsStructure (comment and uncomment appropriate lines).
+
+                        // Display tag name, its dimensions, tagType, IsStructure, tagLength and tagId (comment and uncomment appropriate lines above and below).
                         //valsC.add(tagName + dimensions + " ; Type = " + tagType + " ; IsStructure = " + IsStructure + " ; Length = " + tagLength + " Bytes ; Id = " + tagId);
                     }
 
@@ -147,8 +149,9 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
 
             while (offset < tagSize)
             {
-                // tagId, tagLength and IsStructure variables can be calculated and used.
+                // tagId, tagLength and IsStructure variables can be calculated and used if needed.
                 // They can also be diplayed by following the comments further below.
+
                 //int tagId = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset);
                 int tagType = GetCLGXTagsMaster.getUInt16(tag_id, offset + 4);
                 //int tagLength = GetCLGXTagsMaster.getUInt16(tag_id, offset + 6);
@@ -157,7 +160,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
 
                 if (!systemBit)
                 {
-                    //Boolean IsStructure = extractInt32Bit(tagType, 15);
+                    //Boolean IsStructure = extractInt32Bit(tagType, 15); // bit 15
 
                     int x = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset + 8);
                     int y = (int)GetCLGXTagsMaster.getUInt32(tag_id, offset + 12);
@@ -198,7 +201,8 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
                     if (!tagName.contains(":")){
                         // Display tag name and its dimensions only.
                         valsP.add("Program:" + params[1] + "." + tagName + dimensions);
-                        // Display tag name, its dimensions, tagId, tagLength and IsStructure (comment and uncomment appropriate lines above and below).
+
+                        // Display tag name, its dimensions, tagType, IsStructure, tagLength and tagId (comment and uncomment appropriate lines above and below).
                         //valsP.add("Program:" + params[1] + "." + tagName + dimensions + " ; Type = " + tagType + " ; IsStructure = " + IsStructure + " ; Length = " + tagLength + " Bytes ; Id = " + tagId);
                     }
 

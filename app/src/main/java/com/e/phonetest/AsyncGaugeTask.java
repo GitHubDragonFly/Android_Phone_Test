@@ -105,7 +105,7 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
                         dict.put(tags[i], tag_id);
                     } else {
                         String tagABString = "protocol=ab_eip&";
-                        tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name[i] + "&elem_type=" + dataType[i];
+                        tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name[i];
 
                         tag_id = GaugeMaster.TagCreate(tagABString, timeout);
 

@@ -22,6 +22,7 @@ Related project: [libplctag4android](https://github.com/libplctag/libplctag4andr
 
 This app is as experimental as the above mentioned related project but a bit more elaborate.
 The above mentioned related project can be used to compile the latest prerelease version of the libplctag library.
+Do realize that using any version other than v2.1.20 could cause the app produce a different result (it will probably show an error but might be something else).
 
 See [this link](https://github.com/libplctag/libplctag4android/issues/1) for instructions on how to create libplctag AAR.
 
