@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         EditText etABTag;
         EditText etABTagValue;
+        String caller;
 
         ABAddressInfo(){}
     }
@@ -315,6 +316,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB1;
                 ABinfo.etABTagValue = tvAB1;
+                ABinfo.caller = "tvABTagValue1";
                 ABAddressList.add(ABinfo);
             }
 
@@ -324,6 +326,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB2;
                 ABinfo.etABTagValue = tvAB2;
+                ABinfo.caller = "tvABTagValue2";
                 ABAddressList.add(ABinfo);
             }
 
@@ -333,6 +336,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB3;
                 ABinfo.etABTagValue = tvAB3;
+                ABinfo.caller = "tvABTagValue3";
                 ABAddressList.add(ABinfo);
             }
 
@@ -342,13 +346,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 ABAddressInfo ABinfo = new ABAddressInfo();
                 ABinfo.etABTag = etAB4;
                 ABinfo.etABTagValue = tvAB4;
+                ABinfo.caller = "tvABTagValue4";
                 ABAddressList.add(ABinfo);
             }
 
             for (ABAddressInfo abi: ABAddressList){
                 abi.etABTag.setInputType(InputType.TYPE_NULL);
                 abi.etABTag.setClickable(false);
-                abi.etABTagValue.setInputType(InputType.TYPE_NULL);
+                callerName = abi.caller;
+                abi.etABTagValue.setText("");
+                abi.etABTagValue.setEnabled(false);
+                abi.etABTagValue.removeTextChangedListener(tcListener);
             }
 
             params.add(plcAddresses);
@@ -370,8 +378,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             for (ABAddressInfo abi: ABAddressList){
                 abi.etABTag.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
                 abi.etABTag.setClickable(true);
-                abi.etABTagValue.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                abi.etABTagValue.setEnabled(true);
+                abi.etABTagValue.addTextChangedListener(tcListener);
                 abi.etABTagValue.setTextColor(textColor);
+                callerName = abi.caller;
                 abi.etABTagValue.setText("");
             }
 
@@ -380,8 +390,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             tbtnAutoRead.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
             btnSettings.setEnabled(true);
             btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
-            btnGauge.setEnabled(true);
-            btnGauge.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
         }
     }
 
