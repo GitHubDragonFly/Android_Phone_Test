@@ -55,7 +55,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
                 int tagType = GetCLGXTagsMaster.getUInt16(tag_id, offset + 4);
                 //int tagLength = GetCLGXTagsMaster.getUInt16(tag_id, offset + 6);
 
-                Boolean systemBit = extractSystemBit(tagType); // bit 12
+                Boolean systemBit = extractInt32Bit(tagType, 12); // bit 12
 
                 if (!systemBit)
                 {
@@ -156,7 +156,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
                 int tagType = GetCLGXTagsMaster.getUInt16(tag_id, offset + 4);
                 //int tagLength = GetCLGXTagsMaster.getUInt16(tag_id, offset + 6);
 
-                Boolean systemBit = (extractSystemBit(tagType)); // bit 12
+                Boolean systemBit = extractInt32Bit(tagType, 12); // bit 12
 
                 if (!systemBit)
                 {
@@ -248,11 +248,12 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
         super.onCancelled();
     }
 
-    private Boolean extractSystemBit(int ReadValue)
+    // bitPosition is currently used for bit 12 only but could be used for bit 15 as well (isStructure)
+    private Boolean extractInt32Bit(int ReadValue, int bitPosition)
     {
         String bitString = Integer.toBinaryString(ReadValue);
         bitString = String.format("%32s", bitString).replace(' ', '0');
 
-        return bitString.charAt(12) != '0';
+        return bitString.charAt(bitPosition) != '0';
     }
 }
