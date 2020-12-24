@@ -3,7 +3,7 @@ Android phone app for communication with Allen Bradley programmable logic contro
 
 * Note: This app can be installed on a tablet as well. You could go about removing all android:screenOrientation="sensorPortrait" entries from AndroidManifest and
 adding android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" to achieve any orientation on the tablet
-and prevent the MainActivity from resetting. Otherwise it will be portrait orientation only.
+and prevent the MainActivity from restarting when orientation changes. Otherwise it will be portrait orientation only.
 
 Intended to be used solely as a testing tool (not fit for any production environment).
 
