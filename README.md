@@ -1,7 +1,9 @@
 # PhoneTest
 Android phone app for communication with Allen Bradley programmable logic controllers (PLC).
 
-* Note: This app can be installed on a tablet as well (you could go about removing all "android:screenOrientation" entries from AndroidManifest to achieve any orientation on the tablet otherwise it will be portrait only).
+* Note: This app can be installed on a tablet as well. You could go about removing all android:screenOrientation="sensorPortrait" entries from AndroidManifest and
+adding android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" to achieve any orientation on the tablet
+and prevent the MainActivity from resetting. Otherwise it will be portrait orientation only.
 
 Intended to be used solely as a testing tool (not fit for any production environment).
 
