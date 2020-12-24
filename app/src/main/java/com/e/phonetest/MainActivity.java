@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     boolean clearingTags;
 
     EditText etABx, etAB1, etAB2, etAB3, etAB4, etABGaugeTag, etABLEDBlinkTag, tvABx, tvAB1, tvAB2, tvAB3, tvAB4;
-    Button btnGetCLGXTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4;
+    Button btnGetCLGXTags, btnClearTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4;
     TextView lblWriteMessage;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
@@ -84,6 +84,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinCLGXTags.setOnItemSelectedListener(this);
 
         btnGetCLGXTags = findViewById(R.id.buttonGetCLGXTags);
+        btnClearTags = findViewById(R.id.buttonClearTags);
         btnSettings = findViewById(R.id.buttonSettings);
         btnGauge = findViewById(R.id.buttonGauge);
         tbtnAutoRead = findViewById(R.id.toggleAutoRead);
@@ -151,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void afterTextChanged(Editable editable) {
+                ButtonClearTagsEnableDisable();
             }
         };
 
@@ -227,6 +229,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public void ButtonClearTagsEnableDisable(){
+        if ((!(etAB1.getInputType() == InputType.TYPE_NULL) && !etAB1.getText().toString().equals("")) ||
+                (!(etAB2.getInputType() == InputType.TYPE_NULL) && !etAB2.getText().toString().equals("")) ||
+                (!(etAB3.getInputType() == InputType.TYPE_NULL) && !etAB3.getText().toString().equals("")) ||
+                (!(etAB4.getInputType() == InputType.TYPE_NULL) && !etAB4.getText().toString().equals("")) ||
+                !etABGaugeTag.getText().toString().equals("") || !etABLEDBlinkTag.getText().toString().equals("")){
+
+            btnClearTags.setEnabled(true);
+            btnClearTags.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_on));
+        } else {
+            if (btnClearTags.isEnabled()){
+                btnClearTags.setEnabled(false);
+                btnClearTags.setBackground(ContextCompat.getDrawable(MainActivity.this, android.R.drawable.button_onoff_indicator_off));
+            }
+        }
     }
 
     public void sendMessageGetCLGXTags(View v){
@@ -552,6 +571,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             etABLEDBlinkTag.setText("");
         }
 
+        ButtonClearTagsEnableDisable();
+
         clearingTags = false;
     }
 
@@ -670,6 +691,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             case "etABTag4":
                 callerName = "tvABTagValue4";
                 tvAB4.setText("");
+                break;
+            case "etABGaugeTag":
+            case "etABLEDBlinkTag":
+                ButtonClearTagsEnableDisable();
                 break;
         }
     }
