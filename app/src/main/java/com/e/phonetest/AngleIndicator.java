@@ -220,17 +220,17 @@ public class AngleIndicator extends View {
 
         if (mShowAnglePie)
             if (mZeroPosition == 90 || mZeroPosition == 270)
-                canvas.drawArc(rectArc, mZeroPosition + 180, - mCurrentValue, true, paintAnglePie);
+                canvas.drawArc(rectArc, mZeroPosition + 180, -(mCurrentValue % 360), true, paintAnglePie);
             else
-                canvas.drawArc(rectArc, mZeroPosition, - mCurrentValue, true, paintAnglePie);
+                canvas.drawArc(rectArc, mZeroPosition, -(mCurrentValue % 360), true, paintAnglePie);
         else if (mShowAngleArc){
             if (mZeroPosition == 90 || mZeroPosition == 270){
                 arcPath.reset();
-                arcPath.arcTo(rectArc, mZeroPosition + 180, - mCurrentValue, true);
+                arcPath.arcTo(rectArc, mZeroPosition + 180, -(mCurrentValue % 360), true);
             }
             else{
                 arcPath.reset();
-                arcPath.arcTo(rectArc, mZeroPosition, - mCurrentValue, true);
+                arcPath.arcTo(rectArc, mZeroPosition, -(mCurrentValue % 360), true);
             }
 
             canvas.drawPath(arcPath, paintAngleArc);
@@ -259,10 +259,7 @@ public class AngleIndicator extends View {
 
     private void drawArrow(Canvas canvas){
         canvas.translate(getWidth() / 2f, getHeight() / 2f);
-        if (mZeroPosition == 90 || mZeroPosition == 270)
-            canvas.rotate(- mCurrentValue + mZeroPosition + 180);
-        else
-            canvas.rotate(- mCurrentValue + mZeroPosition);
+        canvas.rotate(-(mCurrentValue + mZeroPosition));
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
         canvas.drawPath(polygonPath, lgBrush);
