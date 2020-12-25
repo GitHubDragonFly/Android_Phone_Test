@@ -17,7 +17,7 @@ import android.graphics.RectF;
 public class LEDLight extends View {
 
     public static final int LED_COLOR = Color.BLUE;
-    public static final float LED_LIGHT_COLOR_RATIO = 0.95f;
+    public static final float LED_LIGHT_COLOR_RATIO = 0.85f;
     public static final float LED_DARK_COLOR_RATIO = 0.15f;
     public static final boolean LED_ON = false;
     public static final boolean LED_BLINK = false;
@@ -164,24 +164,36 @@ public class LEDLight extends View {
     }
 
     private void drawLightLED(Canvas canvas){
-        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.WHITE, mLED_LightColorRatio), Shader.TileMode.MIRROR));
-        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mLED_Color, mLED_Color, Shader.TileMode.MIRROR));
+        float[] hslVals = new float[3];
+        ColorUtils.colorToHSL(mLED_Color, hslVals);
+        hslVals[1] = 1f;
+        hslVals[2] = mLED_LightColorRatio;
+
+        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, ColorUtils.HSLToColor(hslVals), mLED_Color, Shader.TileMode.MIRROR));
 
         canvas.drawOval(rect1, paintDarkCircle);
         canvas.drawOval(rect1, paintBorder);
+
+        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, ColorUtils.HSLToColor(hslVals), mLED_Color, Shader.TileMode.MIRROR));
 
         canvas.drawOval(rect2, paintLightCircle);
         canvas.drawOval(rect2, paintBorder);
     }
 
     private void drawDarkLED(Canvas canvas){
-        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.blendARGB(Color.WHITE, mLED_Color, mLED_LightColorRatio), Shader.TileMode.MIRROR));
-        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mLED_Color, ColorUtils.blendARGB(mLED_Color, Color.BLACK, mLED_DarkColorRatio), Shader.TileMode.MIRROR));
+        float[] hslVals = new float[3];
+        ColorUtils.colorToHSL(mLED_Color, hslVals);
+        hslVals[1] = 0.75f;
+        hslVals[2] = mLED_DarkColorRatio;
 
-        canvas.drawOval(rect1, paintLightCircle);
+        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, ColorUtils.HSLToColor(hslVals), mLED_Color, Shader.TileMode.MIRROR));
+
+        canvas.drawOval(rect1, paintDarkCircle);
         canvas.drawOval(rect1, paintBorder);
 
-        canvas.drawOval(rect2, paintDarkCircle);
+        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mLED_Color, ColorUtils.HSLToColor(hslVals), Shader.TileMode.MIRROR));
+
+        canvas.drawOval(rect2, paintLightCircle);
         canvas.drawOval(rect2, paintBorder);
     }
 }
