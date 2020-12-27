@@ -5,6 +5,34 @@
     android:layout_height="match_parent"
     android:background="@drawable/dark_blue">
 
+    <com.e.phonetest.LEDLight
+        android:id="@+id/LEDLight2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginRight="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:led_Color="#060278"
+        app:led_DarkColorRatio="0.1"
+        app:led_LightColorRatio="0.9"
+        app:led_ON="false" />
+
+    <com.e.phonetest.LEDLight
+        android:id="@+id/LEDLight3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:led_Color="#870303"
+        app:led_DarkColorRatio="0.1"
+        app:led_LightColorRatio="0.9"
+        app:led_ON="false" />
+
     <TextView
         android:id="@+id/tvLEDBlinkAddress"
         android:layout_width="0dp"
@@ -90,6 +118,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:led_Color="#1D7802"
+        app:led_DarkColorRatio="0.1"
+        app:led_LightColorRatio="0.9"
         app:led_ON="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

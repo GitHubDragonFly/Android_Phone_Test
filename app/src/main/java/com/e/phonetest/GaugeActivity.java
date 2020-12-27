@@ -21,7 +21,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     String txtGauge = "", txtLED = "";
     String[] params = new String[6];
     AngleIndicator ai1;
-    LEDLight led1;
+    LEDLight led1, led2, led3;
 
     boolean switchTimerState;
     int addressesProvided = 2;
@@ -45,6 +45,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
 
         ai1 = findViewById(R.id.angleIndicator1);
         led1 = findViewById(R.id.LEDLight1);
+        led2 = findViewById(R.id.LEDLight2);
+        led3 = findViewById(R.id.LEDLight3);
         btnGaugeDemo = findViewById(R.id.buttonGaugeDemo);
         tvGaugeAddress = findViewById(R.id.tvGaugeAddress);
         tvLEDBlinkAddress = findViewById(R.id.tvLEDBlinkAddress);
@@ -140,10 +142,21 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
 
             ai1.setCurrentValue(val1);
 
-            if (millisUntilFinished > 36000)
+            if (millisUntilFinished > 36000){
                 val1++;
-            else
+
+                if (!led3.isLED_ON()){
+                    led3.setLED_ON(true);
+                    led2.setLED_ON(false);
+                }
+            } else {
                 val1--;
+
+                if (led3.isLED_ON()){
+                    led3.setLED_ON(false);
+                    led2.setLED_ON(true);
+                }
+            }
         }
 
         @Override
@@ -163,6 +176,12 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
             mTimer.cancel();
             switchTimerState = false;
             v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
+
+            if (led2.isLED_ON())
+                led2.setLED_ON(false);
+
+            if (led3.isLED_ON())
+                led3.setLED_ON(false);
         }
     }
 
