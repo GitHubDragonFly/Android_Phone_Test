@@ -158,11 +158,11 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         if (!switchTimerState){
             mTimer.start();
             switchTimerState = true;
-            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
+            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
         } else {
             mTimer.cancel();
             switchTimerState = false;
-            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
         }
     }
 
