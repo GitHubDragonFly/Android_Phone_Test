@@ -259,7 +259,12 @@ public class AngleIndicator extends View {
 
     private void drawArrow(Canvas canvas){
         canvas.translate(getWidth() / 2f, getHeight() / 2f);
-        canvas.rotate(-(mCurrentValue % 360) + mZeroPosition);
+
+        if (mZeroPosition == 90 || mZeroPosition == 270)
+            canvas.rotate(-(mCurrentValue % 360) + mZeroPosition + 180);
+        else
+            canvas.rotate(-(mCurrentValue % 360) + mZeroPosition);
+
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
         canvas.drawPath(polygonPath, lgBrush);
