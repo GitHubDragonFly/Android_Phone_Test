@@ -25,6 +25,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
 
     boolean switchTimerState;
     int addressesProvided = 2;
+    float val1 = 1;
 
     Button btnGaugeDemo;
 
@@ -133,8 +134,6 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     }
 
     private final CountDownTimer mTimer = new CountDownTimer(72000, 100) {
-        float val1 = 1;
-
         @Override
         public void onTick(final long millisUntilFinished) {
             if (val1 == 360 || val1 == -360)
@@ -175,6 +174,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         } else {
             mTimer.cancel();
             switchTimerState = false;
+            val1 = 1;
+            ai1.setCurrentValue(0);
             v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
 
             if (led2.isLED_ON())
