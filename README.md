@@ -31,7 +31,8 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 - The "Write" buttons are enabled when the tag is present AND the value to write is present.
 - The "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
 - The Custom String Length has to be specified when the "custom string" data type is selected.
-- The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for either or both: the green LED and the gauge (multiple data types supported). The red and blue LEDs are only functional in the Demo mode.
+- The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for either or both: the green LED and the gauge (multiple data types supported).
+The red and blue LEDs are only visible and functional in the Demo mode.
 - Modbus functionality of the libplctag library is not included in this app.
 
 There might be bugs in the app. Not everything could be tested by me, since I don't have access to all the different PLCs supported by the libplctag library.
