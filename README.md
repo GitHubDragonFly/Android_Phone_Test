@@ -52,9 +52,11 @@ All it takes is to:
 - Copy the APK over to your phone and install it (you might need to enable the "Install from Unknown Sources" option).
 
 ## Note: This app can be installed on a tablet as well
-You could go about removing all android:screenOrientation="sensorPortrait" entries from the AndroidManifest and adding
-android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" and android:name=".GaugeActivity"
-to achieve any orientation on the tablet and prevent the MainActivity and GaugeActivity from restarting when orientation changes.
+You could achieve any orientation on the tablet and prevent the MainActivity and GaugeActivity from restarting when orientation changes.
+Just make the following changes within the AndroidManifest:
+ - remove all android:screenOrientation="sensorPortrait" entries
+ - add android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" and android:name=".GaugeActivity"
+
 Otherwise it will be portrait orientation only.
 
 # Licensing
