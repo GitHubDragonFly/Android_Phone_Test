@@ -91,6 +91,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
                 tvLEDBlinkAddress.setText(txtLED);
 
                 btnGaugeDemo.setVisibility(View.INVISIBLE);
+                led2.setVisibility(View.INVISIBLE);
+                led3.setVisibility(View.INVISIBLE);
 
                 if (myGaugeTask == null) {
                     myGaugeTask = new AsyncGaugeTask();

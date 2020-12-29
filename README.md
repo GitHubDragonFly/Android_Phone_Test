@@ -1,10 +1,6 @@
 # PhoneTest
 Android phone app for communication with Allen Bradley programmable logic controllers (PLC).
 
-* Note: This app can be installed on a tablet as well. You could go about removing all android:screenOrientation="sensorPortrait" entries from AndroidManifest and
-adding android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" to achieve any orientation on the tablet
-and prevent the MainActivity from restarting when orientation changes. Otherwise it will be portrait orientation only.
-
 Intended to be used solely as a testing tool (not fit for any production environment).
 
 Minimum requirement is Android 4.1 (API level 16) while targeting Android 11 (API level 30). This should cover lots of old Android phones as well as new.
@@ -53,6 +49,12 @@ All it takes is to:
 - Open this as an existing project in Android Studio and, on the menu, do a Build/Rebuild Project.
 - Locate created APK file in this folder: app/build/outputs/apk/free/debug.
 - Copy the APK over to your phone and install it (you might need to enable the "Install from Unknown Sources" option).
+
+## Note: This app can be installed on a tablet as well
+You could go about removing all android:screenOrientation="sensorPortrait" entries from the AndroidManifest and adding
+android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" and android:name=".GaugeActivity"
+to achieve any orientation on the tablet and prevent the MainActivity and GaugeActivity from restarting when orientation changes.
+Otherwise it will be portrait orientation only.
 
 # Licensing
 This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Library General Public License 2.1 to cover for the use of libplctag and jna libraries.
