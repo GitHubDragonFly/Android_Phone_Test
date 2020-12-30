@@ -117,10 +117,21 @@ public class LEDLight extends View {
 
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
+        // maintain the square layout
         final int canvasWidth = MeasureSpec.getSize(widthMeasureSpec);
         final int canvasHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-        setMeasuredDimension(canvasWidth, canvasHeight);
+        if (canvasWidth > canvasHeight) {
+            super.onMeasure(
+                    MeasureSpec.makeMeasureSpec(canvasHeight, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(canvasHeight, MeasureSpec.EXACTLY)
+            );
+        } else {
+            super.onMeasure(
+                    MeasureSpec.makeMeasureSpec(canvasWidth, MeasureSpec.EXACTLY),
+                    MeasureSpec.makeMeasureSpec(canvasWidth, MeasureSpec.EXACTLY)
+            );
+        }
     }
 
     @Override
