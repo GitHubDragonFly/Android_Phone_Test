@@ -1,0 +1,18 @@
+<resources>
+    <declare-styleable name="RoundGauge">
+        <attr name="gaugeDescriptionText" format="string" localization="suggested" default="Speed" />
+        <attr name="gaugeCurrentValue" format="float" />
+        <attr name="gaugeMinValue" format="integer" />
+        <attr name="gaugeMaxValue" format="integer" />
+        <attr name="gaugeDecimalPlaces" format="integer" />
+        <attr name="gaugeLightColorRatio" format="float" />
+        <attr name="gaugeDarkColorRatio" format="float" />
+        <attr name="gaugeLowerCircleColor" format="color" />
+        <attr name="gaugeUpperCircleColor" format="color" />
+        <attr name="gaugeRimColor" format="color" />
+        <attr name="gaugeNeedleColor" format="color" />
+        <attr name="gaugeMajorTicksColor" format="color" />
+        <attr name="gaugeValueTextColor" format="color" />
+        <attr name="gaugeDescriptionTextColor" format="color" />
+    </declare-styleable>
+</resources>
