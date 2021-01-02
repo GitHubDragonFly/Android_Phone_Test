@@ -1,6 +1,6 @@
 <resources>
     <declare-styleable name="RoundGauge">
-        <attr name="gaugeDescriptionText" format="string" localization="suggested" default="Speed" />
+        <attr name="gaugeDescriptionText" format="string" localization="suggested" />
         <attr name="gaugeCurrentValue" format="float" />
         <attr name="gaugeMinValue" format="integer" />
         <attr name="gaugeMaxValue" format="integer" />

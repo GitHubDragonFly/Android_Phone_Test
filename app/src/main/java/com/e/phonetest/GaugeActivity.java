@@ -22,6 +22,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
     String[] params = new String[6];
     AngleIndicator ai1;
     LEDLight led1, led2, led3;
+    RoundGauge rg1;
 
     boolean switchTimerState;
     int addressesProvided = 2;
@@ -48,6 +49,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         led1 = findViewById(R.id.LEDLight1);
         led2 = findViewById(R.id.LEDLight2);
         led3 = findViewById(R.id.LEDLight3);
+        rg1 = findViewById(R.id.roundGauge1);
         btnGaugeDemo = findViewById(R.id.buttonGaugeDemo);
         tvGaugeAddress = findViewById(R.id.tvGaugeAddress);
         tvLEDBlinkAddress = findViewById(R.id.tvLEDBlinkAddress);
@@ -142,6 +144,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
                 val1 = 0;
 
             ai1.setCurrentValue(val1);
+            rg1.setGaugeCurrentValue(val1);
 
             if (millisUntilFinished > 36000){
                 val1++;
@@ -178,6 +181,7 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
             switchTimerState = false;
             val1 = 1;
             ai1.setCurrentValue(0);
+            rg1.setGaugeCurrentValue(0);
             v.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
 
             if (led2.isLED_ON())
@@ -197,10 +201,12 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
             tvGaugeAddress.setTextColor(Color.RED);
             tvGaugeAddress.setText(value);
             ai1.setCurrentValue(0);
+            rg1.setGaugeCurrentValue(0);
         } else {
             tvGaugeAddress.setTextColor(textColor);
             tvGaugeAddress.setText(txtGauge);
             ai1.setCurrentValue(Float.parseFloat(value));
+            rg1.setGaugeCurrentValue(Float.parseFloat(value));
         }
     }
 

@@ -87,19 +87,16 @@
 
     <com.e.phonetest.AngleIndicator
         android:id="@+id/angleIndicator1"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="40dp"
         app:angleArcPieColor="#CDB204"
         app:circleDarkColorRatio="0.35"
         app:circleLightColorRatio="0.95"
         app:layout_constraintBottom_toTopOf="@+id/buttonGaugeDemo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:showAngleArc="true"
         app:showZeroLine="true"
         app:zeroLineColor="#000000"
@@ -121,5 +118,18 @@
         app:led_DarkColorRatio="0.1"
         app:led_LightColorRatio="0.9"
         app:led_ON="false" />
+
+    <com.e.phonetest.RoundGauge
+        android:id="@+id/roundGauge1"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginBottom="40dp"
+        app:gaugeDescriptionText="Angle"
+        app:gaugeMaxValue="360"
+        app:gaugeMinValue="-360"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGaugeDemo"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

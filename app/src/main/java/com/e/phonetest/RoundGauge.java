@@ -45,11 +45,11 @@ public class RoundGauge extends View {
 
     public float getGaugeCurrentValue() {return mGaugeCurrentValue;}
 
-    public void setGaugeCurrentValue(float currentValue){
-        if (currentValue < mGaugeMinValue)
+    public void setGaugeCurrentValue(float gaugeCurrentValue){
+        if (gaugeCurrentValue < mGaugeMinValue)
             mGaugeCurrentValue = mGaugeMinValue;
         else
-            mGaugeCurrentValue = Math.min(currentValue, mGaugeMaxValue);
+            mGaugeCurrentValue = Math.min(gaugeCurrentValue, mGaugeMaxValue);
 
         invalidate();
         requestLayout();
@@ -268,8 +268,8 @@ public class RoundGauge extends View {
         float rectOutTop = (getHeight() - rectOutHeight) / 2f;
         float rectOutRight = rectOutLeft + rectOutWidth;
 
-        float rectInWidth = (float)(Math.cos(Math.PI / 4f) * (getWidth() - 40f));
-        float rectInHeight = (float)(Math.sin(Math.PI / 4f) * (getHeight() - 40f));
+        float rectInWidth = (float)(Math.cos(Math.PI / 4f) * (getWidth() - 30f));
+        float rectInHeight = (float)(Math.sin(Math.PI / 4f) * (getHeight() - 30f));
         float rectInLeft = (getWidth() - rectInWidth) / 2f;
         float rectInTop = (getHeight() - rectInHeight) / 2f;
         float rectInRight = rectInLeft + rectInWidth;
@@ -295,7 +295,7 @@ public class RoundGauge extends View {
     }
 
     private void drawMinMaxText(Canvas canvas){
-        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() * 1 / 4f, getHeight() * 55 / 64f, paintMinMax);
+        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() / 4f, getHeight() * 55 / 64f, paintMinMax);
 
         float tempTextLength = paintMinMax.measureText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue));
         canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue), getWidth() * 3 / 4f - tempTextLength, getHeight() * 55 / 64f, paintMinMax);
