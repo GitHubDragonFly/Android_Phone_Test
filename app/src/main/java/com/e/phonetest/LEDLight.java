@@ -16,9 +16,9 @@ import android.graphics.RectF;
 
 public class LEDLight extends View {
 
-    public static final int LED_COLOR = Color.BLUE;
+    public static final int LED_COLOR = Color.parseColor("#186502");
     public static final float LED_LIGHT_COLOR_RATIO = 0.9f;
-    public static final float LED_DARK_COLOR_RATIO = 0.1f;
+    public static final float LED_DARK_COLOR_RATIO = 0.05f;
     public static final boolean LED_ON = false;
     public static final boolean LED_BLINK = false;
     public static final int LED_BLINK_INTERVAL = 500;
