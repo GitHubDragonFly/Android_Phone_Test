@@ -1,19 +1,19 @@
 <resources>
     <declare-styleable name="AngleIndicator">
-        <attr name="showAngleArc" format="boolean" />
-        <attr name="showAnglePie" format="boolean" />
-        <attr name="showDegreeSign" format="boolean" />
-        <attr name="showDirection" format="boolean" />
-        <attr name="showZeroLine" format="boolean" />
-        <attr name="zeroLineWidth" format="float" />
-        <attr name="currentValue" format="float" />
-        <attr name="circleLightColorRatio" format="float" />
-        <attr name="circleDarkColorRatio" format="float" />
-        <attr name="angleArcPieColor" format="color" />
-        <attr name="arrowColor" format="color" />
-        <attr name="circleColor" format="color" />
-        <attr name="zeroLineColor" format="color" />
-        <attr name="zeroLinePosition" format="enum">
+        <attr name="aiShowAngleArc" format="boolean" />
+        <attr name="aiShowAnglePie" format="boolean" />
+        <attr name="aiShowDegreeSign" format="boolean" />
+        <attr name="aiShowDirection" format="boolean" />
+        <attr name="aiShowZeroLine" format="boolean" />
+        <attr name="aiZeroLineWidth" format="float" />
+        <attr name="aiCurrentValue" format="float" />
+        <attr name="aiCircleLightColorRatio" format="float" />
+        <attr name="aiCircleDarkColorRatio" format="float" />
+        <attr name="aiArcPieColor" format="color" />
+        <attr name="aiArrowColor" format="color" />
+        <attr name="aiCircleColor" format="color" />
+        <attr name="aiZeroLineColor" format="color" />
+        <attr name="aiZeroLinePosition" format="enum">
             <enum name="East" value="0"/>
             <enum name="North" value="90"/>
             <enum name="West" value="180"/>

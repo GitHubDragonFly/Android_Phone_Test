@@ -85,23 +85,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.e.phonetest.AngleIndicator
-        android:id="@+id/angleIndicator1"
-        android:layout_width="176dp"
-        android:layout_height="176dp"
-        android:layout_marginEnd="3dp"
-        android:layout_marginRight="3dp"
-        android:layout_marginBottom="40dp"
-        app:angleArcPieColor="#CDB204"
-        app:circleDarkColorRatio="0.35"
-        app:circleLightColorRatio="0.95"
-        app:layout_constraintBottom_toTopOf="@+id/buttonGaugeDemo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:showAngleArc="true"
-        app:showZeroLine="true"
-        app:zeroLineColor="#000000"
-        app:zeroLinePosition="East" />
-
     <com.e.phonetest.LEDLight
         android:id="@+id/LEDLight1"
         android:layout_width="100dp"
@@ -131,5 +114,21 @@
         app:gaugeMinValue="-360"
         app:layout_constraintBottom_toTopOf="@+id/buttonGaugeDemo"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.e.phonetest.AngleIndicator
+        android:id="@+id/angleIndicator1"
+        android:layout_width="176dp"
+        android:layout_height="176dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="40dp"
+        app:aiArcPieColor="#F5BE17"
+        app:aiCircleDarkColorRatio="0.45"
+        app:aiShowAngleArc="true"
+        app:aiShowDegreeSign="true"
+        app:aiShowZeroLine="true"
+        app:aiZeroLinePosition="East"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGaugeDemo"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

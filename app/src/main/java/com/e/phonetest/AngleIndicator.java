@@ -19,24 +19,24 @@ import android.graphics.RectF;
 
 public class AngleIndicator extends View {
 
-    public static final int CIRCLE_COLOR = Color.BLUE;
-    public static final int ARROW_COLOR = Color.RED;
-    public static final int ANGLE_ARC_PIE_COLOR = Color.GREEN;
-    public static final int ZERO_LINE_COLOR = Color.YELLOW;
-    public static final int ZERO_POSITION = 0;
-    public static final float ZERO_LINE_WIDTH = 4f;
-    public static final float CURRENT_VALUE = 0f;
-    public static final float CIRCLE_LIGHT_COLOR_RATIO = 0.95f;
-    public static final float CIRCLE_DARK_COLOR_RATIO = 0.15f;
-    public static final String DEGREE_SIGN = "°";
-    public static final boolean SHOW_ANGLE_ARC = false;
-    public static final boolean SHOW_ANGLE_PIE = false;
-    public static final boolean SHOW_DEGREE_SIGN = false;
-    public static final boolean SHOW_DIRECTION = false;
-    public static final boolean SHOW_ZERO_LINE = false;
+    public static final int AI_CIRCLE_COLOR = Color.BLUE;
+    public static final int AI_ARROW_COLOR = Color.RED;
+    public static final int AI_ARC_PIE_COLOR = Color.GREEN;
+    public static final int AI_ZERO_LINE_COLOR = Color.YELLOW;
+    public static final int AI_ZERO_LINE_POSITION = 0;
+    public static final float AI_ZERO_LINE_WIDTH = 4f;
+    public static final float AI_CURRENT_VALUE = 0f;
+    public static final float AI_CIRCLE_LIGHT_COLOR_RATIO = 0.95f;
+    public static final float AI_CIRCLE_DARK_COLOR_RATIO = 0.35f;
+    public static final String AI_DEGREE_SIGN = "°";
+    public static final boolean AI_SHOW_ANGLE_ARC = false;
+    public static final boolean AI_SHOW_ANGLE_PIE = false;
+    public static final boolean AI_SHOW_DEGREE_SIGN = false;
+    public static final boolean AI_SHOW_DIRECTION = false;
+    public static final boolean AI_SHOW_ZERO_LINE = false;
 
     private boolean mShowAngleArc, mShowAnglePie, mShowDegreeSign, mShowDirection, mShowZeroLine;
-    private int mAngleArcPieColor, mArrowColor, mCircleColor, mZeroLineColor, mZeroPosition;
+    private int mArcPieColor, mArrowColor, mCircleColor, mZeroLineColor, mZeroLinePosition;
     private float mCurrentValue, mZeroLineWidth, mCircleLightColorRatio, mCircleDarkColorRatio;
     Path polygonPath = new Path(), arcPath = new Path();
     PointF[] points;
@@ -45,7 +45,7 @@ public class AngleIndicator extends View {
     private Paint bmpPaint, paintBorder, paintLightCircle, paintDarkCircle, paintZeroLine, paintAngleArc, paintAnglePie, lgBrush, textPaint;
     private Bitmap bmp;
 
-    public float CurrentValue() {return mCurrentValue;}
+    public float getCurrentValue() {return mCurrentValue;}
 
     public void setCurrentValue(float currentValue){
         mCurrentValue = currentValue;
@@ -73,20 +73,20 @@ public class AngleIndicator extends View {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.AngleIndicator, defStyle, 0);
 
-        mCircleColor = typedArray.getColor(R.styleable.AngleIndicator_circleColor, CIRCLE_COLOR);
-        mAngleArcPieColor = typedArray.getColor(R.styleable.AngleIndicator_angleArcPieColor, ANGLE_ARC_PIE_COLOR);
-        mArrowColor = typedArray.getColor(R.styleable.AngleIndicator_arrowColor, ARROW_COLOR);
-        mZeroLineColor = typedArray.getColor(R.styleable.AngleIndicator_zeroLineColor, ZERO_LINE_COLOR);
-        mShowAngleArc = typedArray.getBoolean(R.styleable.AngleIndicator_showAngleArc, SHOW_ANGLE_ARC);
-        mShowAnglePie = typedArray.getBoolean(R.styleable.AngleIndicator_showAnglePie, SHOW_ANGLE_PIE);
-        mShowDegreeSign = typedArray.getBoolean(R.styleable.AngleIndicator_showDegreeSign, SHOW_DEGREE_SIGN);
-        mShowDirection = typedArray.getBoolean(R.styleable.AngleIndicator_showDirection, SHOW_DIRECTION);
-        mShowZeroLine = typedArray.getBoolean(R.styleable.AngleIndicator_showZeroLine, SHOW_ZERO_LINE);
-        mZeroLineWidth = typedArray.getFloat(R.styleable.AngleIndicator_zeroLineWidth, ZERO_LINE_WIDTH);
-        mCurrentValue = typedArray.getFloat(R.styleable.AngleIndicator_currentValue, CURRENT_VALUE);
-        mCircleLightColorRatio = typedArray.getFloat(R.styleable.AngleIndicator_circleLightColorRatio, CIRCLE_LIGHT_COLOR_RATIO);
-        mCircleDarkColorRatio = typedArray.getFloat(R.styleable.AngleIndicator_circleDarkColorRatio, CIRCLE_DARK_COLOR_RATIO);
-        mZeroPosition = typedArray.getInt(R.styleable.AngleIndicator_zeroLinePosition, ZERO_POSITION);
+        mCircleColor = typedArray.getColor(R.styleable.AngleIndicator_aiCircleColor, AI_CIRCLE_COLOR);
+        mArcPieColor = typedArray.getColor(R.styleable.AngleIndicator_aiArcPieColor, AI_ARC_PIE_COLOR);
+        mArrowColor = typedArray.getColor(R.styleable.AngleIndicator_aiArrowColor, AI_ARROW_COLOR);
+        mZeroLineColor = typedArray.getColor(R.styleable.AngleIndicator_aiZeroLineColor, AI_ZERO_LINE_COLOR);
+        mShowAngleArc = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowAngleArc, AI_SHOW_ANGLE_ARC);
+        mShowAnglePie = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowAnglePie, AI_SHOW_ANGLE_PIE);
+        mShowDegreeSign = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowDegreeSign, AI_SHOW_DEGREE_SIGN);
+        mShowDirection = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowDirection, AI_SHOW_DIRECTION);
+        mShowZeroLine = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowZeroLine, AI_SHOW_ZERO_LINE);
+        mZeroLineWidth = typedArray.getFloat(R.styleable.AngleIndicator_aiZeroLineWidth, AI_ZERO_LINE_WIDTH);
+        mCurrentValue = typedArray.getFloat(R.styleable.AngleIndicator_aiCurrentValue, AI_CURRENT_VALUE);
+        mCircleLightColorRatio = typedArray.getFloat(R.styleable.AngleIndicator_aiCircleLightColorRatio, AI_CIRCLE_LIGHT_COLOR_RATIO);
+        mCircleDarkColorRatio = typedArray.getFloat(R.styleable.AngleIndicator_aiCircleDarkColorRatio, AI_CIRCLE_DARK_COLOR_RATIO);
+        mZeroLinePosition = typedArray.getInt(R.styleable.AngleIndicator_aiZeroLinePosition, AI_ZERO_LINE_POSITION);
 
         typedArray.recycle();
 
@@ -214,8 +214,8 @@ public class AngleIndicator extends View {
         paintZeroLine.setStrokeWidth(mZeroLineWidth);
         paintZeroLine.setColor(mZeroLineColor);
 
-        paintAnglePie.setColor(mAngleArcPieColor);
-        paintAngleArc.setColor(mAngleArcPieColor);
+        paintAnglePie.setColor(mArcPieColor);
+        paintAngleArc.setColor(mArcPieColor);
 
         lgBrush.setShader(new LinearGradient(getWidth() / 2f, getHeight() / 2f, getWidth(), getHeight() / 2.0f, ColorUtils.blendARGB(mArrowColor, Color.BLACK, 0.3f), mArrowColor, Shader.TileMode.MIRROR));
 
@@ -230,18 +230,18 @@ public class AngleIndicator extends View {
         canvas.drawOval(rect2, paintBorder);
 
         if (mShowAnglePie)
-            if (mZeroPosition == 90 || mZeroPosition == 270)
-                canvas.drawArc(rectArc, mZeroPosition + 180, -(mCurrentValue % 360), true, paintAnglePie);
+            if (mZeroLinePosition == 90 || mZeroLinePosition == 270)
+                canvas.drawArc(rectArc, mZeroLinePosition + 180, -(mCurrentValue % 360), true, paintAnglePie);
             else
-                canvas.drawArc(rectArc, mZeroPosition, -(mCurrentValue % 360), true, paintAnglePie);
+                canvas.drawArc(rectArc, mZeroLinePosition, -(mCurrentValue % 360), true, paintAnglePie);
         else if (mShowAngleArc){
-            if (mZeroPosition == 90 || mZeroPosition == 270){
+            if (mZeroLinePosition == 90 || mZeroLinePosition == 270){
                 arcPath.reset();
-                arcPath.arcTo(rectArc, mZeroPosition + 180, -(mCurrentValue % 360), true);
+                arcPath.arcTo(rectArc, mZeroLinePosition + 180, -(mCurrentValue % 360), true);
             }
             else{
                 arcPath.reset();
-                arcPath.arcTo(rectArc, mZeroPosition, -(mCurrentValue % 360), true);
+                arcPath.arcTo(rectArc, mZeroLinePosition, -(mCurrentValue % 360), true);
             }
 
             canvas.drawPath(arcPath, paintAngleArc);
@@ -250,7 +250,7 @@ public class AngleIndicator extends View {
 
      private void drawZeroLine(Canvas canvas){
          if (mShowZeroLine){
-             switch (mZeroPosition)
+             switch (mZeroLinePosition)
              {
                  case 0: // East
                      canvas.drawLine(getWidth() - 2f, getHeight() / 2f, getWidth() / 2f, getHeight() / 2f, paintZeroLine);
@@ -271,10 +271,10 @@ public class AngleIndicator extends View {
     private void drawArrow(Canvas canvas){
         canvas.translate(getWidth() / 2f, getHeight() / 2f);
 
-        if (mZeroPosition == 90 || mZeroPosition == 270)
-            canvas.rotate(-(mCurrentValue % 360) + mZeroPosition + 180);
+        if (mZeroLinePosition == 90 || mZeroLinePosition == 270)
+            canvas.rotate(-(mCurrentValue % 360) + mZeroLinePosition + 180);
         else
-            canvas.rotate(-(mCurrentValue % 360) + mZeroPosition);
+            canvas.rotate(-(mCurrentValue % 360) + mZeroLinePosition);
 
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
@@ -285,9 +285,9 @@ public class AngleIndicator extends View {
         String mDegreeSign = "", mDirection = "";
 
         if (mShowDegreeSign)
-            mDegreeSign = DEGREE_SIGN;
+            mDegreeSign = AI_DEGREE_SIGN;
 
-        float value = mCurrentValue + mZeroPosition;
+        float value = mCurrentValue + mZeroLinePosition;
         float value2show = mCurrentValue % 360;
         float mod = value % 360;
         float modValue = Math.abs(mod);
@@ -346,7 +346,7 @@ public class AngleIndicator extends View {
         String tempText = String.format(Locale.ENGLISH , "%.1f", value2show) + mDegreeSign + mDirection;
         float tempTextLength = textPaint.measureText(tempText);
 
-        if (mZeroPosition == 0 || mZeroPosition == 90 || mZeroPosition == 180)
+        if (mZeroLinePosition == 0 || mZeroLinePosition == 90 || mZeroLinePosition == 180)
             canvas.drawText(tempText, getWidth() / 2f - tempTextLength / 2f, 3 * getHeight() / 4f, textPaint);
         else
             canvas.drawText(tempText, getWidth() / 2f - tempTextLength / 2f, getHeight() / 4f, textPaint);
