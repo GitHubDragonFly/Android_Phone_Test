@@ -27,6 +27,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,ReadABTaskCallback,WriteABTaskCallback,GetCLGXTagsTaskCallback,SetTags,SetPLCParameters {
+    private static final int intButtonWriteABTag1 = R.id.btnWriteABTag1;
+    private static final int intButtonWriteABTag2 = R.id.btnWriteABTag2;
+    private static final int intButtonWriteABTag3 = R.id.btnWriteABTag3;
+    private static final int intButtonWriteABTag4 = R.id.btnWriteABTag4;
+
     public static ReadABTaskCallback ReadtaskCallback;
     public static WriteABTaskCallback WritetaskCallback;
     public static GetCLGXTagsTaskCallback GetCLGXTagstaskCallback;
@@ -46,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ABAddressInfo(){}
     }
 
-    private List<ABAddressInfo> ABAddressList = new ArrayList<>();
+    private final List<ABAddressInfo> ABAddressList = new ArrayList<>();
 
     public static String callerName = "", abTimeout = "10000", abGaugeAddress = "", abLEDBlinkAddress = "", boolDisplay = "True : False";
     public static String abCPU = "controllogix", abIPAddress = "192.168.1.21", abPath = "1,3", abProgram = "MainProgram";
@@ -450,7 +455,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         params[1] = timeout;
 
         switch(v.getId()){
-            case R.id.btnWriteABTag1:
+            case intButtonWriteABTag1:
                 if (TextUtils.isEmpty(etAB1.getText()) || TextUtils.isEmpty(tvAB1.getText())){
                     myWriteABTask = null;
                     return;
@@ -461,7 +466,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     tvABx = tvAB1;
                 }
                 break;
-            case R.id.btnWriteABTag2:
+            case intButtonWriteABTag2:
                 if (TextUtils.isEmpty(etAB2.getText()) || TextUtils.isEmpty(tvAB2.getText())){
                     myWriteABTask = null;
                     return;
@@ -472,7 +477,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     tvABx = tvAB2;
                 }
                 break;
-            case R.id.btnWriteABTag3:
+            case intButtonWriteABTag3:
                 if (TextUtils.isEmpty(etAB3.getText()) || TextUtils.isEmpty(tvAB3.getText())){
                     myWriteABTask = null;
                     return;
@@ -483,7 +488,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     tvABx = tvAB3;
                 }
                 break;
-            case R.id.btnWriteABTag4:
+            case intButtonWriteABTag4:
                 if (TextUtils.isEmpty(etAB4.getText()) || TextUtils.isEmpty(tvAB4.getText())){
                     myWriteABTask = null;
                     return;

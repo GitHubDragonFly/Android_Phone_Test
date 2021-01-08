@@ -16,6 +16,7 @@
     <string name="tvDataType">Data Type</string>
     <string name="tvPLCAddress">PLC Tag / Address</string>
     <string name="labelBit">Bit / Char</string>
+    <string name="labelBitPID">Bit / Word</string>
     <string name="labelCustomStringLength">Custom String Length</string>
     <string name="labelWriteEnable">Enable Write</string>
     <string name="labelABPLCCPU">PLC / CPU</string>
@@ -89,6 +90,38 @@
         <item>timer</item>
         <item>counter</item>
         <item>control</item>
+        <item>pid</item>
+    </string-array>
+
+    <string-array name="pid_bits_words">
+        <item>None</item>
+        <item>TM</item>
+        <item>AM</item>
+        <item>CM</item>
+        <item>OL</item>
+        <item>RG</item>
+        <item>SC</item>
+        <item>TF</item>
+        <item>DA</item>
+        <item>DB</item>
+        <item>UL</item>
+        <item>LL</item>
+        <item>SP</item>
+        <item>PV</item>
+        <item>DN</item>
+        <item>EN</item>
+        <item>SPS</item>
+        <item>KC</item>
+        <item>Ti</item>
+        <item>TD</item>
+        <item>MAXS</item>
+        <item>MINS</item>
+        <item>ZCD</item>
+        <item>CVH</item>
+        <item>CVL</item>
+        <item>LUT</item>
+        <item>SPV</item>
+        <item>CVP</item>
     </string-array>
 
     <string-array name="gauge_data_type">

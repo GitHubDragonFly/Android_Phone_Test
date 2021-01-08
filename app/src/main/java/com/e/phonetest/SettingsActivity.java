@@ -66,10 +66,7 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                 String ipAddress = "192.168.1.21";
                 etABIP.setText(ipAddress);
                 etABPath.setText("1,3");
-                if (spinABCPU.getSelectedItem().toString().equals("controllogix"))
-                    etABProgram.setEnabled(true);
-                else
-                    etABProgram.setEnabled(false);
+                etABProgram.setEnabled(spinABCPU.getSelectedItem().toString().equals("controllogix"));
             } else {
                 etABProgram.setEnabled(false);
                 String ipAddress = "192.168.1.10";

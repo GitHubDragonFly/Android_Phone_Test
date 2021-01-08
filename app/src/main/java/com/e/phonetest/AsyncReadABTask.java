@@ -7,15 +7,16 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("deprecation")
 public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Void, String> {
 
     public String value = "", callerID = "";
     private String name = "";
-    private int elem_size, customStringLength;
+    private int elem_size, elem_count, customStringLength;
     HashMap<String, Integer> dict = new HashMap<>();
-    private Tag ABMaster = new Tag();
+    private final Tag ABMaster = new Tag();
 
     ReadABTaskCallback ABtaskCallback = MainActivity.ReadtaskCallback;
 
@@ -30,16 +31,18 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
         //String[] values = new String[number_of_addresses];
         String[] tags = new String[number_of_addresses];
+        String[] pidName = new String[number_of_addresses];
         String[] dType = new String[number_of_addresses];
         int[] bitIndex = new int[number_of_addresses];
         //Arrays.fill(values, "");
         Arrays.fill(tags, "");
+        Arrays.fill(pidName, "");
         Arrays.fill(dType, "");
         Arrays.fill(bitIndex, -1);
 
         while (!isCancelled()){
             for (int i = 0; i < number_of_addresses; i++) {
-                String tempValue = "";
+                String tempValue = "", pidTagString;
                 int tag_id;
 
                 if (dict.size() != number_of_addresses){
@@ -78,10 +81,12 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     switch (dataType) {
                         case "bool":
                             elem_size = 1;
+                            elem_count = 1;
                             break;
                         case "int8":
                         case "uint8":
                             elem_size = 1;
+                            elem_count = 1;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -90,18 +95,21 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int16":
                         case "uint16":
                             elem_size = 2;
+                            elem_count = 1;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "bool array":
-                            elem_size = 4;
+                            elem_size = 2;
+                            elem_count = 2;
                             break;
                         case "int32":
                         case "uint32":
                         case "float32":
-                            elem_size = 4;
+                            elem_size = 2;
+                            elem_count = 2;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -110,7 +118,8 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int64":
                         case "uint64":
                         case "float64":
-                            elem_size = 8;
+                            elem_size = 2;
+                            elem_count = 4;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -118,10 +127,12 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             break;
                         case "int128":
                         case "uint128":
-                            elem_size = 16;
+                            elem_size = 2;
+                            elem_count = 8;
                             break;
                         case "custom string":
                             elem_size = (int)Math.ceil(customStringLength / 8F) * 8;
+                            elem_count = 1;
                             break;
                         case "string":
                             if (cpu.equals("micro800")) {
@@ -131,6 +142,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             } else {
                                 elem_size = 84;
                             }
+                            elem_count = 1;
                             break;
                         case "timer":
                         case "counter":
@@ -139,7 +151,8 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             {
                                 if (name.endsWith(".PRE") || name.endsWith(".ACC") || name.endsWith(".LEN") || name.endsWith(".POS"))
                                 {
-                                    elem_size = 4;
+                                    elem_size = 2;
+                                    elem_count = 2;
                                     dataType = "int32";
                                 }
                                 else if (name.endsWith(".EN") || name.endsWith(".TT") || name.endsWith(".DN") ||
@@ -149,20 +162,34 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                         name.endsWith(".IN") || name.endsWith(".FD"))
                                 {
                                     elem_size = 1;
+                                    elem_count = 1;
                                     dataType = "bool";
                                 }
-                                else
-                                    elem_size = 12;
+                                else {
+                                    elem_size = 2;
+                                    elem_count = 6;
+                                }
                             }
                             else
                             {
                                 if (name.endsWith(".PRE") || name.endsWith(".ACC") || name.endsWith(".LEN") || name.endsWith(".POS"))
                                 {
                                     elem_size = 2;
+                                    elem_count = 1;
                                     dataType = "int16";
                                 }
-                                else
-                                    elem_size = 6;
+                                else {
+                                    elem_size = 2;
+                                    elem_count = 3;
+                                }
+                            }
+                            break;
+                        case "pid":
+                            elem_size = 2;
+                            elem_count = 23;
+                            if (name.contains(".")){
+                                pidName[i] = name;
+                                name = name.substring(0, name.indexOf(".")); // Workaround
                             }
                             break;
                     }
@@ -171,8 +198,8 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         if (name.contains("[") && !name.contains(",") && name.contains("]")){
                             int tempBitIndex = Integer.parseInt(name.substring(name.indexOf('[') + 1, name.indexOf(']')));
 
-                            int wordStart = (int)Math.floor((tempBitIndex / (elem_size * 8.0)));
-                            bitIndex[i] = tempBitIndex - wordStart * (elem_size * 8);
+                            int wordStart = (int)Math.floor((tempBitIndex / (elem_size * elem_count * 8.0)));
+                            bitIndex[i] = tempBitIndex - wordStart * (elem_size * elem_count * 8);
 
                             name = name.substring(0, name.indexOf("[") + 1) + wordStart + "]"; // Workaround
                             dataType = "int32";
@@ -180,21 +207,28 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     }
 
                     String tagABString = "protocol=ab_eip&";
-                    tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name;
+                    tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=" + elem_count + "&name=" + name;
 
                     tag_id = ABMaster.TagCreate(tagABString, timeout);
 
                     while (ABMaster.getStatus(tag_id) == 1){
                         try {
-                            Thread.sleep(10);
+                            TimeUnit.MILLISECONDS.sleep(10);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
                     }
 
                     if (ABMaster.getStatus(tag_id) == 0){
-                        dict.put(tagABString, tag_id);
-                        tags[i] = tagABString;
+                        if (dataType.equals("pid")){
+                            pidTagString = "protocol=ab_eip&" + gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=" + elem_count + "&name=" + pidName;
+                            dict.put(pidTagString, tag_id);
+                            tags[i] = pidTagString;
+                        } else {
+                            dict.put(tagABString, tag_id);
+                            tags[i] = tagABString;
+                        }
+
                         dType[i] = dataType;
                     } else {
                         if (ABMaster.getStatus(tag_id) == 1)
@@ -240,23 +274,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                             }
                                         }
                                     } else {
-                                        int val = ABMaster.getBit(id, bitIndex[i]);
-
-                                        if (MainActivity.boolDisplay.equals("One : Zero")){
-                                            tempValue = String.valueOf(val);
-                                        } else if (MainActivity.boolDisplay.equals("On : Off")){
-                                            if (val == 1){
-                                                tempValue = "On";
-                                            } else {
-                                                tempValue = "Off";
-                                            }
-                                        } else {
-                                            if (val == 1){
-                                                tempValue = "True";
-                                            } else {
-                                                tempValue = "False";
-                                            }
-                                        }
+                                        tempValue = BooleanDisplay(ABMaster.getBit(id, bitIndex[i]));
                                     }
                                 } else {
                                     switch (dType[i]){
@@ -395,25 +413,22 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                             {
                                                 if (name.contains("."))
                                                 {
-                                                    if (name.substring(name.indexOf('.') + 1).equals("EN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("TT"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    switch (name.substring(name.indexOf('.') + 1)){
+                                                        case "EN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                            break;
+                                                        case "TT":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                            break;
+                                                        case "DN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                            break;
+                                                        case "PRE":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                            break;
+                                                        case "ACC":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                            break;
                                                     }
                                                 }
                                                 else
@@ -447,37 +462,31 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                             {
                                                 if (name.contains("."))
                                                 {
-                                                    if (name.substring(name.indexOf('.') + 1).equals("CU"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("CD"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("OV"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 12));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("UN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 11));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("UA"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 10));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("PRE"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("ACC"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    switch (name.substring(name.indexOf('.') + 1)){
+                                                        case "CU":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                            break;
+                                                        case "CD":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                            break;
+                                                        case "DN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                            break;
+                                                        case "OV":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 12));
+                                                            break;
+                                                        case "UN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 11));
+                                                            break;
+                                                        case "UA":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 10));
+                                                            break;
+                                                        case "PRE":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                            break;
+                                                        case "ACC":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                            break;
                                                     }
                                                 }
                                                 else
@@ -511,45 +520,37 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                             {
                                                 if (name.contains("."))
                                                 {
-                                                    if (name.substring(name.indexOf('.') + 1).equals("EN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 15));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("EU"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 14));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("DN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 13));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("EM"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 12));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("ER"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 11));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("UL"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 10));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("IN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 9));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("FD"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getBit(id, 8));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("LEN"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 2));
-                                                    }
-                                                    else if (name.substring(name.indexOf('.') + 1).equals("POS"))
-                                                    {
-                                                        tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                    switch (name.substring(name.indexOf('.') + 1)){
+                                                        case "EN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 15));
+                                                            break;
+                                                        case "EU":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 14));
+                                                            break;
+                                                        case "DN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 13));
+                                                            break;
+                                                        case "EM":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 12));
+                                                            break;
+                                                        case "ER":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 11));
+                                                            break;
+                                                        case "UL":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 10));
+                                                            break;
+                                                        case "IN":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 9));
+                                                            break;
+                                                        case "FD":
+                                                            tempValue = String.valueOf(ABMaster.getBit(id, 8));
+                                                            break;
+                                                        case "LEN":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 2));
+                                                            break;
+                                                        case "POS":
+                                                            tempValue = String.valueOf(ABMaster.getInt16(id, 4));
+                                                            break;
                                                     }
                                                 }
                                                 else
@@ -564,6 +565,106 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                                     }
                                                     tempValue = tempValueBuilder.toString();
                                                 }
+                                            }
+                                            break;
+                                        case "pid":
+                                            if (pidName[i].contains("."))
+                                            {
+                                                switch (pidName[i].substring(pidName[i].indexOf('.') + 1)){
+                                                    case "EN":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 15));
+                                                        break;
+                                                    case "DN":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 13));
+                                                        break;
+                                                    case "PV":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 12));
+                                                        break;
+                                                    case "SP":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 11));
+                                                        break;
+                                                    case "LL":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 10));
+                                                        break;
+                                                    case "UL":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 9));
+                                                        break;
+                                                    case "DB":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 8));
+                                                        break;
+                                                    case "DA":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 7));
+                                                        break;
+                                                    case "TF":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 6));
+                                                        break;
+                                                    case "SC":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 5));
+                                                        break;
+                                                    case "RG":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 4));
+                                                        break;
+                                                    case "OL":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 3));
+                                                        break;
+                                                    case "CM":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 2));
+                                                        break;
+                                                    case "AM":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 1));
+                                                        break;
+                                                    case "TM":
+                                                        tempValue = BooleanDisplay(ABMaster.getBit(id, 0));
+                                                        break;
+                                                    case "SPS":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,4));
+                                                        break;
+                                                    case "KC":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,6));
+                                                        break;
+                                                    case "Ti":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,8));
+                                                        break;
+                                                    case "TD":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,10));
+                                                        break;
+                                                    case "MAXS":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,14));
+                                                        break;
+                                                    case "MINS":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,16));
+                                                        break;
+                                                    case "ZCD":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,18));
+                                                        break;
+                                                    case "CVH":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,22));
+                                                        break;
+                                                    case "CVL":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,24));
+                                                        break;
+                                                    case "LUT":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,26));
+                                                        break;
+                                                    case "SPV":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,28));
+                                                        break;
+                                                    case "CVP":
+                                                        tempValue = String.valueOf(ABMaster.getInt16(id,32));
+                                                        break;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                StringBuilder tempValueBuilder = new StringBuilder();
+                                                for (int k = 0; k < 23; k++)
+                                                {
+                                                    if (k == 22)
+                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2));
+                                                    else
+                                                        tempValueBuilder.append(ABMaster.getInt16(id, k * 2)).append(", ");
+                                                }
+                                                tempValue = tempValueBuilder.toString();
                                             }
                                             break;
                                     }
@@ -581,7 +682,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                                 while (ABMaster.getStatus(tag_id) == 1){
                                     try {
-                                        Thread.sleep(10);
+                                        TimeUnit.MILLISECONDS.sleep(10);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -604,7 +705,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                             while (ABMaster.getStatus(tag_id) == 1){
                                 try {
-                                    Thread.sleep(10);
+                                    TimeUnit.MILLISECONDS.sleep(10);
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
@@ -641,7 +742,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                 // Slow down the communication to give time for UI to update all the values.
                 // Adjust the sleep time if necessary.
                 try {
-                    Thread.sleep(50);
+                    TimeUnit.MILLISECONDS.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -672,11 +773,33 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
     protected void onCancelled() {
         super.onCancelled();
 
-        if (dict != null && ABMaster != null){
+        if (dict != null){
             for (String key : dict.keySet()){
                 Integer keyIntVal = dict.get(key);
                 if (keyIntVal != null)
                     ABMaster.close(keyIntVal);
+            }
+        }
+    }
+
+    private String BooleanDisplay(int boolValue){
+        if (MainActivity.boolDisplay.equals("One : Zero")){
+            if (boolValue == 1){
+                return "1";
+            } else {
+                return "0";
+            }
+        } else if (MainActivity.boolDisplay.equals("On : Off")){
+            if (boolValue == 1){
+                return "On";
+            } else {
+                return "Off";
+            }
+        } else {
+            if (boolValue == 1){
+                return "True";
+            } else {
+                return "False";
             }
         }
     }

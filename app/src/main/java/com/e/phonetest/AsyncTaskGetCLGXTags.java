@@ -5,6 +5,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 import org.libplctag.Tag;
 
 @SuppressWarnings("deprecation")
@@ -12,7 +14,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
 
     public List<String> valsC = new ArrayList<>(), valsP = new ArrayList<>();
     int timeout;
-    private Tag GetCLGXTagsMaster = new Tag();
+    private final Tag GetCLGXTagsMaster = new Tag();
 
     GetCLGXTagsTaskCallback GetCLGXTagstaskCallback = MainActivity.GetCLGXTagstaskCallback;
 
@@ -31,7 +33,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
         while (GetCLGXTagsMaster.getStatus(tag_id) == 1)
         {
             try {
-                Thread.sleep(10);
+                TimeUnit.MILLISECONDS.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -126,7 +128,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
         while (GetCLGXTagsMaster.getStatus(tag_id) == 1)
         {
             try {
-                Thread.sleep(10);
+                TimeUnit.MILLISECONDS.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -248,7 +250,7 @@ public class AsyncTaskGetCLGXTags extends AsyncTask<String, Void, String> {
         super.onCancelled();
     }
 
-    // bitPosition is currently used for bit 12 only but could be used for bit 15 as well (isStructure)
+    // bitPosition is currently used for bit 12 (systemBit) only but could be used for bit 15 as well (isStructure)
     private Boolean extractInt32Bit(int ReadValue, int bitPosition)
     {
         String bitString = Integer.toBinaryString(ReadValue);
