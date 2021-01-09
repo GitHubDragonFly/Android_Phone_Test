@@ -93,6 +93,25 @@
         <item>pid</item>
     </string-array>
 
+    <string-array name="ab_slcplc5_data_type">
+        <item>int8</item>
+        <item>uint8</item>
+        <item>int16</item>
+        <item>uint16</item>
+        <item>int32</item>
+        <item>uint32</item>
+        <item>int64</item>
+        <item>uint64</item>
+        <item>int128</item>
+        <item>uint128</item>
+        <item>float32</item>
+        <item>float64</item>
+        <item>string</item>
+        <item>timer</item>
+        <item>counter</item>
+        <item>control</item>
+    </string-array>
+
     <string-array name="pid_bits_words">
         <item>None</item>
         <item>TM</item>

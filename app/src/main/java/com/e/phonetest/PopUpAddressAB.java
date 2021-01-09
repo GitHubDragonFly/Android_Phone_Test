@@ -105,8 +105,12 @@ public class PopUpAddressAB extends AppCompatActivity implements AdapterView.OnI
             case "njnx":
                 if (callerName.equals("etABGaugeTag") || callerName.equals("etABLEDBlinkTag"))
                     stringArray = getResources().getStringArray(R.array.gauge_data_type);
-                else
-                    stringArray = getResources().getStringArray(R.array.ab_mlgx_data_type);
+                else {
+                    if (cpu.equals("micrologix"))
+                        stringArray = getResources().getStringArray(R.array.ab_mlgx_data_type);
+                    else
+                        stringArray = getResources().getStringArray(R.array.ab_slcplc5_data_type);
+                }
 
                 dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, stringArray);
                 dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

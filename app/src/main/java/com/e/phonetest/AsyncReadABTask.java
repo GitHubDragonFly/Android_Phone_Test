@@ -221,7 +221,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                     if (ABMaster.getStatus(tag_id) == 0){
                         if (dataType.equals("pid")){
-                            pidTagString = "protocol=ab_eip&" + gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=" + elem_count + "&name=" + pidName;
+                            pidTagString = "protocol=ab_eip&" + gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=" + elem_count + "&name=" + pidName[i];
                             dict.put(pidTagString, tag_id);
                             tags[i] = pidTagString;
                         } else {
@@ -677,20 +677,6 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                                 ABMaster.close(id);
                                 dict.remove(tags[i]);
-
-                                tag_id = ABMaster.TagCreate(tags[i], timeout);
-
-                                while (ABMaster.getStatus(tag_id) == 1){
-                                    try {
-                                        TimeUnit.MILLISECONDS.sleep(10);
-                                    } catch (InterruptedException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                if (ABMaster.getStatus(tag_id) == 0){
-                                    dict.put(tags[i], tag_id);
-                                }
                             }
                         } else {
                             if (ABMaster.getStatus(id) == 1)
@@ -700,20 +686,6 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                             ABMaster.close(id);
                             dict.remove(tags[i]);
-
-                            tag_id = ABMaster.TagCreate(tags[i], timeout);
-
-                            while (ABMaster.getStatus(tag_id) == 1){
-                                try {
-                                    TimeUnit.MILLISECONDS.sleep(10);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-
-                            if (ABMaster.getStatus(tag_id) == 0){
-                                dict.put(tags[i], tag_id);
-                            }
                         }
                     }
                 }
