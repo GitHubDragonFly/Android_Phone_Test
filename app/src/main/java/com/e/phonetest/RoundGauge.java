@@ -33,14 +33,16 @@ public class RoundGauge extends View {
     public static final float GAUGE_LIGHT_COLOR_RATIO = 0.95f;
     public static final float GAUGE_DARK_COLOR_RATIO = 0.45f;
 
-    private int mGaugeLowerCircleColor, mGaugeUpperCircleColor, mGaugeRimColor, mGaugeNeedleColor, mGaugeMajorTicksColor, mGaugeValueTextColor, mGaugeDescriptionTextColor, mGaugeDecimalPlaces;
+    private int mGaugeLowerCircleColor, mGaugeUpperCircleColor, mGaugeRimColor, mGaugeNeedleColor, mGaugeMajorTicksColor;
+    private int mGaugeValueTextColor, mGaugeDescriptionTextColor, mGaugeDecimalPlaces;
     private float mGaugeMinValue, mGaugeMaxValue, mGaugeCurrentValue, mGaugeLightColorRatio, mGaugeDarkColorRatio;
     private String mGaugeDescriptionText;
-    Path polygonPath = new Path();
-    PointF[] points;
+    Path arrowPolygonPath = new Path();
+    PointF[] arrowPolygonPoints;
     private RectF rect1, rect2, rect3;
 
-    private Paint bmpPaint, paintBorder, paintRim, paintPieLower, paintPieUpper, paintMajorTick, lgBrush, paintMinMax, paintValueText, paintDescriptionText;
+    private Paint bmpPaint, paintBorder, paintRim, paintPieLower, paintPieUpper, paintMajorTick, lgBrush;
+    private Paint paintOutline, paintMinMax, paintValueText, paintDescriptionText;
     private Bitmap bmp;
 
     public float getGaugeCurrentValue() {return mGaugeCurrentValue;}
@@ -101,15 +103,15 @@ public class RoundGauge extends View {
 
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintBorder.setStyle(Paint.Style.STROKE);
-        paintBorder.setStrokeWidth(2f);
+        paintBorder.setStrokeWidth(1f);
+
+        paintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paintOutline.setStyle(Paint.Style.STROKE);
+        paintOutline.setStrokeWidth(2f);
 
         paintMajorTick = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMajorTick.setStyle(Paint.Style.STROKE);
-        paintMajorTick.setStrokeWidth(5f);
-
-        paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBorder.setStyle(Paint.Style.STROKE);
-        paintBorder.setStrokeWidth(2f);
+        paintMajorTick.setStrokeWidth(4f);
 
         paintPieLower = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintPieLower.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -171,44 +173,53 @@ public class RoundGauge extends View {
         }
 
         rect1 = new RectF(0, 0,  getWidth(), getHeight());
-        rect2 = new RectF(12f, 12f, getWidth() - 12f, getHeight() - 12f);
-        rect3 = new RectF(getWidth() / 2f - 16f, getHeight() / 2f - 16f, getWidth() / 2f + 16f, getHeight() / 2f + 16f);
+        rect2 = new RectF(getWidth() / 50f, getHeight() / 50f, getWidth() - getWidth() / 50f, getHeight() - getHeight() / 50f);
+        rect3 = new RectF(getWidth() / 2f - getWidth() / 45f, getHeight() / 2f - getHeight() / 45f, getWidth() / 2f + getWidth() / 45f, getHeight() / 2f + getHeight() / 45f);
 
         bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 
         final Canvas canvas = new Canvas(bmp);
 
-        points = new PointF[] {
-                new PointF(16f, getHeight() / 2f),
-                new PointF(getWidth() / 2f - 21f, getHeight() / 2f - 20f),
-                new PointF(getWidth() / 2f - 28f, getHeight() / 2f - 2f),
+        arrowPolygonPoints = new PointF[] {
+                new PointF(getWidth() / 55f, getHeight() / 2f),
+                new PointF(getWidth() / 2f - getWidth() / 35f, getHeight() / 2f - getHeight() / 40f),
+                new PointF(getWidth() / 2f - getWidth() / 25f, getHeight() / 2f - 2f),
                 new PointF(getWidth() / 2f, getHeight() / 2f - 2f),
                 new PointF(getWidth() / 2f, getHeight() / 2f + 2f),
-                new PointF(getWidth() / 2f - 28f, getHeight() / 2f + 2f),
-                new PointF(getWidth() / 2f - 21f, getHeight() / 2f + 20f)
+                new PointF(getWidth() / 2f - getWidth() / 25f, getHeight() / 2f + 2f),
+                new PointF(getWidth() / 2f - getWidth() / 35f, getHeight() / 2f + getHeight() / 40f)
         };
 
-        polygonPath.reset();
-        polygonPath.moveTo(points[0].x, points[0].y);
-        polygonPath.lineTo(points[1].x, points[1].y);
-        polygonPath.lineTo(points[2].x, points[2].y);
-        polygonPath.lineTo(points[3].x, points[3].y);
-        polygonPath.lineTo(points[4].x, points[4].y);
-        polygonPath.lineTo(points[5].x, points[5].y);
-        polygonPath.lineTo(points[6].x, points[6].y);
-        polygonPath.close();
+        arrowPolygonPath.reset();
+        arrowPolygonPath.moveTo(arrowPolygonPoints[0].x, arrowPolygonPoints[0].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[1].x, arrowPolygonPoints[1].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[2].x, arrowPolygonPoints[2].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[3].x, arrowPolygonPoints[3].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[4].x, arrowPolygonPoints[4].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[5].x, arrowPolygonPoints[5].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[6].x, arrowPolygonPoints[6].y);
+        arrowPolygonPath.close();
 
         paintBorder.setColor(Color.BLACK);
+        paintOutline.setColor(Color.BLACK);
         paintMajorTick.setColor(mGaugeMajorTicksColor);
 
         final float density = getResources().getDisplayMetrics().density;
 
         paintValueText.setColor(mGaugeValueTextColor);
 
-        if (getWidth() < 100 * density)
+        if (getWidth() < 50 * density)
+            paintValueText.setTextSize(8 * density);
+        else if (getWidth() < 75 * density)
+            paintValueText.setTextSize(10 * density);
+        else if (getWidth() < 100 * density)
             paintValueText.setTextSize(14 * density);
+        else if (getWidth() < 150 * density)
+            paintValueText.setTextSize(16 * density);
         else if (getWidth() < 200 * density)
             paintValueText.setTextSize(18 * density);
+        else if (getWidth() < 250 * density)
+            paintValueText.setTextSize(21 * density);
         else if (getWidth() < 300 * density)
             paintValueText.setTextSize(24 * density);
         else
@@ -216,10 +227,18 @@ public class RoundGauge extends View {
 
         paintDescriptionText.setColor(mGaugeDescriptionTextColor);
 
-        if (getWidth() < 100 * density)
+        if (getWidth() < 50 * density)
+            paintDescriptionText.setTextSize(4 * density);
+        else if (getWidth() < 75 * density)
+            paintDescriptionText.setTextSize(6 * density);
+        else if (getWidth() < 100 * density)
             paintDescriptionText.setTextSize(8 * density);
+        else if (getWidth() < 150 * density)
+            paintDescriptionText.setTextSize(11 * density);
         else if (getWidth() < 200 * density)
             paintDescriptionText.setTextSize(14 * density);
+        else if (getWidth() < 250 * density)
+            paintDescriptionText.setTextSize(16 * density);
         else if (getWidth() < 300 * density)
             paintDescriptionText.setTextSize(18 * density);
         else
@@ -227,10 +246,18 @@ public class RoundGauge extends View {
 
         paintMinMax.setColor(mGaugeDescriptionTextColor);
 
-        if (getWidth() < 100 * density)
+        if (getWidth() < 50 * density)
+            paintMinMax.setTextSize(2 * density);
+        else if (getWidth() < 75 * density)
+            paintMinMax.setTextSize(4 * density);
+        else if (getWidth() < 100 * density)
             paintMinMax.setTextSize(6 * density);
+        else if (getWidth() < 150 * density)
+            paintMinMax.setTextSize(8 * density);
         else if (getWidth() < 200 * density)
             paintMinMax.setTextSize(10 * density);
+        else if (getWidth() < 250 * density)
+            paintMinMax.setTextSize(12 * density);
         else if (getWidth() < 300 * density)
             paintMinMax.setTextSize(14 * density);
         else
@@ -252,7 +279,7 @@ public class RoundGauge extends View {
 
         canvas.drawOval(rect2, paintPieUpper);
         canvas.drawArc(rect2, 45, 90, true, paintPieLower);
-        canvas.drawArc(rect2, 45, 90, true, paintBorder);
+        canvas.drawArc(rect2, 45, 90, true, paintOutline);
         canvas.drawOval(rect2, paintBorder);
     }
 
@@ -268,11 +295,9 @@ public class RoundGauge extends View {
         float rectOutTop = (getHeight() - rectOutHeight) / 2f;
         float rectOutRight = rectOutLeft + rectOutWidth;
 
-        float rectInWidth = (float)(Math.cos(Math.PI / 4f) * (getWidth() - 30f));
-        float rectInHeight = (float)(Math.sin(Math.PI / 4f) * (getHeight() - 30f));
-        float rectInLeft = (getWidth() - rectInWidth) / 2f;
-        float rectInTop = (getHeight() - rectInHeight) / 2f;
-        float rectInRight = rectInLeft + rectInWidth;
+        float rectInLeft = rectOutLeft + (float)(Math.cos(Math.PI / 4f)) * (getWidth() / 30f);
+        float rectInTop = rectOutTop + (float)(Math.sin(Math.PI / 4f)) * (getHeight() / 30f);
+        float rectInRight = rectOutRight - (float)(Math.cos(Math.PI / 4f)) * (getWidth() / 30f);
 
         canvas.drawLine(rectOutLeft, rectOutTop, rectInLeft, rectInTop, paintMajorTick);
         canvas.drawLine(rectOutRight, rectOutTop, rectInRight, rectInTop, paintMajorTick);
@@ -288,17 +313,17 @@ public class RoundGauge extends View {
 
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
-        canvas.drawPath(polygonPath, paintBorder);
-        canvas.drawPath(polygonPath, lgBrush);
-        canvas.drawOval(rect3, paintBorder);
+        canvas.drawPath(arrowPolygonPath, paintOutline);
+        canvas.drawPath(arrowPolygonPath, lgBrush);
+        canvas.drawOval(rect3, paintOutline);
         canvas.drawOval(rect3, lgBrush);
     }
 
     private void drawMinMaxText(Canvas canvas){
-        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() / 4f, getHeight() * 55 / 64f, paintMinMax);
+        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() / 4f, getHeight() * 54.5f / 64f, paintMinMax);
 
         float tempTextLength = paintMinMax.measureText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue));
-        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue), getWidth() * 3 / 4f - tempTextLength, getHeight() * 55 / 64f, paintMinMax);
+        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue), getWidth() * 3 / 4f - tempTextLength, getHeight() * 54.5f / 64f, paintMinMax);
 
         if (mGaugeDescriptionText != null){
             if (!mGaugeDescriptionText.equals("")){
