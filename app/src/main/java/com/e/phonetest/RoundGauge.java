@@ -103,15 +103,12 @@ public class RoundGauge extends View {
 
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintBorder.setStyle(Paint.Style.STROKE);
-        paintBorder.setStrokeWidth(1f);
 
         paintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintOutline.setStyle(Paint.Style.STROKE);
-        paintOutline.setStrokeWidth(2f);
 
         paintMajorTick = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintMajorTick.setStyle(Paint.Style.STROKE);
-        paintMajorTick.setStrokeWidth(4f);
 
         paintPieLower = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintPieLower.setStyle(Paint.Style.FILL_AND_STROKE);
@@ -207,6 +204,27 @@ public class RoundGauge extends View {
         final float density = getResources().getDisplayMetrics().density;
 
         paintValueText.setColor(mGaugeValueTextColor);
+
+        if (getWidth() < 75 * density){
+            paintBorder.setStrokeWidth(0.25f);
+            paintOutline.setStrokeWidth(0.25f);
+            paintMajorTick.setStrokeWidth(1f);
+        }
+        else if (getWidth() < 150 * density){
+            paintBorder.setStrokeWidth(0.5f);
+            paintOutline.setStrokeWidth(0.5f);
+            paintMajorTick.setStrokeWidth(1.5f);
+        }
+        else if (getWidth() < 250 * density){
+            paintBorder.setStrokeWidth(0.75f);
+            paintOutline.setStrokeWidth(1f);
+            paintMajorTick.setStrokeWidth(2.5f);
+        }
+        else{
+            paintBorder.setStrokeWidth(1f);
+            paintOutline.setStrokeWidth(2f);
+            paintMajorTick.setStrokeWidth(4f);
+        }
 
         if (getWidth() < 50 * density)
             paintValueText.setTextSize(8 * density);
