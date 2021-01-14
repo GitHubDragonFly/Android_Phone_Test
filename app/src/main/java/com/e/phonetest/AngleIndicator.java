@@ -220,20 +220,20 @@ public class AngleIndicator extends View {
         else if (getWidth() < 150 * density){
             textPaint.setTextSize(16 * density);
             paintBorder.setStrokeWidth(1.5f);
-            paintAnglePie.setStrokeWidth(5f);
-            paintAngleArc.setStrokeWidth(5f);
+            paintAnglePie.setStrokeWidth(4f);
+            paintAngleArc.setStrokeWidth(4f);
             mZeroLineWidth = mZeroLineWidth * 2 / 3;
         }
         else if (getWidth() < 200 * density){
             textPaint.setTextSize(18 * density);
-            paintAnglePie.setStrokeWidth(6f);
-            paintAngleArc.setStrokeWidth(6f);
+            paintAnglePie.setStrokeWidth(5f);
+            paintAngleArc.setStrokeWidth(5f);
             mZeroLineWidth = mZeroLineWidth * 3 / 4;
         }
         else if (getWidth() < 250 * density){
             textPaint.setTextSize(21 * density);
-            paintAnglePie.setStrokeWidth(7f);
-            paintAngleArc.setStrokeWidth(7f);
+            paintAnglePie.setStrokeWidth(6f);
+            paintAngleArc.setStrokeWidth(6f);
         }
         else if (getWidth() < 300 * density){
             textPaint.setTextSize(24 * density);
@@ -242,8 +242,8 @@ public class AngleIndicator extends View {
         }
         else{
             textPaint.setTextSize(36 * density);
-            paintAnglePie.setStrokeWidth(9f);
-            paintAngleArc.setStrokeWidth(9f);
+            paintAnglePie.setStrokeWidth(10f);
+            paintAngleArc.setStrokeWidth(10f);
         }
 
         textPaint.setColor(mZeroLineColor);
