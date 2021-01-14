@@ -135,6 +135,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
             myGaugeTask.cancel(true);
             myGaugeTask = null;
         }
+
+        MainActivity.gaugeScreenOpen = false;
     }
 
     private final CountDownTimer mTimer = new CountDownTimer(72000, 100) {
