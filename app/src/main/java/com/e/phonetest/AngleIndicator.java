@@ -97,7 +97,6 @@ public class AngleIndicator extends View {
 
         paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintBorder.setStyle(Paint.Style.STROKE);
-        paintBorder.setStrokeWidth(2f);
 
         paintLightCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintLightCircle.setStyle(Paint.Style.FILL);
@@ -110,11 +109,9 @@ public class AngleIndicator extends View {
 
         paintAnglePie = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintAnglePie.setStyle(Paint.Style.FILL_AND_STROKE);
-        paintAnglePie.setStrokeWidth(12f);
 
         paintAngleArc = new Paint(Paint.ANTI_ALIAS_FLAG);
         paintAngleArc.setStyle(Paint.Style.STROKE);
-        paintAngleArc.setStrokeWidth(12f);
 
         lgBrush = new Paint(Paint.ANTI_ALIAS_FLAG);
         lgBrush.setStyle(Paint.Style.FILL);
@@ -165,9 +162,9 @@ public class AngleIndicator extends View {
             bmp.recycle();
         }
 
-        rect1 = new RectF(0f, 0f,  getWidth(), getHeight());
-        rectArc = new RectF(6f, 6f,  getWidth() - 6f, getHeight() - 6f);
-        rect2 = new RectF(12f, 12f, getWidth() - 12f, getHeight() - 12f);
+        rect1 = new RectF(0, 0,  getWidth(), getHeight());
+        rect2 = new RectF(getWidth() / 50f, getHeight() / 50f, getWidth() - getWidth() / 50f, getHeight() - getHeight() / 50f);
+        rectArc = new RectF(getWidth() / 100f, getWidth() / 100f,  getWidth() - getWidth() / 100f, getHeight() - getWidth() / 100f);
         RectF rect3 = new RectF(getWidth() / 2f - getWidth() * 0.3f / 7f, getHeight() * 3.1f / 7f, getWidth() / 2f + getWidth() * 0.4f / 7f, getHeight() * 3.9f / 7f);
 
         bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -197,14 +194,57 @@ public class AngleIndicator extends View {
 
         final float density = getResources().getDisplayMetrics().density;
 
-        if (getWidth() < 100 * density)
-            textPaint.setTextSize(14 * density);
-        else if (getWidth() < 200 * density)
+        paintBorder.setStrokeWidth(2f);
+
+        if (getWidth() < 50 * density){
+            textPaint.setTextSize(5 * density);
+            paintBorder.setStrokeWidth(0.5f);
+            paintAnglePie.setStrokeWidth(2f);
+            paintAngleArc.setStrokeWidth(2f);
+            mZeroLineWidth = mZeroLineWidth / 4;
+        }
+        else if (getWidth() < 75 * density){
+            textPaint.setTextSize(8 * density);
+            paintBorder.setStrokeWidth(0.75f);
+            paintAnglePie.setStrokeWidth(3f);
+            paintAngleArc.setStrokeWidth(3f);
+            mZeroLineWidth = mZeroLineWidth / 3;
+        }
+        else if (getWidth() < 100 * density){
+            textPaint.setTextSize(12 * density);
+            paintBorder.setStrokeWidth(1f);
+            paintAnglePie.setStrokeWidth(4f);
+            paintAngleArc.setStrokeWidth(4f);
+            mZeroLineWidth = mZeroLineWidth / 2;
+        }
+        else if (getWidth() < 150 * density){
+            textPaint.setTextSize(16 * density);
+            paintBorder.setStrokeWidth(1.5f);
+            paintAnglePie.setStrokeWidth(5f);
+            paintAngleArc.setStrokeWidth(5f);
+            mZeroLineWidth = mZeroLineWidth * 2 / 3;
+        }
+        else if (getWidth() < 200 * density){
             textPaint.setTextSize(18 * density);
-        else if (getWidth() < 300 * density)
+            paintAnglePie.setStrokeWidth(6f);
+            paintAngleArc.setStrokeWidth(6f);
+            mZeroLineWidth = mZeroLineWidth * 3 / 4;
+        }
+        else if (getWidth() < 250 * density){
+            textPaint.setTextSize(21 * density);
+            paintAnglePie.setStrokeWidth(7f);
+            paintAngleArc.setStrokeWidth(7f);
+        }
+        else if (getWidth() < 300 * density){
             textPaint.setTextSize(24 * density);
-        else
+            paintAnglePie.setStrokeWidth(8f);
+            paintAngleArc.setStrokeWidth(8f);
+        }
+        else{
             textPaint.setTextSize(36 * density);
+            paintAnglePie.setStrokeWidth(9f);
+            paintAngleArc.setStrokeWidth(9f);
+        }
 
         textPaint.setColor(mZeroLineColor);
 
