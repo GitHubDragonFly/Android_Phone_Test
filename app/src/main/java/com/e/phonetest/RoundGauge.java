@@ -200,86 +200,76 @@ public class RoundGauge extends View {
         paintBorder.setColor(Color.BLACK);
         paintOutline.setColor(Color.BLACK);
         paintMajorTick.setColor(mGaugeMajorTicksColor);
+        paintValueText.setColor(mGaugeValueTextColor);
+        paintDescriptionText.setColor(mGaugeDescriptionTextColor);
+        paintMinMax.setColor(mGaugeDescriptionTextColor);
 
         final float density = getResources().getDisplayMetrics().density;
 
-        paintValueText.setColor(mGaugeValueTextColor);
-
-        if (getWidth() < 75 * density){
+        if (getWidth() < 50 * density){
+            paintBorder.setStrokeWidth(0.15f);
+            paintOutline.setStrokeWidth(0.15f);
+            paintMajorTick.setStrokeWidth(0.75f);
+            paintValueText.setTextSize(8 * density);
+            paintDescriptionText.setTextSize(4 * density);
+            paintMinMax.setTextSize(2 * density);
+        }
+        else if (getWidth() < 75 * density){
             paintBorder.setStrokeWidth(0.25f);
             paintOutline.setStrokeWidth(0.25f);
             paintMajorTick.setStrokeWidth(1f);
+            paintValueText.setTextSize(10 * density);
+            paintDescriptionText.setTextSize(6 * density);
+            paintMinMax.setTextSize(4 * density);
+        }
+        else if (getWidth() < 100 * density){
+            paintBorder.setStrokeWidth(0.4f);
+            paintOutline.setStrokeWidth(0.4f);
+            paintMajorTick.setStrokeWidth(1.25f);
+            paintValueText.setTextSize(14 * density);
+            paintDescriptionText.setTextSize(8 * density);
+            paintMinMax.setTextSize(6 * density);
         }
         else if (getWidth() < 150 * density){
-            paintBorder.setStrokeWidth(0.5f);
-            paintOutline.setStrokeWidth(0.5f);
+            paintBorder.setStrokeWidth(0.55f);
+            paintOutline.setStrokeWidth(0.55f);
             paintMajorTick.setStrokeWidth(1.5f);
+            paintValueText.setTextSize(16 * density);
+            paintDescriptionText.setTextSize(11 * density);
+            paintMinMax.setTextSize(8 * density);
+        }
+        else if (getWidth() < 200 * density){
+            paintBorder.setStrokeWidth(0.75f);
+            paintOutline.setStrokeWidth(0.75f);
+            paintMajorTick.setStrokeWidth(2.0f);
+            paintValueText.setTextSize(18 * density);
+            paintDescriptionText.setTextSize(14 * density);
+            paintMinMax.setTextSize(10 * density);
         }
         else if (getWidth() < 250 * density){
-            paintBorder.setStrokeWidth(0.75f);
+            paintBorder.setStrokeWidth(1f);
             paintOutline.setStrokeWidth(1f);
             paintMajorTick.setStrokeWidth(2.5f);
+            paintValueText.setTextSize(21 * density);
+            paintDescriptionText.setTextSize(16 * density);
+            paintMinMax.setTextSize(12 * density);
+        }
+        else if (getWidth() < 300 * density){
+            paintBorder.setStrokeWidth(1.5f);
+            paintOutline.setStrokeWidth(1.5f);
+            paintMajorTick.setStrokeWidth(3f);
+            paintValueText.setTextSize(24 * density);
+            paintDescriptionText.setTextSize(18 * density);
+            paintMinMax.setTextSize(14 * density);
         }
         else{
-            paintBorder.setStrokeWidth(1f);
+            paintBorder.setStrokeWidth(2f);
             paintOutline.setStrokeWidth(2f);
             paintMajorTick.setStrokeWidth(4f);
-        }
-
-        if (getWidth() < 50 * density)
-            paintValueText.setTextSize(8 * density);
-        else if (getWidth() < 75 * density)
-            paintValueText.setTextSize(10 * density);
-        else if (getWidth() < 100 * density)
-            paintValueText.setTextSize(14 * density);
-        else if (getWidth() < 150 * density)
-            paintValueText.setTextSize(16 * density);
-        else if (getWidth() < 200 * density)
-            paintValueText.setTextSize(18 * density);
-        else if (getWidth() < 250 * density)
-            paintValueText.setTextSize(21 * density);
-        else if (getWidth() < 300 * density)
-            paintValueText.setTextSize(24 * density);
-        else
             paintValueText.setTextSize(36 * density);
-
-        paintDescriptionText.setColor(mGaugeDescriptionTextColor);
-
-        if (getWidth() < 50 * density)
-            paintDescriptionText.setTextSize(4 * density);
-        else if (getWidth() < 75 * density)
-            paintDescriptionText.setTextSize(6 * density);
-        else if (getWidth() < 100 * density)
-            paintDescriptionText.setTextSize(8 * density);
-        else if (getWidth() < 150 * density)
-            paintDescriptionText.setTextSize(11 * density);
-        else if (getWidth() < 200 * density)
-            paintDescriptionText.setTextSize(14 * density);
-        else if (getWidth() < 250 * density)
-            paintDescriptionText.setTextSize(16 * density);
-        else if (getWidth() < 300 * density)
-            paintDescriptionText.setTextSize(18 * density);
-        else
             paintDescriptionText.setTextSize(24 * density);
-
-        paintMinMax.setColor(mGaugeDescriptionTextColor);
-
-        if (getWidth() < 50 * density)
-            paintMinMax.setTextSize(2 * density);
-        else if (getWidth() < 75 * density)
-            paintMinMax.setTextSize(4 * density);
-        else if (getWidth() < 100 * density)
-            paintMinMax.setTextSize(6 * density);
-        else if (getWidth() < 150 * density)
-            paintMinMax.setTextSize(8 * density);
-        else if (getWidth() < 200 * density)
-            paintMinMax.setTextSize(10 * density);
-        else if (getWidth() < 250 * density)
-            paintMinMax.setTextSize(12 * density);
-        else if (getWidth() < 300 * density)
-            paintMinMax.setTextSize(14 * density);
-        else
             paintMinMax.setTextSize(18 * density);
+        }
 
         paintPieLower.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 2f, mGaugeLowerCircleColor, ColorUtils.blendARGB(mGaugeLowerCircleColor, Color.BLACK, mGaugeDarkColorRatio), Shader.TileMode.MIRROR));
         paintPieUpper.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mGaugeUpperCircleColor, ColorUtils.blendARGB(mGaugeUpperCircleColor, Color.WHITE, mGaugeLightColorRatio), Shader.TileMode.MIRROR));
