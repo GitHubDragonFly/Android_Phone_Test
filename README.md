@@ -10,7 +10,7 @@ In order to work as designed, it uses permission to access Internet and Network 
 
 It is using the following open source libraries, added to the app in the form of AAR modules:
 
-- [libplctag](https://github.com/libplctag/libplctag) v2.1.20
+- [libplctag](https://github.com/libplctag/libplctag) v2.2.0
 - [jna](https://github.com/java-native-access/jna) v5.6.0
 
 It is also using a modified version of the Tag.java wrapper, part of the libplctag project, so a tag_id for every tag created could be mapped and used in the software.
