@@ -55,6 +55,8 @@ public class GaugeActivity extends AppCompatActivity implements GaugeTaskCallbac
         tvLEDBlinkAddress = findViewById(R.id.tvLEDBlinkAddress);
         textColor = tvGaugeAddress.getTextColors();
 
+        // If no tags are provided, the Gauge Activity screen will be in the Demo mode, showing the red and blue LEDs as well
+
         if (MainActivity.abGaugeAddress.equals("") || MainActivity.abLEDBlinkAddress.equals("")){
             if (MainActivity.abGaugeAddress.equals("")){
                 txtGauge = "";

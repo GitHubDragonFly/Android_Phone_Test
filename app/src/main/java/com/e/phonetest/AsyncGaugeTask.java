@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import org.libplctag.Tag;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("deprecation")
 public class AsyncGaugeTask extends AsyncTask<String, String, String> {
@@ -12,15 +13,17 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
 
     public String gaugeValue = "";
 
-    private String[] name = new String[] {"", ""}, dataType = new String[] {"", ""};
+    private final String[] name = new String[] {"", ""};
+    private final String[] dataType = new String[] {"", ""};
 
     HashMap<String, Integer> dict = new HashMap<>();
-    private Tag GaugeMaster = new Tag();
+    private final Tag GaugeMaster = new Tag();
 
     private int elem_size;
 
     @Override
     protected String doInBackground(String... params) {
+        // Gauge Activity screen is currently setup to accept up to 2 tags, one for gauges and one for the green LED
         String gateway_path_cpu = params[0];
         name[0] = params[1];
         dataType[0] = params[2];
@@ -111,7 +114,7 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
 
                         while (GaugeMaster.getStatus(tag_id) == 1){
                             try {
-                                Thread.sleep(10);
+                                TimeUnit.MILLISECONDS.sleep(10);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
@@ -212,7 +215,7 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
                     }
                 }
 
-                // Publish progress on UI thread continuously, controlled with thread's sleep time.
+                // Publish progress on UI thread continuously, controlled with the sleep time.
 
                 gaugeValue = tempValue.trim();
 
@@ -220,7 +223,7 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
 
                 // Adjust the sleep time if necessary.
                 try {
-                    Thread.sleep(50);
+                    TimeUnit.MILLISECONDS.sleep(50);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
