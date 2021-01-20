@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,ReadABTaskCallback,WriteABTaskCallback,GetCLGXTagsTaskCallback,SetTags,SetPLCParameters {
     private static final int intButtonWriteABTag1 = R.id.btnWriteABTag1;
@@ -299,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @SuppressWarnings("unchecked")
-    public void sendMessageToggleAB(View v){
+    public void sendMessageToggleAB(View v) throws InterruptedException {
         if (tbtnAutoRead.getText().equals(tbtnAutoRead.getTextOn())){
             if (myReadABTask == null) {
                 myReadABTask = new AsyncReadABTask();
@@ -402,6 +403,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             if (myReadABTask != null){
                 myReadABTask.cancel(true);
+
+                // Add check for isCancelled to prevent any subsequent UI update
+                while (!myReadABTask.isCancelled()){
+                    TimeUnit.MILLISECONDS.sleep(5);
+                }
+
                 myReadABTask = null;
             }
 
