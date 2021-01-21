@@ -1,20 +1,20 @@
 package com.e.phonetest;
 
-import android.view.View;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import androidx.core.graphics.ColorUtils;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
-import android.graphics.RadialGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.util.AttributeSet;
+import android.view.View;
+import androidx.core.graphics.ColorUtils;
 import java.util.Locale;
 
 public class RoundGauge extends View {
@@ -41,8 +41,8 @@ public class RoundGauge extends View {
     PointF[] arrowPolygonPoints;
     private RectF rect1, rect2, rect3;
 
-    private Paint bmpPaint, paintBorder, paintRim, paintPieLower, paintPieUpper, paintMajorTick, lgBrush;
-    private Paint paintOutline, paintMinMax, paintValueText, paintDescriptionText;
+    private Paint bmpPaint, borderPaint, rimPaint, pieLowerPaint, pieUpperPaint, majorTickPaint, lgBrush;
+    private Paint outlinePaint, minMaxPaint, valueTextPaint, descriptionTextPaint;
     private Bitmap bmp;
 
     public float getGaugeCurrentValue() {return mGaugeCurrentValue;}
@@ -97,27 +97,27 @@ public class RoundGauge extends View {
         bmpPaint = new Paint();
         bmpPaint.setFilterBitmap(true);
 
-        paintValueText = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        paintMinMax = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
-        paintDescriptionText = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        valueTextPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        minMaxPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
+        descriptionTextPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-        paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBorder.setStyle(Paint.Style.STROKE);
+        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        borderPaint.setStyle(Paint.Style.STROKE);
 
-        paintOutline = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintOutline.setStyle(Paint.Style.STROKE);
+        outlinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        outlinePaint.setStyle(Paint.Style.STROKE);
 
-        paintMajorTick = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintMajorTick.setStyle(Paint.Style.STROKE);
+        majorTickPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        majorTickPaint.setStyle(Paint.Style.STROKE);
 
-        paintPieLower = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintPieLower.setStyle(Paint.Style.FILL_AND_STROKE);
+        pieLowerPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        pieLowerPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        paintPieUpper = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintPieUpper.setStyle(Paint.Style.FILL);
+        pieUpperPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        pieUpperPaint.setStyle(Paint.Style.FILL);
 
-        paintRim = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintRim.setStyle(Paint.Style.FILL);
+        rimPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        rimPaint.setStyle(Paint.Style.FILL);
 
         lgBrush = new Paint(Paint.ANTI_ALIAS_FLAG);
         lgBrush.setStyle(Paint.Style.FILL);
@@ -197,84 +197,84 @@ public class RoundGauge extends View {
         arrowPolygonPath.lineTo(arrowPolygonPoints[6].x, arrowPolygonPoints[6].y);
         arrowPolygonPath.close();
 
-        paintBorder.setColor(Color.BLACK);
-        paintOutline.setColor(Color.BLACK);
-        paintMajorTick.setColor(mGaugeMajorTicksColor);
-        paintValueText.setColor(mGaugeValueTextColor);
-        paintDescriptionText.setColor(mGaugeDescriptionTextColor);
-        paintMinMax.setColor(mGaugeDescriptionTextColor);
+        borderPaint.setColor(Color.BLACK);
+        outlinePaint.setColor(Color.BLACK);
+        majorTickPaint.setColor(mGaugeMajorTicksColor);
+        valueTextPaint.setColor(mGaugeValueTextColor);
+        descriptionTextPaint.setColor(mGaugeDescriptionTextColor);
+        minMaxPaint.setColor(mGaugeDescriptionTextColor);
 
         final float density = getResources().getDisplayMetrics().density;
 
         if (getWidth() < 50 * density){
-            paintBorder.setStrokeWidth(0.15f);
-            paintOutline.setStrokeWidth(0.15f);
-            paintMajorTick.setStrokeWidth(0.75f);
-            paintValueText.setTextSize(8 * density);
-            paintDescriptionText.setTextSize(4 * density);
-            paintMinMax.setTextSize(2 * density);
+            borderPaint.setStrokeWidth(0.15f);
+            outlinePaint.setStrokeWidth(0.15f);
+            majorTickPaint.setStrokeWidth(0.75f);
+            valueTextPaint.setTextSize(8 * density);
+            descriptionTextPaint.setTextSize(4 * density);
+            minMaxPaint.setTextSize(2 * density);
         }
         else if (getWidth() < 75 * density){
-            paintBorder.setStrokeWidth(0.25f);
-            paintOutline.setStrokeWidth(0.25f);
-            paintMajorTick.setStrokeWidth(1f);
-            paintValueText.setTextSize(10 * density);
-            paintDescriptionText.setTextSize(6 * density);
-            paintMinMax.setTextSize(4 * density);
+            borderPaint.setStrokeWidth(0.25f);
+            outlinePaint.setStrokeWidth(0.25f);
+            majorTickPaint.setStrokeWidth(1f);
+            valueTextPaint.setTextSize(10 * density);
+            descriptionTextPaint.setTextSize(6 * density);
+            minMaxPaint.setTextSize(4 * density);
         }
         else if (getWidth() < 100 * density){
-            paintBorder.setStrokeWidth(0.4f);
-            paintOutline.setStrokeWidth(0.4f);
-            paintMajorTick.setStrokeWidth(1.25f);
-            paintValueText.setTextSize(14 * density);
-            paintDescriptionText.setTextSize(8 * density);
-            paintMinMax.setTextSize(6 * density);
+            borderPaint.setStrokeWidth(0.4f);
+            outlinePaint.setStrokeWidth(0.4f);
+            majorTickPaint.setStrokeWidth(1.25f);
+            valueTextPaint.setTextSize(14 * density);
+            descriptionTextPaint.setTextSize(8 * density);
+            minMaxPaint.setTextSize(6 * density);
         }
         else if (getWidth() < 150 * density){
-            paintBorder.setStrokeWidth(0.55f);
-            paintOutline.setStrokeWidth(0.55f);
-            paintMajorTick.setStrokeWidth(1.5f);
-            paintValueText.setTextSize(16 * density);
-            paintDescriptionText.setTextSize(11 * density);
-            paintMinMax.setTextSize(8 * density);
+            borderPaint.setStrokeWidth(0.55f);
+            outlinePaint.setStrokeWidth(0.55f);
+            majorTickPaint.setStrokeWidth(1.5f);
+            valueTextPaint.setTextSize(16 * density);
+            descriptionTextPaint.setTextSize(11 * density);
+            minMaxPaint.setTextSize(8 * density);
         }
         else if (getWidth() < 200 * density){
-            paintBorder.setStrokeWidth(0.75f);
-            paintOutline.setStrokeWidth(0.75f);
-            paintMajorTick.setStrokeWidth(2.0f);
-            paintValueText.setTextSize(18 * density);
-            paintDescriptionText.setTextSize(14 * density);
-            paintMinMax.setTextSize(10 * density);
+            borderPaint.setStrokeWidth(0.75f);
+            outlinePaint.setStrokeWidth(0.75f);
+            majorTickPaint.setStrokeWidth(2.0f);
+            valueTextPaint.setTextSize(18 * density);
+            descriptionTextPaint.setTextSize(14 * density);
+            minMaxPaint.setTextSize(10 * density);
         }
         else if (getWidth() < 250 * density){
-            paintBorder.setStrokeWidth(1f);
-            paintOutline.setStrokeWidth(1f);
-            paintMajorTick.setStrokeWidth(2.5f);
-            paintValueText.setTextSize(21 * density);
-            paintDescriptionText.setTextSize(16 * density);
-            paintMinMax.setTextSize(12 * density);
+            borderPaint.setStrokeWidth(1f);
+            outlinePaint.setStrokeWidth(1f);
+            majorTickPaint.setStrokeWidth(2.5f);
+            valueTextPaint.setTextSize(21 * density);
+            descriptionTextPaint.setTextSize(16 * density);
+            minMaxPaint.setTextSize(12 * density);
         }
         else if (getWidth() < 300 * density){
-            paintBorder.setStrokeWidth(1.5f);
-            paintOutline.setStrokeWidth(1.5f);
-            paintMajorTick.setStrokeWidth(3f);
-            paintValueText.setTextSize(24 * density);
-            paintDescriptionText.setTextSize(18 * density);
-            paintMinMax.setTextSize(14 * density);
+            borderPaint.setStrokeWidth(1.5f);
+            outlinePaint.setStrokeWidth(1.5f);
+            majorTickPaint.setStrokeWidth(3f);
+            valueTextPaint.setTextSize(24 * density);
+            descriptionTextPaint.setTextSize(18 * density);
+            minMaxPaint.setTextSize(14 * density);
         }
         else{
-            paintBorder.setStrokeWidth(2f);
-            paintOutline.setStrokeWidth(2f);
-            paintMajorTick.setStrokeWidth(4f);
-            paintValueText.setTextSize(36 * density);
-            paintDescriptionText.setTextSize(24 * density);
-            paintMinMax.setTextSize(18 * density);
+            borderPaint.setStrokeWidth(2f);
+            outlinePaint.setStrokeWidth(2f);
+            majorTickPaint.setStrokeWidth(4f);
+            valueTextPaint.setTextSize(36 * density);
+            descriptionTextPaint.setTextSize(24 * density);
+            minMaxPaint.setTextSize(18 * density);
         }
 
-        paintPieLower.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 2f, mGaugeLowerCircleColor, ColorUtils.blendARGB(mGaugeLowerCircleColor, Color.BLACK, mGaugeDarkColorRatio), Shader.TileMode.MIRROR));
-        paintPieUpper.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mGaugeUpperCircleColor, ColorUtils.blendARGB(mGaugeUpperCircleColor, Color.WHITE, mGaugeLightColorRatio), Shader.TileMode.MIRROR));
+        pieLowerPaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 2f, mGaugeLowerCircleColor, ColorUtils.blendARGB(mGaugeLowerCircleColor, Color.BLACK, mGaugeDarkColorRatio), Shader.TileMode.MIRROR));
+        pieUpperPaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mGaugeUpperCircleColor, ColorUtils.blendARGB(mGaugeUpperCircleColor, Color.WHITE, mGaugeLightColorRatio), Shader.TileMode.MIRROR));
 
-        paintRim.setColor(mGaugeRimColor);
+        rimPaint.setColor(mGaugeRimColor);
 
         lgBrush.setShader(new LinearGradient(getWidth() / 2f, getHeight() / 2f - 14f, getWidth() / 2f, getHeight() / 2f + 14f, ColorUtils.blendARGB(mGaugeNeedleColor, Color.LTGRAY, 0.5f), mGaugeNeedleColor, Shader.TileMode.MIRROR));
 
@@ -282,20 +282,20 @@ public class RoundGauge extends View {
     }
 
     private void drawCircles(Canvas canvas){
-        canvas.drawOval(rect1, paintRim);
-        canvas.drawOval(rect1, paintBorder);
+        canvas.drawOval(rect1, rimPaint);
+        canvas.drawOval(rect1, borderPaint);
 
-        canvas.drawOval(rect2, paintPieUpper);
-        canvas.drawArc(rect2, 45, 90, true, paintPieLower);
-        canvas.drawArc(rect2, 45, 90, true, paintOutline);
-        canvas.drawOval(rect2, paintBorder);
+        canvas.drawOval(rect2, pieUpperPaint);
+        canvas.drawArc(rect2, 45, 90, true, pieLowerPaint);
+        canvas.drawArc(rect2, 45, 90, true, outlinePaint);
+        canvas.drawOval(rect2, borderPaint);
     }
 
     private void drawMajorTicks(Canvas canvas){
         // Major Ticks
-        canvas.drawLine(0, getHeight() / 2f, getWidth() / 30f, getHeight() / 2f, paintMajorTick);
-        canvas.drawLine(getWidth() / 2f, 0, getWidth() / 2f, getWidth() / 30f, paintMajorTick);
-        canvas.drawLine(getWidth() - getWidth() / 30f, getHeight() / 2f, getWidth(), getHeight() / 2f, paintMajorTick);
+        canvas.drawLine(0, getHeight() / 2f, getWidth() / 30f, getHeight() / 2f, majorTickPaint);
+        canvas.drawLine(getWidth() / 2f, 0, getWidth() / 2f, getWidth() / 30f, majorTickPaint);
+        canvas.drawLine(getWidth() - getWidth() / 30f, getHeight() / 2f, getWidth(), getHeight() / 2f, majorTickPaint);
 
         float rectOutWidth = (float)(Math.cos(Math.PI / 4f) * getWidth());
         float rectOutHeight = (float)(Math.sin(Math.PI / 4f) * getHeight());
@@ -307,8 +307,8 @@ public class RoundGauge extends View {
         float rectInTop = rectOutTop + (float)(Math.sin(Math.PI / 4f)) * (getHeight() / 30f);
         float rectInRight = rectOutRight - (float)(Math.cos(Math.PI / 4f)) * (getWidth() / 30f);
 
-        canvas.drawLine(rectOutLeft, rectOutTop, rectInLeft, rectInTop, paintMajorTick);
-        canvas.drawLine(rectOutRight, rectOutTop, rectInRight, rectInTop, paintMajorTick);
+        canvas.drawLine(rectOutLeft, rectOutTop, rectInLeft, rectInTop, majorTickPaint);
+        canvas.drawLine(rectOutRight, rectOutTop, rectInRight, rectInTop, majorTickPaint);
     }
 
     private void drawArrow(Canvas canvas){
@@ -321,22 +321,22 @@ public class RoundGauge extends View {
 
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
-        canvas.drawPath(arrowPolygonPath, paintOutline);
+        canvas.drawPath(arrowPolygonPath, outlinePaint);
         canvas.drawPath(arrowPolygonPath, lgBrush);
-        canvas.drawOval(rect3, paintOutline);
+        canvas.drawOval(rect3, outlinePaint);
         canvas.drawOval(rect3, lgBrush);
     }
 
     private void drawMinMaxText(Canvas canvas){
-        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() / 4f, getHeight() * 54.5f / 64f, paintMinMax);
+        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMinValue), getWidth() / 4f, getHeight() * 54.5f / 64f, minMaxPaint);
 
-        float tempTextLength = paintMinMax.measureText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue));
-        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue), getWidth() * 3 / 4f - tempTextLength, getHeight() * 54.5f / 64f, paintMinMax);
+        float tempTextLength = minMaxPaint.measureText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue));
+        canvas.drawText(String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", mGaugeMaxValue), getWidth() * 3 / 4f - tempTextLength, getHeight() * 54.5f / 64f, minMaxPaint);
 
         if (mGaugeDescriptionText != null){
             if (!mGaugeDescriptionText.equals("")){
-                tempTextLength = paintDescriptionText.measureText(mGaugeDescriptionText);
-                canvas.drawText(mGaugeDescriptionText, getWidth() / 2f - tempTextLength / 2f, getHeight() * 11 / 15f, paintDescriptionText);
+                tempTextLength = descriptionTextPaint.measureText(mGaugeDescriptionText);
+                canvas.drawText(mGaugeDescriptionText, getWidth() / 2f - tempTextLength / 2f, getHeight() * 11 / 15f, descriptionTextPaint);
             }
         }
     }
@@ -355,7 +355,7 @@ public class RoundGauge extends View {
                 tempText = String.format(Locale.ENGLISH , "%." + mGaugeDecimalPlaces + "f", Math.max(mGaugeMinValue, mGaugeCurrentValue));
         }
 
-        float tempTextLength = paintValueText.measureText(tempText);
-        canvas.drawText(tempText, getWidth() / 2f - tempTextLength / 2f, getHeight() * 3 / 10f, paintValueText);
+        float tempTextLength = valueTextPaint.measureText(tempText);
+        canvas.drawText(tempText, getWidth() / 2f - tempTextLength / 2f, getHeight() * 3 / 10f, valueTextPaint);
     }
 }

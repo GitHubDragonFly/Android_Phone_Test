@@ -29,12 +29,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
         int timeout = Integer.parseInt(params[0].get(0).get(1));
         int number_of_addresses = params[0].get(1).size();
 
-        //String[] values = new String[number_of_addresses];
         String[] tags = new String[number_of_addresses];
         String[] pidName = new String[number_of_addresses];
         String[] dType = new String[number_of_addresses];
         int[] bitIndex = new int[number_of_addresses];
-        //Arrays.fill(values, "");
         Arrays.fill(tags, "");
         Arrays.fill(pidName, "");
         Arrays.fill(dType, "");
@@ -690,20 +688,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     }
                 }
 
-                // Publish progress on UI thread when value has changed.
-
-                //if (!values[i].equals(tempValue)){
-                //    values[i] = tempValue.trim();
-                //    value = tempValue.trim();
-                //    tempValue = "";
-
-                //    callerID = params[0].get(2).get(i);
-
-                //    publishProgress();
-                //}
-
-
-                // Publish progress on UI thread continuously, controlled with thread's sleep time.
+                // Publish progress on UI thread continuously, controlled with sleep time.
 
                 value = tempValue.trim();
 
@@ -711,7 +696,6 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
                 publishProgress();
 
-                // Slow down the communication to give time for UI to update all the values.
                 // Adjust the sleep time if necessary.
                 try {
                     TimeUnit.MILLISECONDS.sleep(50);

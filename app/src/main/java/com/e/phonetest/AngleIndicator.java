@@ -1,21 +1,21 @@
 package com.e.phonetest;
 
-import android.view.View;
 import android.content.Context;
-import androidx.core.graphics.ColorUtils;
-import java.util.Locale;
 import android.content.res.TypedArray;
-import android.util.AttributeSet;
-import android.graphics.LinearGradient;
-import android.graphics.RadialGradient;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Shader;
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
+import android.util.AttributeSet;
+import android.view.View;
+import androidx.core.graphics.ColorUtils;
+import java.util.Locale;
 
 public class AngleIndicator extends View {
 
@@ -38,11 +38,11 @@ public class AngleIndicator extends View {
     private boolean mShowAngleArc, mShowAnglePie, mShowDegreeSign, mShowDirection, mShowZeroLine;
     private int mArcPieColor, mArrowColor, mCircleColor, mZeroLineColor, mZeroLinePosition;
     private float mCurrentValue, mZeroLineWidth, mCircleLightColorRatio, mCircleDarkColorRatio;
-    Path polygonPath = new Path(), arcPath = new Path();
-    PointF[] points;
+    Path arrowPolygonPath = new Path(), arcPath = new Path();
+    PointF[] arrowPolygonPoints;
     private RectF rect1, rectArc, rect2;
 
-    private Paint bmpPaint, paintBorder, paintLightCircle, paintDarkCircle, paintZeroLine, paintAngleArc, paintAnglePie, lgBrush, textPaint;
+    private Paint bmpPaint, borderPaint, lightCirclePaint, darkCirclePaint, zeroLinePaint, angleArcPaint, anglePiePaint, lgBrush, textPaint;
     private Bitmap bmp;
 
     public float getCurrentValue() {return mCurrentValue;}
@@ -95,23 +95,23 @@ public class AngleIndicator extends View {
 
         textPaint = new Paint(Paint.LINEAR_TEXT_FLAG | Paint.ANTI_ALIAS_FLAG);
 
-        paintBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintBorder.setStyle(Paint.Style.STROKE);
+        borderPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        borderPaint.setStyle(Paint.Style.STROKE);
 
-        paintLightCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintLightCircle.setStyle(Paint.Style.FILL);
+        lightCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        lightCirclePaint.setStyle(Paint.Style.FILL);
 
-        paintDarkCircle = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintDarkCircle.setStyle(Paint.Style.FILL);
+        darkCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        darkCirclePaint.setStyle(Paint.Style.FILL);
 
-        paintZeroLine = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintZeroLine.setStyle(Paint.Style.STROKE);
+        zeroLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        zeroLinePaint.setStyle(Paint.Style.STROKE);
 
-        paintAnglePie = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintAnglePie.setStyle(Paint.Style.FILL_AND_STROKE);
+        anglePiePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        anglePiePaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        paintAngleArc = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paintAngleArc.setStyle(Paint.Style.STROKE);
+        angleArcPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        angleArcPaint.setStyle(Paint.Style.STROKE);
 
         lgBrush = new Paint(Paint.ANTI_ALIAS_FLAG);
         lgBrush.setStyle(Paint.Style.FILL);
@@ -171,7 +171,7 @@ public class AngleIndicator extends View {
 
         final Canvas canvas = new Canvas(bmp);
 
-        points = new PointF[] {
+        arrowPolygonPoints = new PointF[] {
                 new PointF(getWidth() / 2f, getHeight() * 3.1f / 7f),
                 new PointF(getWidth() * 5.25f / 7f, getHeight() * 3.1f / 7f),
                 new PointF(getWidth() * 5.25f / 7f, getHeight() * 6f / 16f),
@@ -181,81 +181,81 @@ public class AngleIndicator extends View {
                 new PointF(getWidth() / 2f, getHeight() * 3.9f / 7f)
         };
 
-        polygonPath.reset();
-        polygonPath.moveTo(points[0].x, points[0].y);
-        polygonPath.lineTo(points[1].x, points[1].y);
-        polygonPath.lineTo(points[2].x, points[2].y);
-        polygonPath.lineTo(points[3].x, points[3].y);
-        polygonPath.lineTo(points[4].x, points[4].y);
-        polygonPath.lineTo(points[5].x, points[5].y);
-        polygonPath.lineTo(points[6].x, points[6].y);
-        polygonPath.addArc(rect3, 90, 180);
-        polygonPath.close();
+        arrowPolygonPath.reset();
+        arrowPolygonPath.moveTo(arrowPolygonPoints[0].x, arrowPolygonPoints[0].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[1].x, arrowPolygonPoints[1].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[2].x, arrowPolygonPoints[2].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[3].x, arrowPolygonPoints[3].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[4].x, arrowPolygonPoints[4].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[5].x, arrowPolygonPoints[5].y);
+        arrowPolygonPath.lineTo(arrowPolygonPoints[6].x, arrowPolygonPoints[6].y);
+        arrowPolygonPath.addArc(rect3, 90, 180);
+        arrowPolygonPath.close();
 
         final float density = getResources().getDisplayMetrics().density;
 
-        paintBorder.setStrokeWidth(2f);
+        borderPaint.setStrokeWidth(2f);
 
         if (getWidth() < 50 * density){
             textPaint.setTextSize(5 * density);
-            paintBorder.setStrokeWidth(0.5f);
-            paintAnglePie.setStrokeWidth(2f);
-            paintAngleArc.setStrokeWidth(2f);
+            borderPaint.setStrokeWidth(0.5f);
+            anglePiePaint.setStrokeWidth(2f);
+            angleArcPaint.setStrokeWidth(2f);
             mZeroLineWidth = mZeroLineWidth / 4;
         }
         else if (getWidth() < 75 * density){
             textPaint.setTextSize(8 * density);
-            paintBorder.setStrokeWidth(0.75f);
-            paintAnglePie.setStrokeWidth(3f);
-            paintAngleArc.setStrokeWidth(3f);
+            borderPaint.setStrokeWidth(0.75f);
+            anglePiePaint.setStrokeWidth(3f);
+            angleArcPaint.setStrokeWidth(3f);
             mZeroLineWidth = mZeroLineWidth / 3;
         }
         else if (getWidth() < 100 * density){
             textPaint.setTextSize(12 * density);
-            paintBorder.setStrokeWidth(1f);
-            paintAnglePie.setStrokeWidth(4f);
-            paintAngleArc.setStrokeWidth(4f);
+            borderPaint.setStrokeWidth(1f);
+            anglePiePaint.setStrokeWidth(4f);
+            angleArcPaint.setStrokeWidth(4f);
             mZeroLineWidth = mZeroLineWidth / 2;
         }
         else if (getWidth() < 150 * density){
             textPaint.setTextSize(16 * density);
-            paintBorder.setStrokeWidth(1.5f);
-            paintAnglePie.setStrokeWidth(4f);
-            paintAngleArc.setStrokeWidth(4f);
+            borderPaint.setStrokeWidth(1.5f);
+            anglePiePaint.setStrokeWidth(4f);
+            angleArcPaint.setStrokeWidth(4f);
             mZeroLineWidth = mZeroLineWidth * 2 / 3;
         }
         else if (getWidth() < 200 * density){
             textPaint.setTextSize(18 * density);
-            paintAnglePie.setStrokeWidth(5f);
-            paintAngleArc.setStrokeWidth(5f);
+            anglePiePaint.setStrokeWidth(5f);
+            angleArcPaint.setStrokeWidth(5f);
             mZeroLineWidth = mZeroLineWidth * 3 / 4;
         }
         else if (getWidth() < 250 * density){
             textPaint.setTextSize(21 * density);
-            paintAnglePie.setStrokeWidth(6f);
-            paintAngleArc.setStrokeWidth(6f);
+            anglePiePaint.setStrokeWidth(6f);
+            angleArcPaint.setStrokeWidth(6f);
         }
         else if (getWidth() < 300 * density){
             textPaint.setTextSize(24 * density);
-            paintAnglePie.setStrokeWidth(8f);
-            paintAngleArc.setStrokeWidth(8f);
+            anglePiePaint.setStrokeWidth(8f);
+            angleArcPaint.setStrokeWidth(8f);
         }
         else{
             textPaint.setTextSize(36 * density);
-            paintAnglePie.setStrokeWidth(10f);
-            paintAngleArc.setStrokeWidth(10f);
+            anglePiePaint.setStrokeWidth(10f);
+            angleArcPaint.setStrokeWidth(10f);
         }
 
         textPaint.setColor(mZeroLineColor);
 
-        paintLightCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.WHITE, mCircleLightColorRatio), Shader.TileMode.MIRROR));
-        paintDarkCircle.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.BLACK, mCircleDarkColorRatio), Shader.TileMode.MIRROR));
+        lightCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.WHITE, mCircleLightColorRatio), Shader.TileMode.MIRROR));
+        darkCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.BLACK, mCircleDarkColorRatio), Shader.TileMode.MIRROR));
 
-        paintZeroLine.setStrokeWidth(mZeroLineWidth);
-        paintZeroLine.setColor(mZeroLineColor);
+        zeroLinePaint.setStrokeWidth(mZeroLineWidth);
+        zeroLinePaint.setColor(mZeroLineColor);
 
-        paintAnglePie.setColor(mArcPieColor);
-        paintAngleArc.setColor(mArcPieColor);
+        anglePiePaint.setColor(mArcPieColor);
+        angleArcPaint.setColor(mArcPieColor);
 
         lgBrush.setShader(new LinearGradient(getWidth() / 2f, getHeight() / 2f, getWidth(), getHeight() / 2.0f, ColorUtils.blendARGB(mArrowColor, Color.BLACK, 0.3f), mArrowColor, Shader.TileMode.MIRROR));
 
@@ -263,17 +263,17 @@ public class AngleIndicator extends View {
     }
 
     private void drawCircles(Canvas canvas){
-        canvas.drawOval(rect1, paintLightCircle);
-        canvas.drawOval(rect1, paintBorder);
+        canvas.drawOval(rect1, lightCirclePaint);
+        canvas.drawOval(rect1, borderPaint);
 
-        canvas.drawOval(rect2, paintDarkCircle);
-        canvas.drawOval(rect2, paintBorder);
+        canvas.drawOval(rect2, darkCirclePaint);
+        canvas.drawOval(rect2, borderPaint);
 
         if (mShowAnglePie)
             if (mZeroLinePosition == 90 || mZeroLinePosition == 270)
-                canvas.drawArc(rectArc, mZeroLinePosition + 180, -(mCurrentValue % 360), true, paintAnglePie);
+                canvas.drawArc(rectArc, mZeroLinePosition + 180, -(mCurrentValue % 360), true, anglePiePaint);
             else
-                canvas.drawArc(rectArc, mZeroLinePosition, -(mCurrentValue % 360), true, paintAnglePie);
+                canvas.drawArc(rectArc, mZeroLinePosition, -(mCurrentValue % 360), true, anglePiePaint);
         else if (mShowAngleArc){
             if (mZeroLinePosition == 90 || mZeroLinePosition == 270){
                 arcPath.reset();
@@ -284,7 +284,7 @@ public class AngleIndicator extends View {
                 arcPath.arcTo(rectArc, mZeroLinePosition, -(mCurrentValue % 360), true);
             }
 
-            canvas.drawPath(arcPath, paintAngleArc);
+            canvas.drawPath(arcPath, angleArcPaint);
         }
     }
 
@@ -293,16 +293,16 @@ public class AngleIndicator extends View {
              switch (mZeroLinePosition)
              {
                  case 0: // East
-                     canvas.drawLine(getWidth() - 2f, getHeight() / 2f, getWidth() / 2f, getHeight() / 2f, paintZeroLine);
+                     canvas.drawLine(getWidth() - 2f, getHeight() / 2f, getWidth() / 2f, getHeight() / 2f, zeroLinePaint);
                      break;
                  case 90: // North
-                     canvas.drawLine(getWidth() / 2f, 1, getWidth() / 2f, getHeight() / 2f, paintZeroLine);
+                     canvas.drawLine(getWidth() / 2f, 1, getWidth() / 2f, getHeight() / 2f, zeroLinePaint);
                      break;
                  case 180: // West
-                     canvas.drawLine(2, getWidth() / 2f, getWidth() / 2f, getHeight() / 2f, paintZeroLine);
+                     canvas.drawLine(2, getWidth() / 2f, getWidth() / 2f, getHeight() / 2f, zeroLinePaint);
                      break;
                  default: // South
-                     canvas.drawLine(getWidth() / 2f, getHeight() - 2f, getWidth() / 2f, getHeight() / 2f, paintZeroLine);
+                     canvas.drawLine(getWidth() / 2f, getHeight() - 2f, getWidth() / 2f, getHeight() / 2f, zeroLinePaint);
                      break;
              }
          }
@@ -318,7 +318,7 @@ public class AngleIndicator extends View {
 
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
-        canvas.drawPath(polygonPath, lgBrush);
+        canvas.drawPath(arrowPolygonPath, lgBrush);
     }
 
     private void drawText(Canvas canvas){
@@ -329,8 +329,7 @@ public class AngleIndicator extends View {
 
         float value = mCurrentValue + mZeroLinePosition;
         float value2show = mCurrentValue % 360;
-        float mod = value % 360;
-        float modValue = Math.abs(mod);
+        float modValue = Math.abs(value % 360);
 
         if (mShowDirection){
             if ((modValue >= 337.5 && modValue <= 360) || (modValue >= 0 && modValue < 22.5))
