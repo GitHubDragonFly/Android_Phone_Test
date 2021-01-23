@@ -63,14 +63,9 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
                     spinABCPU.getSelectedItem().toString().equals("logixpccc") ||
                     spinABCPU.getSelectedItem().toString().equals("njnx")) {
 
-                String ipAddress = "192.168.1.21";
-                etABIP.setText(ipAddress);
-                etABPath.setText("1,3");
                 etABProgram.setEnabled(spinABCPU.getSelectedItem().toString().equals("controllogix"));
             } else {
                 etABProgram.setEnabled(false);
-                String ipAddress = "192.168.1.10";
-                etABIP.setText(ipAddress);
                 etABPath.setText("");
             }
         }
