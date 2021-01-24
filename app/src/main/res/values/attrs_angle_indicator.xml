@@ -11,6 +11,7 @@
         <attr name="aiCircleDarkColorRatio" format="float" />
         <attr name="aiArcPieColor" format="color" />
         <attr name="aiArrowColor" format="color" />
+        <attr name="aiTextColor" format="color" />
         <attr name="aiCircleColor" format="color" />
         <attr name="aiZeroLineColor" format="color" />
         <attr name="aiZeroLinePosition" format="enum">

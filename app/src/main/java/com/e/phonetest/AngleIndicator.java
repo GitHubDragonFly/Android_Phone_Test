@@ -22,7 +22,8 @@ public class AngleIndicator extends View {
     public static final int AI_CIRCLE_COLOR = Color.BLUE;
     public static final int AI_ARROW_COLOR = Color.RED;
     public static final int AI_ARC_PIE_COLOR = Color.GREEN;
-    public static final int AI_ZERO_LINE_COLOR = Color.YELLOW;
+    public static final int AI_ZERO_LINE_COLOR = Color.BLACK;
+    public static final int AI_TEXT_COLOR = Color.YELLOW;
     public static final int AI_ZERO_LINE_POSITION = 0;
     public static final float AI_ZERO_LINE_WIDTH = 4f;
     public static final float AI_CURRENT_VALUE = 0f;
@@ -36,13 +37,13 @@ public class AngleIndicator extends View {
     public static final boolean AI_SHOW_ZERO_LINE = false;
 
     private boolean mShowAngleArc, mShowAnglePie, mShowDegreeSign, mShowDirection, mShowZeroLine;
-    private int mArcPieColor, mArrowColor, mCircleColor, mZeroLineColor, mZeroLinePosition;
+    private int mArcPieColor, mArrowColor, mTextColor, mCircleColor, mZeroLineColor, mZeroLinePosition;
     private float mCurrentValue, mZeroLineWidth, mCircleLightColorRatio, mCircleDarkColorRatio;
     Path arrowPolygonPath = new Path(), arcPath = new Path();
     PointF[] arrowPolygonPoints;
-    private RectF rect1, rectArc, rect2;
+    private RectF rectOuter, rectInner, rectArc, rectDot;
 
-    private Paint bmpPaint, borderPaint, lightCirclePaint, darkCirclePaint, zeroLinePaint, angleArcPaint, anglePiePaint, lgBrush, textPaint;
+    private Paint bmpPaint, borderPaint, dotPaint, lightCirclePaint, darkCirclePaint, zeroLinePaint, angleArcPaint, anglePiePaint, lgBrush, textPaint;
     private Bitmap bmp;
 
     public float getCurrentValue() {return mCurrentValue;}
@@ -75,6 +76,7 @@ public class AngleIndicator extends View {
 
         mCircleColor = typedArray.getColor(R.styleable.AngleIndicator_aiCircleColor, AI_CIRCLE_COLOR);
         mArcPieColor = typedArray.getColor(R.styleable.AngleIndicator_aiArcPieColor, AI_ARC_PIE_COLOR);
+        mTextColor = typedArray.getColor(R.styleable.AngleIndicator_aiTextColor, AI_TEXT_COLOR);
         mArrowColor = typedArray.getColor(R.styleable.AngleIndicator_aiArrowColor, AI_ARROW_COLOR);
         mZeroLineColor = typedArray.getColor(R.styleable.AngleIndicator_aiZeroLineColor, AI_ZERO_LINE_COLOR);
         mShowAngleArc = typedArray.getBoolean(R.styleable.AngleIndicator_aiShowAngleArc, AI_SHOW_ANGLE_ARC);
@@ -113,16 +115,19 @@ public class AngleIndicator extends View {
         angleArcPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         angleArcPaint.setStyle(Paint.Style.STROKE);
 
+        dotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        dotPaint.setStyle(Paint.Style.FILL);
+
         lgBrush = new Paint(Paint.ANTI_ALIAS_FLAG);
         lgBrush.setStyle(Paint.Style.FILL);
     }
 
     @Override
     protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
-        // maintain the square layout
         final int canvasWidth = MeasureSpec.getSize(widthMeasureSpec);
         final int canvasHeight = MeasureSpec.getSize(heightMeasureSpec);
 
+        // maintain the square layout
         if (canvasWidth > canvasHeight) {
             super.onMeasure(
                     MeasureSpec.makeMeasureSpec(canvasHeight, MeasureSpec.EXACTLY),
@@ -162,10 +167,13 @@ public class AngleIndicator extends View {
             bmp.recycle();
         }
 
-        rect1 = new RectF(0, 0,  getWidth(), getHeight());
-        rect2 = new RectF(getWidth() / 50f, getHeight() / 50f, getWidth() - getWidth() / 50f, getHeight() - getHeight() / 50f);
+        rectOuter = new RectF(0, 0,  getWidth(), getHeight());
+        rectInner = new RectF(getWidth() / 50f, getHeight() / 50f, getWidth() - getWidth() / 50f, getHeight() - getHeight() / 50f);
         rectArc = new RectF(getWidth() / 100f, getWidth() / 100f,  getWidth() - getWidth() / 100f, getHeight() - getWidth() / 100f);
-        RectF rect3 = new RectF(getWidth() / 2f - getWidth() * 0.3f / 7f, getHeight() * 3.1f / 7f, getWidth() / 2f + getWidth() * 0.4f / 7f, getHeight() * 3.9f / 7f);
+        RectF rectArrowArc = new RectF(getWidth() / 2f - getWidth() * 0.3f / 7f, getHeight() * 3.1f / 7f, getWidth() / 2f + getWidth() * 0.4f / 7f, getHeight() * 3.9f / 7f);
+
+        // Limit the maximum value of zero line width
+        mZeroLineWidth = Math.min(rectArrowArc.width() / 3f, mZeroLineWidth);
 
         bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
 
@@ -189,7 +197,7 @@ public class AngleIndicator extends View {
         arrowPolygonPath.lineTo(arrowPolygonPoints[4].x, arrowPolygonPoints[4].y);
         arrowPolygonPath.lineTo(arrowPolygonPoints[5].x, arrowPolygonPoints[5].y);
         arrowPolygonPath.lineTo(arrowPolygonPoints[6].x, arrowPolygonPoints[6].y);
-        arrowPolygonPath.addArc(rect3, 90, 180);
+        arrowPolygonPath.addArc(rectArrowArc, 90, 180);
         arrowPolygonPath.close();
 
         final float density = getResources().getDisplayMetrics().density;
@@ -246,13 +254,17 @@ public class AngleIndicator extends View {
             angleArcPaint.setStrokeWidth(10f);
         }
 
-        textPaint.setColor(mZeroLineColor);
+        rectDot = new RectF(getWidth() / 2f - mZeroLineWidth / 2f, getHeight() / 2f - mZeroLineWidth / 2f, getWidth() / 2f + mZeroLineWidth / 2f, getHeight() / 2f + mZeroLineWidth / 2f);
 
-        lightCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect1.width() / 2f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.WHITE, mCircleLightColorRatio), Shader.TileMode.MIRROR));
-        darkCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rect2.width() / 3f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.BLACK, mCircleDarkColorRatio), Shader.TileMode.MIRROR));
+        textPaint.setColor(mTextColor);
+
+        lightCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rectOuter.width() / 2f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.WHITE, mCircleLightColorRatio), Shader.TileMode.MIRROR));
+        darkCirclePaint.setShader(new RadialGradient(getWidth() / 2f, getHeight() / 2f, rectInner.width() / 3f, mCircleColor, ColorUtils.blendARGB(mCircleColor, Color.BLACK, mCircleDarkColorRatio), Shader.TileMode.MIRROR));
 
         zeroLinePaint.setStrokeWidth(mZeroLineWidth);
         zeroLinePaint.setColor(mZeroLineColor);
+
+        dotPaint.setColor(mZeroLineColor);
 
         anglePiePaint.setColor(mArcPieColor);
         angleArcPaint.setColor(mArcPieColor);
@@ -263,11 +275,11 @@ public class AngleIndicator extends View {
     }
 
     private void drawCircles(Canvas canvas){
-        canvas.drawOval(rect1, lightCirclePaint);
-        canvas.drawOval(rect1, borderPaint);
+        canvas.drawOval(rectOuter, lightCirclePaint);
+        canvas.drawOval(rectOuter, borderPaint);
 
-        canvas.drawOval(rect2, darkCirclePaint);
-        canvas.drawOval(rect2, borderPaint);
+        canvas.drawOval(rectInner, darkCirclePaint);
+        canvas.drawOval(rectInner, borderPaint);
 
         if (mShowAnglePie)
             if (mZeroLinePosition == 90 || mZeroLinePosition == 270)
@@ -319,6 +331,11 @@ public class AngleIndicator extends View {
         canvas.translate(-getWidth() / 2f, -getHeight() / 2f);
 
         canvas.drawPath(arrowPolygonPath, lgBrush);
+
+        // Draw centre dot if zero line is also being shown
+        if (mShowZeroLine){
+            canvas.drawOval(rectDot, dotPaint);
+        }
     }
 
     private void drawText(Canvas canvas){
