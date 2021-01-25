@@ -37,7 +37,7 @@ The red and blue LEDs are only visible and functional in the Demo mode.
 There might be bugs in the app. Not everything could be tested by me, since I don't have access to all the different PLCs supported by the libplctag library.
 See the libplctag website for all PLCs supported by the library.
 
-Screenshots folder has pictures of this app running inside the Android x86 emulator phone (Pixel 3a API 30).
+Screenshots folder has pictures of this app running inside the Android x86 emulator phone (Pixel 3a API 30) as well as BlueStacks emulator.
 The app was also tested as working on an old Samsung phone with arm processor and Android 4.4.2.
 
 # Build
