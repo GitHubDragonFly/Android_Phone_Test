@@ -65,4 +65,6 @@ This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Librar
 Any and all trademarks, either directly on indirectly mentioned in this project, belong to their respective owners.
 
 # Useful Resources
-The AdvancedHMI website [forum](https://www.advancedhmi.com/forum/), which is another open source project providing communication with a large number of different PLCs.
+Other open source projects:
+- The AdvancedHMI website [forum](https://www.advancedhmi.com/forum/), providing communication with a large number of different PLCs.
+- The [pylogix](https://github.com/dmroeder/pylogix) and [pycomm3](https://github.com/ottowayi/pycomm3) repositories.
