@@ -14,7 +14,8 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
 
     public String value = "", callerID = "";
     private String name = "";
-    private int elem_size, elem_count, customStringLength;
+    private int elem_size;
+    private int customStringLength;
     HashMap<String, Integer> dict = new HashMap<>();
     private final Tag ABMaster = new Tag();
 
@@ -44,6 +45,8 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                 int tag_id;
 
                 if (dict.size() != number_of_addresses){
+                    int elem_count = 1;
+
                     String fullString = params[0].get(1).get(i);
                     fullString = fullString.replace(" ", "");
 
@@ -79,12 +82,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                     switch (dataType) {
                         case "bool":
                             elem_size = 1;
-                            elem_count = 1;
                             break;
                         case "int8":
                         case "uint8":
                             elem_size = 1;
-                            elem_count = 1;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -93,21 +94,25 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int16":
                         case "uint16":
                             elem_size = 2;
-                            elem_count = 1;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
                             }
                             break;
                         case "bool array":
-                            elem_size = 2;
-                            elem_count = 2;
+                            elem_size = 4;
+
+                            if (name.contains("[") && !name.contains(",") && name.contains("]")){
+                                bitIndex[i] = Integer.parseInt(name.substring(name.indexOf('[') + 1, name.indexOf(']')));
+
+                                elem_count = (int)Math.ceil(bitIndex[i] / (elem_size * 8f));
+                                name = name.substring(0, name.indexOf("[") + 1) + '0' + "]"; // Workaround
+                            }
                             break;
                         case "int32":
                         case "uint32":
                         case "float32":
-                            elem_size = 2;
-                            elem_count = 2;
+                            elem_size = 4;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -116,8 +121,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int64":
                         case "uint64":
                         case "float64":
-                            elem_size = 2;
-                            elem_count = 4;
+                            elem_size = 8;
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -125,12 +129,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             break;
                         case "int128":
                         case "uint128":
-                            elem_size = 2;
-                            elem_count = 8;
+                            elem_size = 16;
                             break;
                         case "custom string":
                             elem_size = (int)Math.ceil(customStringLength / 8F) * 8;
-                            elem_count = 1;
                             break;
                         case "string":
                             if (cpu.equals("micro800")) {
@@ -140,7 +142,6 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             } else {
                                 elem_size = 84;
                             }
-                            elem_count = 1;
                             break;
                         case "timer":
                         case "counter":
@@ -149,8 +150,7 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                             {
                                 if (name.endsWith(".PRE") || name.endsWith(".ACC") || name.endsWith(".LEN") || name.endsWith(".POS"))
                                 {
-                                    elem_size = 2;
-                                    elem_count = 2;
+                                    elem_size = 4;
                                     dataType = "int32";
                                 }
                                 else if (name.endsWith(".EN") || name.endsWith(".TT") || name.endsWith(".DN") ||
@@ -160,12 +160,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                         name.endsWith(".IN") || name.endsWith(".FD"))
                                 {
                                     elem_size = 1;
-                                    elem_count = 1;
                                     dataType = "bool";
                                 }
                                 else {
-                                    elem_size = 2;
-                                    elem_count = 6;
+                                    elem_size = 12;
                                 }
                             }
                             else
@@ -173,35 +171,20 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                                 if (name.endsWith(".PRE") || name.endsWith(".ACC") || name.endsWith(".LEN") || name.endsWith(".POS"))
                                 {
                                     elem_size = 2;
-                                    elem_count = 1;
                                     dataType = "int16";
                                 }
                                 else {
-                                    elem_size = 2;
-                                    elem_count = 3;
+                                    elem_size = 6;
                                 }
                             }
                             break;
                         case "pid":
-                            elem_size = 2;
-                            elem_count = 23;
+                            elem_size = 46;
                             if (name.contains(".")){
                                 pidName[i] = name;
                                 name = name.substring(0, name.indexOf(".")); // Workaround
                             }
                             break;
-                    }
-
-                    if (dataType.equals("bool array")){
-                        if (name.contains("[") && !name.contains(",") && name.contains("]")){
-                            int tempBitIndex = Integer.parseInt(name.substring(name.indexOf('[') + 1, name.indexOf(']')));
-
-                            int wordStart = (int)Math.floor((tempBitIndex / (elem_size * elem_count * 8.0)));
-                            bitIndex[i] = tempBitIndex - wordStart * (elem_size * elem_count * 8);
-
-                            name = name.substring(0, name.indexOf("[") + 1) + wordStart + "]"; // Workaround
-                            dataType = "int32";
-                        }
                     }
 
                     String tagABString = "protocol=ab_eip&";

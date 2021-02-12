@@ -43,6 +43,8 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
                 String tempValue = "";
 
                 if (dict.size() != 2){
+                    int elem_count = 1;
+
                     if (name[i].contains("/")){
                         bitIndex[i] = Integer.parseInt(name[i].substring(name[i].indexOf('/') + 1));
                         name[i] = name[i].substring(0, name[i].indexOf('/'));
@@ -70,6 +72,13 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
                             break;
                         case "bool array":
                             elem_size = 4;
+
+                            if (name[i].contains("[") && !name[i].contains(",") && name[i].contains("]")) {
+                                bitIndex[i] = Integer.parseInt(name[i].substring(name[i].indexOf('[') + 1, name[i].indexOf(']')));
+
+                                elem_count = (int) Math.ceil(bitIndex[i] / (elem_size * 8f));
+                                name[i] = name[i].substring(0, name[i].indexOf("[") + 1) + '0' + "]"; // Workaround
+                            }
                             break;
                         case "int32":
                         case "uint32":
@@ -91,24 +100,12 @@ public class AsyncGaugeTask extends AsyncTask<String, String, String> {
                             break;
                     }
 
-                    if (dataType[i].equals("bool array")){
-                        if (name[i].contains("[") && !name[i].contains(",") && name[i].contains("]")){
-                            int tempBitIndex = Integer.parseInt(name[i].substring(name[i].indexOf('[') + 1, name[i].indexOf(']')));
-
-                            int wordStart = (int)Math.floor((tempBitIndex / (elem_size * 8.0)));
-                            bitIndex[i] = tempBitIndex - wordStart * (elem_size * 8);
-
-                            name[i] = name[i].substring(0, name[i].indexOf("[") + 1) + wordStart + "]"; // Workaround
-                            dataType[i] = "int32";
-                        }
-                    }
-
                     if (name[i].equals("")){
                         tags[i] = "";
                         dict.put(tags[i], tag_id);
                     } else {
                         String tagABString = "protocol=ab_eip&";
-                        tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=1&name=" + name[i];
+                        tagABString += gateway_path_cpu + "&elem_size=" + elem_size + "&elem_count=" + elem_count + "&name=" + name[i];
 
                         tag_id = GaugeMaster.TagCreate(tagABString, timeout);
 
