@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import org.libplctag.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -47,6 +48,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     AsyncTaskGetCLGXTags myTaskGetCLGXTags = null;
     AsyncWriteABTask myWriteABTask = null;
 
+    private final Tag Master = new Tag();
+
+    public static int version_major;
+    public static int version_minor;
+    public static int version_patch;
+
     private static class ABAddressInfo
     {
         EditText etABTag;
@@ -63,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     EditText etABx, etAB1, etAB2, etAB3, etAB4, etABGaugeTag, etABLEDBlinkTag, tvABx, tvAB1, tvAB2, tvAB3, tvAB4;
     Button btnGetCLGXTags, btnClearTags, btnSettings, btnGauge, btnWriteCaller, btnWriteAB1, btnWriteAB2, btnWriteAB3, btnWriteAB4;
-    TextView lblWriteMessage;
+    TextView lblVersion, lblWriteMessage;
     ToggleButton tbtnAutoRead;
     Spinner spinCLGXTags;
 
@@ -87,6 +94,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         GetCLGXTagstaskCallback = this;
         setPLCParameters = this;
         setTags = this;
+
+        version_major = Master.getIntAttribute(0, "version_major", 0);
+        version_minor = Master.getIntAttribute(0, "version_minor", 0);
+        version_patch = Master.getIntAttribute(0, "version_patch", 0);
 
         spinCLGXTags = findViewById(R.id.spinnerCLGXTags);
         spinCLGXTags.setOnItemSelectedListener(this);
@@ -199,6 +210,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         etABGaugeTag = findViewById(R.id.etABGaugeTag);
         etABLEDBlinkTag = findViewById(R.id.etABLEDBlinkTag);
 
+        lblVersion = findViewById(R.id.labelVersion);
+        String ver = "libplctag v" + version_major + "." + version_minor + "." + version_patch;
+        lblVersion.setText(ver);
+
         lblWriteMessage = findViewById(R.id.labelWriteMessage);
     }
 
@@ -296,6 +311,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             btnGetCLGXTags.setEnabled(false);
             btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
+            btnSettings.setEnabled(false);
+            btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_off));
         }
     }
 
@@ -661,6 +678,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         btnGetCLGXTags.setEnabled(true);
         btnGetCLGXTags.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
+        btnSettings.setEnabled(true);
+        btnSettings.setBackground(ContextCompat.getDrawable(this, android.R.drawable.button_onoff_indicator_on));
 
         getCLGXTagsRunning = false;
     }

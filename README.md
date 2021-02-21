@@ -10,10 +10,13 @@ In order to work as designed, it uses permission to access Internet and Network 
 
 It is using the following open source libraries, added to the app in the form of AAR modules:
 
-- [libplctag](https://github.com/libplctag/libplctag) v2.2.0
+- [libplctag](https://github.com/libplctag/libplctag) v2.1.20
 - [jna](https://github.com/java-native-access/jna) v5.6.0
 
-It is also using a modified version of the Tag.java wrapper, part of the libplctag project, so a tag_id for every tag created could be mapped and used in the software.
+Newer versions of the libplctag library will probably break some functionality of this app (I am currently aware of MicroLogix PID not working).
+AAR folder has couple of library versions just for convenience.
+
+The app is also using a modified version of the Tag.java wrapper, part of the libplctag project, so a tag_id for every tag created could be mapped and used in the software.
 Other modifications would be related to added methods for unsigned integers, previously mentioned in the related libplctag4android project (see below) as well as an additional experimental 128-bit support. All the modifications can be seen just by openning this project, navigating to the "libplctag" project, openning the AAR file and navigating through classes.jar.
 
 Related project: [libplctag4android](https://github.com/libplctag/libplctag4android)
