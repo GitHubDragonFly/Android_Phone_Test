@@ -14,9 +14,9 @@ It is using the following open source libraries, added to the app in the form of
 - [jna](https://github.com/java-native-access/jna) v5.6.0
 
 Newer versions of the libplctag library, v2.2.0+, will probably break some functionality of this app (I am currently aware of MicroLogix PID not working so it will not show as an option if you update the library).
-AAR folder was added and has couple of library versions just for convenience.
+The AAR folder was added and has a couple of library versions just for the convenience.
 
-This is the procedure for changing the library:
+This is the procedure for changing the library (upgrade or downgrade):
 - Right-click the "libplctag" folder and select "Load/Unload Modules", with libplctag highlighted click "Unload" and "OK".
 - Right-click the "libplctag" folder again and select "Remove Module", confirm removal.
 - Right-click the "libplctag" folder again and select "Delete", confirm deletion.
@@ -73,7 +73,7 @@ Otherwise it will be portrait orientation only.
 This is all dual licensed under Mozilla Public License 2.0 and GNU Lesser/Library General Public License 2.1 to cover for the use of libplctag and jna libraries.
 
 # Trademarks
-Any and all trademarks, either directly on indirectly mentioned in this project, belong to their respective owners.
+Any and all trademarks, either directly or indirectly mentioned in this project, belong to their respective owners.
 
 # Useful Resources
 Other open source projects:
