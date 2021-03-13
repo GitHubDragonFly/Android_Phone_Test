@@ -113,6 +113,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "uint32":
                         case "float32":
                             elem_size = 4;
+
+                            if (MainActivity.version_major == 2 && MainActivity.version_minor >= 2 && (cpu.equals("micrologix") || cpu.equals("slc500") || cpu.equals("plc5")))
+                                elem_count = 2 * elem_count;
+
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -122,6 +126,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "uint64":
                         case "float64":
                             elem_size = 8;
+
+                            if (MainActivity.version_major == 2 && MainActivity.version_minor >= 2 && (cpu.equals("micrologix") || cpu.equals("slc500") || cpu.equals("plc5")))
+                                elem_count = 4 * elem_count;
+
                             if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                                 if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                                     bitIndex[i] = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -130,6 +138,10 @@ public class AsyncReadABTask extends AsyncTask<ArrayList<ArrayList<String>>, Voi
                         case "int128":
                         case "uint128":
                             elem_size = 16;
+
+                            if (MainActivity.version_major == 2 && MainActivity.version_minor >= 2 && (cpu.equals("micrologix") || cpu.equals("slc500") || cpu.equals("plc5")))
+                                elem_count = 8 * elem_count;
+
                             break;
                         case "custom string":
                             elem_size = (int)Math.ceil(customStringLength / 8F) * 8;

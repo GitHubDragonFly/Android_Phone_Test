@@ -58,17 +58,17 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
             customStringLength = Integer.parseInt(fullString.substring(fullString.lastIndexOf(';') + 1));
         }
 
+        elem_count = 1;
+
         switch (dataType) {
             case "bool":
                 elem_size = 1;
-                elem_count = 1;
                 break;
             case "int8":
             case "uint8":
             case "int16":
             case "uint16":
                 elem_size = 2;
-                elem_count = 1;
                 if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                     if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                         bitIndex = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -78,8 +78,7 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
             case "uint32":
             case "float32":
             case "bool array":
-                elem_size = 2;
-                elem_count = 2;
+                elem_size = 4;
                 if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                     if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                         bitIndex = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -88,8 +87,7 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
             case "int64":
             case "uint64":
             case "float64":
-                elem_size = 2;
-                elem_count = 4;
+                elem_size = 8;
                 if ((name.contains(".") && !name.contains(":")) || (name.contains(".") && name.lastIndexOf('.') > name.indexOf('.'))){
                     if (TextUtils.isDigitsOnly(name.substring(name.lastIndexOf('.') + 1)))
                         bitIndex = Integer.parseInt(name.substring(name.lastIndexOf('.') + 1));
@@ -97,12 +95,10 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
                 break;
             case "int128":
             case "uint128":
-                elem_size = 2;
-                elem_count = 8;
+                elem_size = 16;
                 break;
             case "custom string":
                 elem_size = (int)Math.ceil(customStringLength / 8F) * 8;
-                elem_count = 1;
                 break;
             case "string":
                 if (cpu.equals("micro800")) {
@@ -112,18 +108,15 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
                 } else {
                     elem_size = 84;
                 }
-                elem_count = 1;
                 break;
             case "timer":
             case "counter":
             case "control":
                 if ((cpu.equals("controllogix") || cpu.equals("micro800")) && name.endsWith(".PRE")) {
-                    elem_size = 2;
-                    elem_count = 2;
+                    elem_size = 4;
                     dataType = "int32";
                 } else if ((cpu.equals("micrologix") || cpu.equals("slc500") || cpu.equals("plc5") || cpu.equals("logixpccc")) && name.endsWith(".PRE")) {
                     elem_size = 2;
-                    elem_count = 1;
                     dataType = "int16";
                 } else {
                     value = "AB Write Failed";
@@ -209,8 +202,8 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
                 }
             } else {
                 if ((!(dataType.equals("bool") || dataType.equals("string") || dataType.equals("custom string") ||
-                        dataType.equals("float32") || dataType.equals("float64")) && !TextUtils.isDigitsOnly(params[3])) ||
-                        ((dataType.equals("float32") || dataType.equals("float64")) && !TextUtils.isDigitsOnly(params[3].replace(".", "")))){
+                        dataType.equals("float32") || dataType.equals("float64")) && !TextUtils.isDigitsOnly(params[3].replace("-", ""))) ||
+                        ((dataType.equals("float32") || dataType.equals("float64")) && !TextUtils.isDigitsOnly((params[3].replace(".", "").replace("-", ""))))){
 
                     value = "AB Write Failed";
                     publishProgress();
