@@ -469,7 +469,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         path = path.replace(" ", "");
         timeout = timeout.replace(" ", "");
 
-        if (TextUtils.isEmpty(ipaddress) || !TextUtils.isDigitsOnly(timeout)){
+        if (TextUtils.isEmpty(ipaddress) || (TextUtils.isEmpty(path) && (cpu.equals("controllogix") || cpu.equals("logixpccc") || cpu.equals("njnx"))) || !TextUtils.isDigitsOnly(timeout)){
             myWriteABTask = null;
             return;
         }
@@ -481,7 +481,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             params[0] = "gateway=" + ipaddress + "&cpu=" + cpu;
         }
-        params[0] = "gateway=" + ipaddress + "&path=" + path + "&cpu=" + cpu;
+
         params[1] = timeout;
 
         switch(v.getId()){

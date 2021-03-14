@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 @SuppressWarnings("deprecation")
 public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
 
-    private static String tagABString = "protocol=ab_eip&";
     public String value = "", gateway_path_cpu = "", cpu = "", name = "", pidName = "";
     int timeout, elem_size, elem_count, customStringLength;
     private final Tag ABWriteMaster = new Tag();
@@ -20,7 +19,7 @@ public class AsyncWriteABTask extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-
+        String tagABString = "protocol=ab_eip&";
         gateway_path_cpu = params[0];
         cpu = gateway_path_cpu.substring(gateway_path_cpu.lastIndexOf('=') + 1);
         timeout = Integer.parseInt(params[1]);
