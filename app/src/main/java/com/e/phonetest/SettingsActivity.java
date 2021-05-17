@@ -44,11 +44,14 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 // Enable or disable the OK button if either IP or Timeout are empty
-                btnOK.setEnabled(!charSequence.toString().replace(" ", "").equals(""));
-                if (btnOK.isEnabled())
-                    btnOK.setBackground(ContextCompat.getDrawable(SettingsActivity.this, android.R.drawable.button_onoff_indicator_on));
-                else
+                if (etABIP.getText().toString().replace(" ", "").equals("") || etABTimeout.getText().toString().replace(" ", "").equals("")){
+                    btnOK.setEnabled(false);
                     btnOK.setBackground(ContextCompat.getDrawable(SettingsActivity.this, android.R.drawable.button_onoff_indicator_off));
+                }
+                else {
+                    btnOK.setEnabled(true);
+                    btnOK.setBackground(ContextCompat.getDrawable(SettingsActivity.this, android.R.drawable.button_onoff_indicator_on));
+                }
             }
 
             @Override
