@@ -35,6 +35,10 @@
     <string name="valueHint">Read / Write Value</string>
     <string name="timeoutHint">Positive Number</string>
 
+    <string-array name="missing_path">
+        <item>Missing PATH</item>
+    </string-array>
+
     <string-array name="ab_tags">
         <item>Controller + Program Tags</item>
     </string-array>

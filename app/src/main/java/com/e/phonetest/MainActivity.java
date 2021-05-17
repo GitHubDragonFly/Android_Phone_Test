@@ -288,7 +288,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             program = program.replace(" ", "");
             timeout = timeout.replace(" ", "");
 
-            if (TextUtils.isEmpty(ipaddress) || TextUtils.isEmpty(path) || TextUtils.isEmpty(program) || !TextUtils.isDigitsOnly(timeout)){
+            if (TextUtils.isEmpty(ipaddress) || (TextUtils.isEmpty(path) && (abCPU.equals("controllogix") || abCPU.equals("logixpccc") || abCPU.equals("njnx"))) || !TextUtils.isDigitsOnly(timeout)){
+                if (TextUtils.isEmpty(path) && (abCPU.equals("controllogix") || abCPU.equals("logixpccc") || abCPU.equals("njnx"))){
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.missing_path));
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dataAdapter.notifyDataSetChanged();
+                    spinCLGXTags.setAdapter(dataAdapter);
+                }
+
+                getCLGXTagsRunning = false;
                 return;
             }
 
@@ -470,6 +478,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         timeout = timeout.replace(" ", "");
 
         if (TextUtils.isEmpty(ipaddress) || (TextUtils.isEmpty(path) && (cpu.equals("controllogix") || cpu.equals("logixpccc") || cpu.equals("njnx"))) || !TextUtils.isDigitsOnly(timeout)){
+            if (TextUtils.isEmpty(path) && (cpu.equals("controllogix") || cpu.equals("logixpccc") || cpu.equals("njnx"))){
+                lblWriteMessage.setText(getResources().getStringArray(R.array.missing_path)[0]);
+            }
+
             myWriteABTask = null;
             return;
         }
