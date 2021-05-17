@@ -532,8 +532,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         // Disable access or clearing of the corresponding text boxes
-        etABx.setInputType(InputType.TYPE_NULL);
-        tvABx.setInputType(InputType.TYPE_NULL);
+        etABx.setEnabled(false);
+        tvABx.setEnabled(false);
         // Set the label indicating write success/failure to "Please Wait..."
         lblWriteMessage.setText(getResources().getStringArray(R.array.ab_tags_please_wait)[0]);
 
@@ -692,8 +692,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         // Enable access to corresponding text boxes
-        etABx.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        tvABx.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        etABx.setEnabled(true);
+        tvABx.setEnabled(true);
         // Set the label indicating write success/failure
         lblWriteMessage.setText(value.substring(3));
 

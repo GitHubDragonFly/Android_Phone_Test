@@ -3,10 +3,13 @@ package com.e.phonetest;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -15,6 +18,8 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
     Spinner spinABCPU, spinBooleanDisplay;
     EditText etABIP, etABProgram, etABPath, etABTimeout;
+    Button btnOK;
+    TextWatcher stcListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +34,34 @@ public class SettingsActivity extends AppCompatActivity implements AdapterView.O
 
         spinBooleanDisplay = findViewById(R.id.spinnerBooleanDisplay);
 
-        etABIP = findViewById(R.id.etABIPAddress);
+        btnOK = findViewById(R.id.buttonSettingsOK);
+
+        stcListener = new TextWatcher(){
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                // Enable or disable the OK button if either IP or Timeout are empty
+                btnOK.setEnabled(!charSequence.toString().replace(" ", "").equals(""));
+                if (btnOK.isEnabled())
+                    btnOK.setBackground(ContextCompat.getDrawable(SettingsActivity.this, android.R.drawable.button_onoff_indicator_on));
+                else
+                    btnOK.setBackground(ContextCompat.getDrawable(SettingsActivity.this, android.R.drawable.button_onoff_indicator_off));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        };
+
         etABProgram = findViewById(R.id.etABProgram);
         etABPath = findViewById(R.id.etABPath);
+        etABIP = findViewById(R.id.etABIPAddress);
+        etABIP.addTextChangedListener(stcListener);
         etABTimeout = findViewById(R.id.etABTimeout);
+        etABTimeout.addTextChangedListener(stcListener);
 
         //Set current values to initial screen
 
