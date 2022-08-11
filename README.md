@@ -34,6 +34,10 @@ The above mentioned related project can be used to compile the latest prerelease
 
 See [this link](https://github.com/libplctag/libplctag4android/issues/1) for instructions on how to create libplctag AAR.
 
+# Screenshot
+
+![Start Page](screenshots/App%20Running%20Screen%20(Pixel%203a%20Emulator).png?raw=true)
+
 # Functionality
 - Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
 - The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
