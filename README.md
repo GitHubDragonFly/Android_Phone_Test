@@ -17,12 +17,12 @@ Newer versions of the libplctag library, v2.2.0+, will probably break some funct
 The AAR folder was added and has a couple of library versions just for the convenience.
 
 This is the procedure for changing the library (upgrade or downgrade):
-- Right-click the "libplctag" folder and select "Load/Unload Modules", with libplctag highlighted click "Unload" and "OK".
+- Right-click the `libplctag` folder and select `Load/Unload Modules`, with libplctag highlighted click `Unload` and `OK`.
 - Right-click the "libplctag" folder again and select "Remove Module", confirm removal.
-- Right-click the "libplctag" folder again and select "Delete", confirm deletion.
-- On the menu select "File/Project Structure", in the "Modules" window click "+" and select "Import .JAR/.AAR Package", browse to the folder where the new library is, select it and click "Finish".
-- On the menu select "File/Save All" and then do "File/Sync Project with Gradle Files" (this will make the newly created "libplctag" folder name go bold)
-- In the project tree, open "settings.gradle" file and delete the duplicate line that says "include ':libplctag'".
+- Right-click the `libplctag` folder again and select `Delete`, confirm deletion.
+- On the menu select `File/Project Structure`, in the `Modules` window click `+` and select `Import .JAR/.AAR Package`, browse to the folder where the new library is, select it and click `Finish`.
+- On the menu select `File/Save All` and then do `File/Sync Project with Gradle Files` (this will make the newly created `libplctag` folder name go bold)
+- In the project tree, open `settings.gradle` file and delete the duplicate line that says `include ':libplctag'`.
 
 The app is also using a modified version of the Tag.java wrapper, part of the libplctag project, so a tag_id for every tag created could be mapped and used in the software.
 Other modifications would be related to added methods for unsigned integers, previously mentioned in the related libplctag4android project (see below) as well as an additional experimental 128-bit support. All the modifications can be seen just by openning this project, navigating to the "libplctag" project, openning the AAR file and navigating through classes.jar.
@@ -39,13 +39,13 @@ See [this link](https://github.com/libplctag/libplctag4android/issues/1) for ins
 ![Start Page](screenshots/App%20Running%20Screen%20(Pixel%203a%20Emulator).png?raw=true)
 
 # Functionality
-- Only a single value will be displayed per tag entered, either of string/char/integer/float...etc.
-- The default PLC values are set in the MainActivity.java file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
-- The app provides automated READ while, during this operation, unused tag spots can be populated and used to write in parallel.
-- The "Write" buttons are enabled when the tag is present AND the value to write is present.
-- The "Get Tags" button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
-- The Custom String Length has to be specified when the "custom string" data type is selected.
-- The "Gauge" screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for either or both: the green LED and the gauges (multiple data types supported).
+- Only a single value will be displayed per tag entered, either of string / char / integer / float ... etc.
+- The default PLC values are set in the `MainActivity.java` file (variables: abCPU, abIPAddress, abPath, abProgram, abTimeout, boolDisplay) and can be changed to match any specific setup.
+- The app provides automated READ (`Auto ON`) while, during this operation, unused tag spots can be populated and used to write in parallel.
+- The `Write` buttons are enabled when the tag is present AND the value to write is present.
+- The `Get Tags` button will fetch ControlLogix tags and selecting any of the fetched tags will copy it to the clipboard.
+- The Custom String Length has to be specified when the `custom string` data type is selected.
+- The `Gauge` screen is to demo [AndroidUserControls](https://github.com/GitHubDragonFly/AndroidUserControls) but does allow setting the PLC Tag for either or both: the green LED and the gauges (multiple data types supported).
 The red and blue LEDs are only visible and functional in the Demo mode.
 - Modbus functionality of the libplctag library is not included in this app.
 
@@ -68,8 +68,8 @@ All it takes is to:
 ## Note: This app can be installed on a tablet as well
 You could achieve any orientation on the tablet and prevent the MainActivity and GaugeActivity from restarting when orientation changes.
 Just make the following changes within the AndroidManifest:
- - remove all android:screenOrientation="sensorPortrait" entries
- - add android:configChanges="orientation|screenSize|screenLayout|keyboardHidden" just below android:name=".MainActivity" and android:name=".GaugeActivity"
+ - remove all `android:screenOrientation="sensorPortrait"` entries
+ - add `android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"` just below each of the following lines `android:name=".MainActivity"` and `android:name=".GaugeActivity"`
 
 Otherwise it will be portrait orientation only.
 
