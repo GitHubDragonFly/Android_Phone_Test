@@ -1,5 +1,5 @@
 # PhoneTest
-Android phone app for communication with Allen Bradley programmable logic controllers (PLC).
+Android phone app for communication with Allen Bradley programmable logic controllers (PLC) via WiFi on a local network.
 
 Intended to be used solely as a testing tool (not fit for any production environment).
 
